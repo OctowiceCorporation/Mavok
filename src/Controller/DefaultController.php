@@ -4,12 +4,13 @@
 namespace App\Controller;
 
 
+
 class DefaultController
 {
 
 
     public function index()
     {
-
+        die();
     }
 }
