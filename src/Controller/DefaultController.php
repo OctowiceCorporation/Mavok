@@ -11,7 +11,7 @@ class DefaultController
 
     public function index()
     {
-        echo 'nahyi';
+        echo 'nahyi blyat nahui blyat';
         die();
     }
 }
