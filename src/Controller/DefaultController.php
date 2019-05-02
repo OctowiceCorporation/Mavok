@@ -11,6 +11,7 @@ class DefaultController
 
     public function index()
     {
+        echo 'nahyi';
         die();
     }
 }
