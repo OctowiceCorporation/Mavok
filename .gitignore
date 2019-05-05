@@ -8,6 +8,8 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+/public/images/
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 /phpunit.xml
