@@ -26,26 +26,28 @@ class DefaultController
     {
         $categories = $categoryRepository->findBy(['parent' => null]);
 
-        function callback(Category $children, &$arr){
-            $prod = [];
+        function callback(Category $children, &$arr)
+        {
             foreach ($children->getProducts() as $product) {
-                $prod[] = $product->getName();
-                dump($children);
+                $arr[$product->getId()] = $product->getName();
             }
-            $arr[] = [$children->getName(), $prod];
+
             foreach ($children->getChildren() as $child) {
-                callback($child, $arr);
+                $arr[$child->getId()] = [$child->getName(), []];
+                callback($child, $arr[$child->getId()][1]);
             }
         }
 
         $arr = [];
 
         foreach ($categories as $category) {
-            callback($category, $arr);
+            $arr[$category->getId()] = [$category->getName(), []];
+            callback($category, $arr[$category->getId()][1]);
         }
 
+
         echo '<pre>';
-            print_r($arr);
+        print_r($arr);
         echo '</pre>';
 
         die();
