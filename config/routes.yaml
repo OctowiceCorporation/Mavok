@@ -1,3 +1,12 @@
 index:
     path: /
     controller: App\Controller\DefaultController::index
+add_category:
+    path: /add_category
+    controller: App\Controller\DefaultController::addCategory
+parce_np:
+    path: /parce_np
+    controller: App\Controller\DefaultController::parceNP
+get_np:
+    path: /get_np
+    controller: App\Controller\DefaultController::getNP

@@ -12,10 +12,13 @@
   "require": {
     "php": "^7.1.0",
     "ext-iconv": "*",
+    "ext-json": "*",
     "friendsofsymfony/rest-bundle": "^2.3",
+    "guzzlehttp/guzzle": "^6.3",
     "knplabs/knp-components": "^1.2",
     "knplabs/knp-paginator-bundle": "^3.0",
     "php-paradise/array-keys-converter": "^1.0@dev",
+    "phpoffice/phpspreadsheet": "^1.6",
     "platformsh/symfonyflex-bridge": "^1.3",
     "sensio/framework-extra-bundle": "^5.2",
     "symfony/asset": "^4.1",
@@ -41,8 +44,7 @@
     "symfony/web-link": "^4.1",
     "symfony/webpack-encore-pack": "*",
     "symfony/yaml": "^4.1",
-    "twig/extensions": "^1.5",
-    "ext-json": "*"
+    "twig/extensions": "^1.5"
   },
   "require-dev": {
     "easycorp/easy-deploy-bundle": "^1.0",
