@@ -14,41 +14,112 @@ use App\Entity\Product;
 use App\Entity\Specification;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use GuzzleHttp\Client;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Yaml\Yaml;
 
-class DefaultController
+class DefaultController extends AbstractController
 {
 
-    public function index(CategoryRepository $categoryRepository)
+    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, EntityManagerInterface $manager)
     {
-        $categories = $categoryRepository->findBy(['parent' => null]);
 
-        function callback(Category $children, &$arr){
-            $prod = [];
-            foreach ($children->getProducts() as $product) {
-                $prod[] = $product->getName();
-                dump($children);
+
+
+//        $cat = $categoryRepository->findAll();
+//        foreach ($cat as $category){
+//            $category->setSlug(null);
+//            $manager->persist($category);
+//        }
+//        $manager->flush();
+        dd('qq');
+
+        function callback(Category $children, &$arr)
+        {
+//            foreach ($children->getProducts() as $product) {
+//                $charac = [];
+//                foreach ($product->getSpecifications() as $item) {
+//                    $charac[$item->getId()] = $item->getName().' '.$item->getUnit().' '.$item->getValue();
+//                }
+//                $arr[$product->getId()] = [
+//                    'product_name' => $product->getName(),
+//                    'manufacturer' => $product->getManufacturer(),
+//                    'producing_country' => $product->getProducingCountry(),
+//                    'product_unit' => $product->getProductUnit(),
+//                    'wholesale_price' => $product->getWholesalePrice().' '.$product->getCurrency()->getName().' / '.$product->getWholesalePrice()*$product->getCurrency()->getValue().' UAH',
+//                    'wholesale_minimum' => $product->getMinimumWholesale(),
+//                    'created_at' => $product->getCreatedAt(),
+//                    'updated_at' => $product->getUpdatedAt(),
+//                    'price' => $product->getRetailPrice().' '.$product->getCurrency()->getName().' / '.$product->getRetailPrice()*$product->getCurrency()->getValue().' UAH',
+//                    'specification' => $charac,
+//                    'description' => $product->getDescription(),
+//                ];
+//            }
+
+            $arr['id'] = $children->getId();
+
+            if($children->getChildren()->isEmpty()){
+                $arr['вложеные категории'] = 'нет вложеностей';
+                foreach ($children->getProducts() as $product) {
+                    $arr['Товары'][] = $product->getName();
+                }
+
             }
-            $arr[] = [$children->getName(), $prod];
+
+
             foreach ($children->getChildren() as $child) {
-                callback($child, $arr);
+                $arr['вложеные категории'][$child->getName()] = [];
+                callback($child, $arr['вложеные категории'][$child->getName()]);
+            }
+        }
+
+        function parce_category(Category $category, &$arr, $categor){
+            foreach ($category->getChildren() as $child) {
+                parce_category($child, $arr, $categor);
+            }
+
+            foreach ($category->getProducts() as $product) {
+                $product->setCategory($categor);
+                $arr[] = $product->getCategory()->getName();
             }
         }
 
         $arr = [];
 
         foreach ($categories as $category) {
-            callback($category, $arr);
+            $arr[$category->getName()] = [];
+            callback($category, $arr[$category->getName()]);
         }
 
+//        $yaml = Yaml::dump($arr, 10, 8);
+//
+//        file_put_contents('categories.yaml',$yaml);
+
+//        foreach ($categories as $category) {
+//            $arr[$category->getId()] = [$category, []];
+//            parce_category($category, $arr[$category->getId()][1], $arr[$category->getId()][0]);
+//        }
+
+        dd($arr);
+
+
+        foreach ($arr as $item) {
+
+        }
+
+
         echo '<pre>';
-            print_r($arr);
+        print_r($arr);
         echo '</pre>';
 
         die();
+
+//        return $this->render('base.html.twig');
     }
 
     public function parceNP(EntityManagerInterface $em)
@@ -80,22 +151,160 @@ class DefaultController
         dd($cities);
     }
 
+    public function reparce(CategoryRepository $categoryRepository, EntityManagerInterface $manager)
+    {
+
+        $batya = $categoryRepository->findOneBy(['id' => 259]);
+
+//        $cat1 = new Category();
+//        $cat1->setName('Трубы');
+//        $cat1->setParent($batya);
+//        $manager->persist($cat1);
+//        $cat2 = new Category();
+//        $cat2->setParent($batya);
+//        $cat2->setName('Фитинги (Для внутренней канализации)');
+//        $manager->persist($cat2);
+//
+//        $manager->flush();
+//        dd();
+
+
+
+        function callqq(Category $category, &$arr){
+                foreach ($category->getChildren() as $child) {
+                    callqq($child, $arr);
+                    $arr[$child->getId()] = $child;
+                }
+//            if (!$category->getProducts()->isEmpty()){
+//                foreach ($category->getProducts() as $product) {
+//                    $arr[] = $product;
+//                }
+//            }
+        }
+
+        $arr = [];
+
+        callqq($batya, $arr);
+
+//        dd($arr);
+
+        foreach ($arr as $item) {
+//            $item->setCategory($batya);
+//            $manager->persist($item);
+            $manager->remove($item);
+        }
+        $manager->flush();
+        dd();
+
+//        $new_cat = new Category();
+//        $new_cat->setName('Бойлер');
+//        $manager->persist($new_cat);
+//        $manager->flush();
+//        $categories = $categoryRepository->findOneBy(['id' => 13]);
+//        $arr = [];
+//        foreach ($categories->getProducts() as $item) {
+//            $arr[] = $item;
+//        }
+//        dd($arr);
+
+//        $arr = [];
+//
+//        foreach ($categories->getProducts() as $product) {
+//            $arr[] = $product;
+//
+
+
+//        $arr = [];
+//        callqq($categories, $categories, $arr);
+//        foreach ($arr as $item) {
+//            $item->setCategory($new_cat);
+//            $manager->persist($item);
+//        }
+//        $manager->flush();
+
+//        foreach ($categories->getChildren() as $child) {
+//            foreach ($child->getProducts() as $product) {
+//                $product->setCategory($categories);
+//                $manager->persist($product);
+//            }
+//            $manager->remove($child);
+//        }
+//        $manager->flush();
+
+
+
+
+
+
+        function callback(Category $children, &$arr)
+        {
+//            foreach ($children->getProducts() as $product) {
+//                $charac = [];
+//                foreach ($product->getSpecifications() as $item) {
+//                    $charac[$item->getId()] = $item->getName().' '.$item->getUnit().' '.$item->getValue();
+//                }
+//                $arr[$product->getId()] = [
+//                    'product_name' => $product->getName(),
+//                    'manufacturer' => $product->getManufacturer(),
+//                    'producing_country' => $product->getProducingCountry(),
+//                    'product_unit' => $product->getProductUnit(),
+//                    'wholesale_price' => $product->getWholesalePrice().' '.$product->getCurrency()->getName().' / '.$product->getWholesalePrice()*$product->getCurrency()->getValue().' UAH',
+//                    'wholesale_minimum' => $product->getMinimumWholesale(),
+//                    'created_at' => $product->getCreatedAt(),
+//                    'updated_at' => $product->getUpdatedAt(),
+//                    'price' => $product->getRetailPrice().' '.$product->getCurrency()->getName().' / '.$product->getRetailPrice()*$product->getCurrency()->getValue().' UAH',
+//                    'specification' => $charac,
+//                    'description' => $product->getDescription(),
+//                ];
+//            }
+//
+//            if($children->getChildren()->isEmpty())
+//                $arr = 'нет вложеностей';
+//
+//            foreach ($children->getChildren() as $child) {
+//                $arr[$child->getName()] = [];
+//                callback($child, $arr[$child->getName()]['вложеные категории']);
+//            }
+//        }
+//
+//        function parce_category(Category $category, &$arr, $categor){
+//            foreach ($category->getChildren() as $child) {
+//                parce_category($child, $arr, $categor);
+//            }
+//
+//            foreach ($category->getProducts() as $product) {
+//                $product->setCategory($categor);
+//                $arr[] = $product->getCategory()->getName();
+//            }
+        }
+
+        $arr = [];
+
+//        foreach ($categories-> as $category) {
+//            $arr[$category->getName()] = [];
+//            callback($category, $arr[$category->getName()]);
+//        }
+
+        dd($arr);
+    }
+
     public function addCategory(EntityManagerInterface $em)
     {
-        $client = new Client();
-
-        $currencies = $em->getRepository(Currency::class)->findAll();
-        $currencies_array = [];
-
-        foreach ($currencies as $currency) {
-            $currencies_array[$currency->getName()] = $currency;
-        }
+//        $client = new Client();
+//
+//        $currencies = $em->getRepository(Currency::class)->findAll();
+//        $currencies_array = [];
+//
+//        foreach ($currencies as $currency) {
+//            $currencies_array[$currency->getName()] = $currency;
+//        }
 
         $reader = new Xlsx();
         $reader->setReadDataOnly(true);
-        $spreadsheet = $reader->load('import/BoilerCategories.xlsx');
+        $spreadsheet = $reader->load('base.xlsx');
         $categories = $spreadsheet->getActiveSheet()->toArray();
-        array_shift($categories);
+        dd($categories);
+//        array_shift($categories);
 
         $reader->setReadDataOnly(true);
         $spreadsheet = $reader->load('import/BoilerProducts.xlsx');
@@ -396,9 +605,48 @@ class DefaultController
 
     }
 
-    public function getNP(NovaPoshtaCityRepository $cityRepository)
+    public function getNP(NovaPoshtaCityRepository $cityRepository, $slug, CategoryRepository $categoryRepository)
     {
-        $cities = $cityRepository->findAll();
-        dd($cities);
+        $slug = rtrim($slug,'/');
+        $array = explode('/', $slug);
+        if(empty($array[0]))
+            return new Response('gg wp', 404);
+        $count = count($array);
+        foreach ($array as $key => $item) {
+            if($count != $key+1){
+                $found = false;
+                $cat = $categoryRepository->findOneBy(['name' => $item]);
+                if(empty($cat))
+                    return new Response('ne nashol, pizda', 404);
+                if(!empty($cat->getParent()) && $key == 0)
+                    return new Response('u tebya batya est\'', 404);
+                if($cat->getChildren()->isEmpty())
+                    return new Response('bezdetniy', 404);
+                echo $cat->getName().' id: '.$cat->getId().PHP_EOL;
+                foreach ($categoryRepository->findOneBy(['name' => $item])->getChildren() as $child) {
+                    echo $child->getName().' --- '.$array[$key+1].';;';
+                    if($child->getName() == $array[$key+1]){
+                        $found = true;
+                        break;
+                    }
+                }
+                if(!$found)
+                    return new Response('huevaya cepochka', 404);
+            }
+        }
+
+        $last_category = $categoryRepository->findOneBy(['name' => $array[count($array)-1]]);
+//        dd($last_category);
+
+
+        if(! $last_category->getChildren()->isEmpty())
+            echo 'oh ebat\' u nego detey';
+        elseif (!$last_category->getProducts()->isEmpty()){
+            echo 'zaebumba, est\' tovari';
+            foreach ($last_category->getProducts() as $product) {
+                dump($product);
+            }
+        }
+        dd('wow');
     }
 }

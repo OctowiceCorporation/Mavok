@@ -8,5 +8,10 @@ parce_np:
     path: /parce_np
     controller: App\Controller\DefaultController::parceNP
 get_np:
-    path: /get_np
+    path: /category/{slug}
     controller: App\Controller\DefaultController::getNP
+    requirements:
+        slug: '.*'
+reparce:
+    path: /reparce
+    controller: App\Controller\DefaultController::reparce
