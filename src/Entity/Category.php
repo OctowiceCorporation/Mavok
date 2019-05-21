@@ -71,6 +71,16 @@ class Category
      */
     private $is_visible;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $usd_value;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $eur_value;
+
     public function __construct()
     {
         $this->created_at = new DateTime();
@@ -245,6 +255,30 @@ class Category
     public function setIsVisible(bool $is_visible): self
     {
         $this->is_visible = $is_visible;
+
+        return $this;
+    }
+
+    public function getUsdValue(): ?float
+    {
+        return $this->usd_value;
+    }
+
+    public function setUsdValue(?float $usd_value): self
+    {
+        $this->usd_value = $usd_value;
+
+        return $this;
+    }
+
+    public function getEurValue(): ?float
+    {
+        return $this->eur_value;
+    }
+
+    public function setEurValue(?float $eur_value): self
+    {
+        $this->eur_value = $eur_value;
 
         return $this;
     }

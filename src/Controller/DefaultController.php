@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 
+use App\Entity\Brand;
 use App\Entity\Category;
 use App\Entity\Currency;
 use App\Entity\Image;
@@ -37,89 +38,103 @@ class DefaultController extends AbstractController
 //            $manager->persist($category);
 //        }
 //        $manager->flush();
-        dd('qq');
+//        dd('qq');
 
-        function callback(Category $children, &$arr)
-        {
-//            foreach ($children->getProducts() as $product) {
-//                $charac = [];
-//                foreach ($product->getSpecifications() as $item) {
-//                    $charac[$item->getId()] = $item->getName().' '.$item->getUnit().' '.$item->getValue();
-//                }
-//                $arr[$product->getId()] = [
-//                    'product_name' => $product->getName(),
-//                    'manufacturer' => $product->getManufacturer(),
-//                    'producing_country' => $product->getProducingCountry(),
-//                    'product_unit' => $product->getProductUnit(),
-//                    'wholesale_price' => $product->getWholesalePrice().' '.$product->getCurrency()->getName().' / '.$product->getWholesalePrice()*$product->getCurrency()->getValue().' UAH',
-//                    'wholesale_minimum' => $product->getMinimumWholesale(),
-//                    'created_at' => $product->getCreatedAt(),
-//                    'updated_at' => $product->getUpdatedAt(),
-//                    'price' => $product->getRetailPrice().' '.$product->getCurrency()->getName().' / '.$product->getRetailPrice()*$product->getCurrency()->getValue().' UAH',
-//                    'specification' => $charac,
-//                    'description' => $product->getDescription(),
-//                ];
-//            }
-
-            $arr['id'] = $children->getId();
-
-            if($children->getChildren()->isEmpty()){
-                $arr['вложеные категории'] = 'нет вложеностей';
-                foreach ($children->getProducts() as $product) {
-                    $arr['Товары'][] = $product->getName();
-                }
-
-            }
-
-
-            foreach ($children->getChildren() as $child) {
-                $arr['вложеные категории'][$child->getName()] = [];
-                callback($child, $arr['вложеные категории'][$child->getName()]);
-            }
-        }
-
-        function parce_category(Category $category, &$arr, $categor){
-            foreach ($category->getChildren() as $child) {
-                parce_category($child, $arr, $categor);
-            }
-
-            foreach ($category->getProducts() as $product) {
-                $product->setCategory($categor);
-                $arr[] = $product->getCategory()->getName();
-            }
-        }
-
-        $arr = [];
-
-        foreach ($categories as $category) {
-            $arr[$category->getName()] = [];
-            callback($category, $arr[$category->getName()]);
-        }
-
-//        $yaml = Yaml::dump($arr, 10, 8);
+//        function callback(Category $children, &$arr)
+//        {
+////            foreach ($children->getProducts() as $product) {
+////                $charac = [];
+////                foreach ($product->getSpecifications() as $item) {
+////                    $charac[$item->getId()] = $item->getName().' '.$item->getUnit().' '.$item->getValue();
+////                }
+////                $arr[$product->getId()] = [
+////                    'product_name' => $product->getName(),
+////                    'manufacturer' => $product->getManufacturer(),
+////                    'producing_country' => $product->getProducingCountry(),
+////                    'product_unit' => $product->getProductUnit(),
+////                    'wholesale_price' => $product->getWholesalePrice().' '.$product->getCurrency()->getName().' / '.$product->getWholesalePrice()*$product->getCurrency()->getValue().' UAH',
+////                    'wholesale_minimum' => $product->getMinimumWholesale(),
+////                    'created_at' => $product->getCreatedAt(),
+////                    'updated_at' => $product->getUpdatedAt(),
+////                    'price' => $product->getRetailPrice().' '.$product->getCurrency()->getName().' / '.$product->getRetailPrice()*$product->getCurrency()->getValue().' UAH',
+////                    'specification' => $charac,
+////                    'description' => $product->getDescription(),
+////                ];
+////            }
 //
-//        file_put_contents('categories.yaml',$yaml);
-
+//            $arr['id'] = $children->getId();
+//
+//            if($children->getChildren()->isEmpty()){
+//                $arr['вложеные категории'] = 'нет вложеностей';
+//                foreach ($children->getProducts() as $product) {
+//                    $arr['Товары'][] = $product->getName();
+//                }
+//
+//            }
+//
+//
+//            foreach ($children->getChildren() as $child) {
+//                $arr['вложеные категории'][$child->getName()] = [];
+//                callback($child, $arr['вложеные категории'][$child->getName()]);
+//            }
+//        }
+//
+//        function parce_category(Category $category, &$arr, $categor){
+//            foreach ($category->getChildren() as $child) {
+//                parce_category($child, $arr, $categor);
+//            }
+//
+//            foreach ($category->getProducts() as $product) {
+//                $product->setCategory($categor);
+//                $arr[] = $product->getCategory()->getName();
+//            }
+//        }
+//
+//        $arr = [];
+//
 //        foreach ($categories as $category) {
-//            $arr[$category->getId()] = [$category, []];
-//            parce_category($category, $arr[$category->getId()][1], $arr[$category->getId()][0]);
+//            $arr[$category->getName()] = [];
+//            callback($category, $arr[$category->getName()]);
+//        }
+//
+////        $yaml = Yaml::dump($arr, 10, 8);
+////
+////        file_put_contents('categories.yaml',$yaml);
+//
+////        foreach ($categories as $category) {
+////            $arr[$category->getId()] = [$category, []];
+////            parce_category($category, $arr[$category->getId()][1], $arr[$category->getId()][0]);
+////        }
+//
+//        dd($arr);
+//
+//
+//        foreach ($arr as $item) {
+//
+//        }
+//
+//
+//        echo '<pre>';
+//        print_r($arr);
+//        echo '</pre>';
+//
+//        die();
+//        $products = $productRepository->findAll();
+//        $brands = $manager->getRepository(Brand::class)->findAll();
+//        foreach ($products as $product) {
+//            foreach ($brands as $brand) {
+//                if ($product->getManufacturer() == $brand->getName()){
+//                    $product->setBrand($brand);
+//                }
+//            }
+//            $manager->persist($product);
+//        }
+//        $manager->flush();
+//        foreach ($productRepository->findAll() as $item) {
+//            dd($item);
 //        }
 
-        dd($arr);
-
-
-        foreach ($arr as $item) {
-
-        }
-
-
-        echo '<pre>';
-        print_r($arr);
-        echo '</pre>';
-
-        die();
-
-//        return $this->render('base.html.twig');
+        return $this->render('index.html.twig');
     }
 
     public function parceNP(EntityManagerInterface $em)
