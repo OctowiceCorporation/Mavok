@@ -2206,8 +2206,7 @@ select option
 .new_arrivals
 {
 	width: 100%;
-	padding-top: 96px;
-	padding-bottom: 96px;
+	padding-top: 48px;
 }
 .new_arrivals_title
 {
@@ -2217,6 +2216,14 @@ select option
 	font-size: 24px;
 	font-weight: 500;
 	margin-bottom: -29px;
+}
+.scrolling-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+.scrolling-wrapper::-webkit-scrollbar {
+	display: none;
 }
 .arrivals_slider
 {
