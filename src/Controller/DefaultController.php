@@ -135,7 +135,7 @@ class DefaultController extends AbstractController
 //        }
         $mainCategories = $categoryRepository->findBy(['parent'=>null]);
 
-        return $this->render('product.html.twig');
+        return $this->render('index.html.twig');
     }
 
     public function parceNP(EntityManagerInterface $em)

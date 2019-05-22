@@ -69,21 +69,6 @@ $(document).ready(function()
 		initTabLines();
 	});
 
-	$(document).on('mouseover', '.hassubs',function () {
-		let elements = $(this).find('ul')[0];
-		$(elements).each(function () {
-			$(this).show();
-			$(this).css('visibility', 'visible').css('top', 0).css('left', '100%').css('opacity', 1);
-		})
-	});
-	$(document).on('mouseout', '.hassubs',function () {
-		let elements = $(this).find('ul')[0];
-		$(elements).each(function () {
-			$(this).show();
-			$(this).css('top', '20%').css('right','50%').css('visibility', 'hidden').css('opacity', 0);
-		})
-	});
-
 	/* 
 
 	2. Set Header
