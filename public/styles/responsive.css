@@ -106,6 +106,13 @@
 	}
 }
 
+@media only screen and (max-width: 700px)
+{
+	.cat_menu{
+		width: calc(100vw + 15px);
+	}
+}
+
 /************
 4. 1100px
 ************/
@@ -499,7 +506,7 @@
 	}
 	.cat_menu li
 	{
-		height: 36px;
+		height: 47px;
 		padding-left: 15px;
 		padding-right: 15px;
 	}
@@ -510,6 +517,7 @@
 	}
 	.cat_menu li ul
 	{
+		top: 50%;
 		left: 50%;
 		z-index: 10;
 	}

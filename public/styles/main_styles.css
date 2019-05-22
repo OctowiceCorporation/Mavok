@@ -926,6 +926,7 @@ select option
 	visibility: visible;
 	opacity: 1;
 }
+
 .cat_menu li
 {
 	display: block;
@@ -984,12 +985,17 @@ select option
 	background: #FFFFFF;
 	box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
 }
-.cat_menu li:hover > ul
+@media only screen and (min-width: 700px)
 {
-	top: 0;
-	visibility: visible;
-	opacity: 1;
+	.cat_menu li a i:hover >
+	{
+		top: 0;
+		visibility: visible;
+		opacity: 1;
+	}
 }
+
+
 .main_nav_dropdown li
 {
 	margin-right: 35px;
