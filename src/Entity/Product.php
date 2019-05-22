@@ -92,16 +92,6 @@ class Product
     private $products;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $manufacturer;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $producing_country;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $minimum_wholesale;
@@ -112,11 +102,6 @@ class Product
     private $sale;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="products")
-     */
-    private $currency;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $product_unit;
@@ -125,6 +110,16 @@ class Product
      * @ORM\OneToMany(targetEntity="App\Entity\Specification", mappedBy="product")
      */
     private $specifications;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $currency_name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Brand", inversedBy="products")
+     */
+    private $brand;
 
     public function __construct()
     {
@@ -365,30 +360,6 @@ class Product
         return $this;
     }
 
-    public function getManufacturer(): ?string
-    {
-        return $this->manufacturer;
-    }
-
-    public function setManufacturer(?string $manufacturer): self
-    {
-        $this->manufacturer = $manufacturer;
-
-        return $this;
-    }
-
-    public function getProducingCountry(): ?string
-    {
-        return $this->producing_country;
-    }
-
-    public function setProducingCountry(?string $producing_country): self
-    {
-        $this->producing_country = $producing_country;
-
-        return $this;
-    }
-
     public function getMinimumWholesale(): ?int
     {
         return $this->minimum_wholesale;
@@ -409,18 +380,6 @@ class Product
     public function setSale(?float $sale): self
     {
         $this->sale = $sale;
-
-        return $this;
-    }
-
-    public function getCurrency(): ?Currency
-    {
-        return $this->currency;
-    }
-
-    public function setCurrency(?Currency $currency): self
-    {
-        $this->currency = $currency;
 
         return $this;
     }
@@ -464,6 +423,30 @@ class Product
                 $specification->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrencyName(): ?string
+    {
+        return $this->currency_name;
+    }
+
+    public function setCurrencyName(string $currency_name): self
+    {
+        $this->currency_name = $currency_name;
+
+        return $this;
+    }
+
+    public function getBrand(): ?Brand
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brand $brand): self
+    {
+        $this->brand = $brand;
 
         return $this;
     }
