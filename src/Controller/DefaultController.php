@@ -41,7 +41,7 @@ class DefaultController extends AbstractController
         if(empty($array[0])){
             $categories = new ArrayCollection();
             foreach ($categoryRepository->findBy(['parent' => null]) as $category) {
-                $categories->add(CategoryMapper::entityToDto($category));
+                $categories->add(CategoryMapper::entityToDto($category, substr($categoryService->generateUrlFromCategory($category), 1)));
             }
             return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => null]);
         }
