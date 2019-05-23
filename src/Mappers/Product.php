@@ -9,12 +9,14 @@ use App\Entity\Product as ProductEntity;
 
 class Product
 {
-    public function entityToDto(ProductEntity $entity): ProductDto
+    static function entityToDto(ProductEntity $entity, float $value = null): ProductDto
     {
         return new ProductDto(
             $entity->getCategory()->getId(),
             $entity->getName(),
+            $entity->getImages()->get(0)->getImagePath(),
             $entity->getRetailPrice(),
+            $entity->getCurrencyName(),
             $entity->getCreatedAt(),
             $entity->getUpdatedAt(),
             $entity->getIsAvailable(),
@@ -22,11 +24,11 @@ class Product
             $entity->getSpecialOffer(),
             $entity->getDescription(),
             $entity->getWholesalePrice(),
-            $entity->getManufacturer(),
-            $entity->getProducingCountry(),
+            $entity->getBrand()->getName(),
+            $entity->getBrand()->getCountry(),
             $entity->getMinimumWholesale(),
             $entity->getSale(),
-            $entity->getCurrency()->getId(),
+            $value,
             $entity->getProductUnit()
         );
     }

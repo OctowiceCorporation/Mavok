@@ -20,6 +20,29 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
+    private function callbackGetProducts(Category $category, array &$array)
+    {
+        if($category->getProducts()->isEmpty()){
+            foreach ($category->getChildren() as $child) {
+                $this->callbackGetProducts($child, $array);
+            }
+        }
+        else
+            foreach ($category->getProducts() as $product) {
+                $array[] = $product;
+            }
+    }
+
+    public function getChildProducts(Category $category)
+    {
+        $arr = [];
+        foreach ($category->getChildren() as $child) {
+            $this->callbackGetProducts($child, $arr);
+        }
+
+        return $arr;
+    }
+
     public function generateUrlFromCategory(Category $category): string
     {
         $url = '';

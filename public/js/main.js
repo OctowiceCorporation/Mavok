@@ -5,13 +5,11 @@ $(document).ready(function () {
     })
         .done(function(msg) {
             let array = JSON.parse(msg);
-            console.log(array);
             let parent = $('#header_dropdown');
             Object.keys(array).forEach(function (key) {
                 callback_category(parent, array[key]);
             });
             function callback_category(element, category) {
-                console.log(category);
                 let is_sub_exist = false;
                 if(category['sub'].length === undefined)
                     is_sub_exist = true;

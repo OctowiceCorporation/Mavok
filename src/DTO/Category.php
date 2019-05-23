@@ -15,8 +15,9 @@ class Category
     private $updated_at;
     private $image;
     private $is_visible;
+    private $link;
 
-    public function __construct(string $name, DateTimeInterface $created_at, DateTimeInterface $updated_at, bool $is_visible, int $parent_id = null, string $description = null, string $image = null)
+    public function __construct(string $name, bool $is_visible, string $link = null, DateTimeInterface $created_at = null, DateTimeInterface $updated_at = null, int $parent_id = null, string $description = null, string $image = null)
     {
         $this->parent_id = $parent_id;
         $this->name = $name;
@@ -25,6 +26,7 @@ class Category
         $this->updated_at = $updated_at;
         $this->image = $image;
         $this->is_visible = $is_visible;
+        $this->link = $link;
     }
 
     public function getParentId(): ?int
@@ -61,4 +63,16 @@ class Category
     {
         return $this->is_visible;
     }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    public function setLink($link): void
+    {
+        $this->link = $link;
+    }
+
+
 }

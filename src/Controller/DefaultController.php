@@ -16,127 +16,91 @@ use App\Entity\Specification;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
+use App\Service\ProductService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Yaml\Yaml;
 use App\Service\CategoryService;
+use App\Mappers\Category as CategoryMapper;
 
 class DefaultController extends AbstractController
 {
 
     public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, EntityManagerInterface $manager)
     {
-
-
-
-//        $cat = $categoryRepository->findAll();
-//        foreach ($cat as $category){
-//            $category->setSlug(null);
-//            $manager->persist($category);
-//        }
-//        $manager->flush();
-//        dd('qq');
-
-//        function callback(Category $children, &$arr)
-//        {
-////            foreach ($children->getProducts() as $product) {
-////                $charac = [];
-////                foreach ($product->getSpecifications() as $item) {
-////                    $charac[$item->getId()] = $item->getName().' '.$item->getUnit().' '.$item->getValue();
-////                }
-////                $arr[$product->getId()] = [
-////                    'product_name' => $product->getName(),
-////                    'manufacturer' => $product->getManufacturer(),
-////                    'producing_country' => $product->getProducingCountry(),
-////                    'product_unit' => $product->getProductUnit(),
-////                    'wholesale_price' => $product->getWholesalePrice().' '.$product->getCurrency()->getName().' / '.$product->getWholesalePrice()*$product->getCurrency()->getValue().' UAH',
-////                    'wholesale_minimum' => $product->getMinimumWholesale(),
-////                    'created_at' => $product->getCreatedAt(),
-////                    'updated_at' => $product->getUpdatedAt(),
-////                    'price' => $product->getRetailPrice().' '.$product->getCurrency()->getName().' / '.$product->getRetailPrice()*$product->getCurrency()->getValue().' UAH',
-////                    'specification' => $charac,
-////                    'description' => $product->getDescription(),
-////                ];
-////            }
-//
-//            $arr['id'] = $children->getId();
-//
-//            if($children->getChildren()->isEmpty()){
-//                $arr['вложеные категории'] = 'нет вложеностей';
-//                foreach ($children->getProducts() as $product) {
-//                    $arr['Товары'][] = $product->getName();
-//                }
-//
-//            }
-//
-//
-//            foreach ($children->getChildren() as $child) {
-//                $arr['вложеные категории'][$child->getName()] = [];
-//                callback($child, $arr['вложеные категории'][$child->getName()]);
-//            }
-//        }
-//
-//        function parce_category(Category $category, &$arr, $categor){
-//            foreach ($category->getChildren() as $child) {
-//                parce_category($child, $arr, $categor);
-//            }
-//
-//            foreach ($category->getProducts() as $product) {
-//                $product->setCategory($categor);
-//                $arr[] = $product->getCategory()->getName();
-//            }
-//        }
-//
-//        $arr = [];
-//
-//        foreach ($categories as $category) {
-//            $arr[$category->getName()] = [];
-//            callback($category, $arr[$category->getName()]);
-//        }
-//
-////        $yaml = Yaml::dump($arr, 10, 8);
-////
-////        file_put_contents('categories.yaml',$yaml);
-//
-////        foreach ($categories as $category) {
-////            $arr[$category->getId()] = [$category, []];
-////            parce_category($category, $arr[$category->getId()][1], $arr[$category->getId()][0]);
-////        }
-//
-//        dd($arr);
-//
-//
-//        foreach ($arr as $item) {
-//
-//        }
-//
-//
-//        echo '<pre>';
-//        print_r($arr);
-//        echo '</pre>';
-//
-//        die();
-//        $products = $productRepository->findAll();
-//        $brands = $manager->getRepository(Brand::class)->findAll();
-//        foreach ($products as $product) {
-//            foreach ($brands as $brand) {
-//                if ($product->getManufacturer() == $brand->getName()){
-//                    $product->setBrand($brand);
-//                }
-//            }
-//            $manager->persist($product);
-//        }
-//        $manager->flush();
-//        foreach ($productRepository->findAll() as $item) {
-//            dd($item);
-//        }
         $mainCategories = $categoryRepository->findBy(['parent'=>null]);
 
         return $this->render('index.html.twig');
+    }
+    public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService)
+    {
+        $slug = rtrim($slug,'/');
+        $array = explode('/', $slug);
+        if(empty($array[0])){
+            $categories = new ArrayCollection();
+            foreach ($categoryRepository->findBy(['parent' => null]) as $category) {
+                $categories->add(CategoryMapper::entityToDto($category, substr($categoryService->generateUrlFromCategory($category), 1)));
+            }
+            return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => null]);
+        }
+        $count = count($array);
+        foreach ($array as $key => $item) {
+            if($count != $key+1){
+                $found = false;
+                $cat = $categoryRepository->findOneBy(['slug' => $item]);
+                if(empty($cat))
+                    return new Response('Product not found', 404);
+                if(!empty($cat->getParent()) && $key == 0)
+                    return $this->redirectToRoute('category',['slug'=>substr($categoryService->generateUrlFromCategory($cat->getParent()), 1)] );
+                if($cat->getChildren()->isEmpty())
+                    return $this->redirectToRoute('category',['slug'=>substr($categoryService->generateUrlFromCategory($cat->getParent()), 1)] );
+                foreach ($categoryRepository->findOneBy(['slug' => $item])->getChildren() as $child) {
+                    if($child->getSlug() == $array[$key+1]){
+                        $found = true;
+                        break;
+                    }
+                }
+                if(!$found)
+                    return new Response('Chain is broken', 404);
+            }
+            if($count == 1) {
+                $cat = $categoryRepository->findOneBy(['slug' => $item]);
+                if(empty($cat))
+                    return new Response('Product not found', 404);
+                if(!empty($cat->getParent()))
+                    return $this->redirectToRoute('category',['slug'=>substr($categoryService->generateUrlFromCategory($cat->getParent()), 1)]);
+            }
+        }
+
+        $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
+
+        if(!$last_category->getChildren()->isEmpty()){
+            $categories = new ArrayCollection();
+            foreach ($last_category->getChildren() as $child) {
+                $categories->add(CategoryMapper::entityToDto($child, substr($categoryService->generateUrlFromCategory($child), 1)));
+            }
+            $products = new ArrayCollection();
+            foreach ($categoryService->getChildProducts($last_category) as $childProduct) {
+                $products->add($productService->getProductPrice($childProduct));
+            }
+            
+            return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => $products]);
+
+        }
+        elseif (!$last_category->getProducts()->isEmpty()){
+            $products = new ArrayCollection();
+            foreach ($last_category->getProducts() as $product) {
+                $products->add($productService->getProductPrice($product));
+            }
+            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products]);
+
+        }
     }
 
     public function parceNP(EntityManagerInterface $em)
@@ -676,53 +640,5 @@ class DefaultController extends AbstractController
     }
 
 
-    public function categoryAction($slug, CategoryRepository $categoryRepository)
-    {
-        $slug = rtrim($slug,'/');
-        $array = explode('/', $slug);
-        if(empty($array[0]))
-            return new Response('gg wp', 404);
-        $count = count($array);
-        foreach ($array as $key => $item) {
-            if($count != $key+1){
-                $found = false;
-                $cat = $categoryRepository->findOneBy(['slug' => $item]);
-                echo $cat->getName();
-                if(empty($cat))
-                    return new Response('ne nashol, pizda', 404);
-                if(!empty($cat->getParent()) && $key == 0)
-                    return new Response('u tebya batya est\'', 404);
-                if($cat->getChildren()->isEmpty())
-                    return new Response('bezdetniy', 404);
-                echo $cat->getSlug().' id: '.$cat->getId().PHP_EOL;
-                foreach ($categoryRepository->findOneBy(['slug' => $item])->getChildren() as $child) {
-                    echo $child->getSlug().' --- '.$array[$key+1].';;';
-                    if($child->getSlug() == $array[$key+1]){
-                        $found = true;
-                        break;
-                    }
-                }
-                if(!$found)
-                    return new Response('huevaya cepochka', 404);
-            }
-            if($count == 1) {
-                $cat = $categoryRepository->findOneBy(['slug' => $item]);
-                if(empty($cat))
-                    return new Response('ne nashol, pizda', 404);
 
-                if(!empty($cat->getParent()))
-                    return new Response('u tebya batya est\'', 404);
-            }
-        }
-
-        $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
-
-
-        if(! $last_category->getChildren()->isEmpty())
-            echo 'oh ebat\' u nego detey';
-        elseif (!$last_category->getProducts()->isEmpty()){
-            echo 'zaebumba, est\' tovari';
-        }
-        dd('wow');
-    }
 }

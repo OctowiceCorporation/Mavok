@@ -9,13 +9,14 @@ use App\Entity\Category as CategoryEntity;
 
 class Category
 {
-    public function entityToDto(CategoryEntity $entity): CategoryDto
+    static function entityToDto(CategoryEntity $entity, string $link = null): CategoryDto
     {
         return new CategoryDto(
             $entity->getName(),
+            $entity->getIsVisible(),
+            $link,
             $entity->getCreatedAt(),
             $entity->getUpdatedAt(),
-            $entity->getIsVisible(),
             $entity->getParent() ? $entity->getParent()->getId() : null,
             $entity->getDescription(),
             $entity->getImage()

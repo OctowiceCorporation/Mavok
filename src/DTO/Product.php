@@ -22,10 +22,12 @@ class Product
     private $producing_country;
     private $minimum_wholesale;
     private $sale;
-    private $currency_id;
+    private $product_value;
     private $product_unit;
+    private $currency;
+    private $image;
 
-    public function __construct(int $category_id, string $name, float $retail_price, DateTimeInterface $created_at, DateTimeInterface $updated_at, bool $is_available, bool $is_visible, bool $special_offer, string $description = null, float $wholesale_price = null, string $manufacturer = null, string $producing_country = null, int $minimum_wholesale = null, float $sale = null, int $currency_id = null, string $product_unit = null)
+    public function __construct(int $category_id, string $name, $image, float $retail_price, string $currency, DateTimeInterface $created_at, DateTimeInterface $updated_at, bool $is_available, bool $is_visible, bool $special_offer, string $description = null, float $wholesale_price = null, string $manufacturer = null, string $producing_country = null, int $minimum_wholesale = null, float $sale = null, float $product_value = null, string $product_unit = null)
     {
         $this->category_id = $category_id;
         $this->name = $name;
@@ -41,8 +43,10 @@ class Product
         $this->producing_country = $producing_country;
         $this->minimum_wholesale = $minimum_wholesale;
         $this->sale = $sale;
-        $this->currency_id = $currency_id;
+        $this->product_value = $product_value;
         $this->product_unit = $product_unit;
+        $this->currency = $currency;
+        $this->image = $image;
     }
 
     public function getCategoryId(): int
@@ -115,13 +119,58 @@ class Product
         return $this->sale;
     }
 
-    public function getCurrencyId(): ?int
-    {
-        return $this->currency_id;
-    }
-
     public function getProductUnit(): ?string
     {
         return $this->product_unit;
     }
+
+    /**
+     * @return float
+     */
+    public function getProductValue(): ?float
+    {
+        return $this->product_value;
+    }
+
+    /**
+     * @param float $product_value
+     */
+    public function setProductValue(float $product_value): void
+    {
+        $this->product_value = $product_value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     */
+    public function setCurrency(string $currency): void
+    {
+        $this->currency = $currency;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
+
+
 }
