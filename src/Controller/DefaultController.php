@@ -23,6 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
+use App\Service\CategoryService;
 
 class DefaultController extends AbstractController
 {
@@ -662,6 +663,65 @@ class DefaultController extends AbstractController
             foreach ($last_category->getProducts() as $product) {
                 dump($product);
             }
+        }
+        dd('wow');
+    }
+
+    public function getHeaderCategories(CategoryRepository $categoryRepository, CategoryService $categoryService)
+    {
+        $categories = $categoryRepository->findBy(['parent'=>null]);
+        $categories = $categoryService->generateUrlForAllCategories($categories);
+
+        return new Response(json_encode($categories));
+    }
+
+
+    public function categoryAction($slug, CategoryRepository $categoryRepository)
+    {
+        $slug = rtrim($slug,'/');
+        $array = explode('/', $slug);
+        if(empty($array[0]))
+            return new Response('gg wp', 404);
+        $count = count($array);
+        foreach ($array as $key => $item) {
+            if($count != $key+1){
+                $found = false;
+                $cat = $categoryRepository->findOneBy(['slug' => $item]);
+                echo $cat->getName();
+                if(empty($cat))
+                    return new Response('ne nashol, pizda', 404);
+                if(!empty($cat->getParent()) && $key == 0)
+                    return new Response('u tebya batya est\'', 404);
+                if($cat->getChildren()->isEmpty())
+                    return new Response('bezdetniy', 404);
+                echo $cat->getSlug().' id: '.$cat->getId().PHP_EOL;
+                foreach ($categoryRepository->findOneBy(['slug' => $item])->getChildren() as $child) {
+                    echo $child->getSlug().' --- '.$array[$key+1].';;';
+                    if($child->getSlug() == $array[$key+1]){
+                        $found = true;
+                        break;
+                    }
+                }
+                if(!$found)
+                    return new Response('huevaya cepochka', 404);
+            }
+            if($count == 1) {
+                $cat = $categoryRepository->findOneBy(['slug' => $item]);
+                if(empty($cat))
+                    return new Response('ne nashol, pizda', 404);
+
+                if(!empty($cat->getParent()))
+                    return new Response('u tebya batya est\'', 404);
+            }
+        }
+
+        $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
+
+
+        if(! $last_category->getChildren()->isEmpty())
+            echo 'oh ebat\' u nego detey';
+        elseif (!$last_category->getProducts()->isEmpty()){
+            echo 'zaebumba, est\' tovari';
         }
         dd('wow');
     }
