@@ -30,7 +30,7 @@ $(document).ready(function () {
             }
         });
 
-    if(window.screen.width < 480){
+    if(window.screen.width < 700){
         $(document).on('click', '.open-ul',function () {
             let uls = $('.open-ul-opened');
             let not_closing = $(this).parents('ul');
