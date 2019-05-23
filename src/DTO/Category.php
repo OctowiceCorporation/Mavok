@@ -15,9 +15,11 @@ class Category
     private $updated_at;
     private $image;
     private $is_visible;
-    private $link;
+    private $slug;
+    private $usd_value;
+    private $eur_value;
 
-    public function __construct(string $name, bool $is_visible, string $link = null, DateTimeInterface $created_at = null, DateTimeInterface $updated_at = null, int $parent_id = null, string $description = null, string $image = null)
+    public function __construct(string $name, bool $is_visible, DateTimeInterface $created_at, DateTimeInterface $updated_at, string $slug, int $parent_id = null, string $description = null, string $image = null, float $usd_value = null, float $eur_value = null)
     {
         $this->parent_id = $parent_id;
         $this->name = $name;
@@ -26,7 +28,10 @@ class Category
         $this->updated_at = $updated_at;
         $this->image = $image;
         $this->is_visible = $is_visible;
-        $this->link = $link;
+        $this->slug = $slug;
+        $this->usd_value = $usd_value;
+        $this->eur_value = $eur_value;
+
     }
 
     public function getParentId(): ?int
@@ -64,15 +69,18 @@ class Category
         return $this->is_visible;
     }
 
-    public function getLink()
+    public function getSlug(): string
     {
-        return $this->link;
+        return $this->slug;
     }
 
-    public function setLink($link): void
+    public function getUsdValue(): ?float
     {
-        $this->link = $link;
+        return $this->usd_value;
     }
 
-
+    public function getEurValue(): ?float
+    {
+        return $this->eur_value;
+    }
 }

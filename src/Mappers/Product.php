@@ -14,22 +14,22 @@ class Product
         return new ProductDto(
             $entity->getCategory()->getId(),
             $entity->getName(),
-            $entity->getImages()->get(0)->getImagePath(),
             $entity->getRetailPrice(),
-            $entity->getCurrencyName(),
             $entity->getCreatedAt(),
             $entity->getUpdatedAt(),
             $entity->getIsAvailable(),
             $entity->getIsVisible(),
             $entity->getSpecialOffer(),
+            $entity->getSlug(),
             $entity->getDescription(),
             $entity->getWholesalePrice(),
-            $entity->getBrand()->getName(),
-            $entity->getBrand()->getCountry(),
             $entity->getMinimumWholesale(),
             $entity->getSale(),
             $value,
-            $entity->getProductUnit()
+            $entity->getProductUnit(),
+            $entity->getCurrencyName(),
+            $entity->getBrand()->getId(),
+            $entity->getImages()->get(0)->getImagePath()
         );
     }
 }

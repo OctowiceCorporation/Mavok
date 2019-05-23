@@ -5,7 +5,6 @@ namespace App\Controller;
 
 
 
-use App\Entity\Brand;
 use App\Entity\Category;
 use App\Entity\Currency;
 use App\Entity\Image;
@@ -20,12 +19,9 @@ use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
-use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Yaml\Yaml;
 use App\Service\CategoryService;
 use App\Mappers\Category as CategoryMapper;
 
@@ -45,7 +41,7 @@ class DefaultController extends AbstractController
         if(empty($array[0])){
             $categories = new ArrayCollection();
             foreach ($categoryRepository->findBy(['parent' => null]) as $category) {
-                $categories->add(CategoryMapper::entityToDto($category, substr($categoryService->generateUrlFromCategory($category), 1)));
+                $categories->add(CategoryMapper::entityToDto($category));
             }
             return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => null]);
         }

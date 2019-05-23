@@ -11,11 +11,6 @@ class ProductService
     private $usd;
     private $eur;
 
-    /**
-     * ProductService constructor.
-     * @param $usd
-     * @param $eur
-     */
     public function __construct($usd, $eur)
     {
         $this->usd = $usd;
