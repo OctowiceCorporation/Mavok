@@ -19,6 +19,22 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function getProductsFromFilter(array $filter, int $id)
+    {
+        $builder = $this->createQueryBuilder('p');
+        $builder->where('p.category = :id')
+            ->setParameter('id', $id)
+            ->leftJoin('p.specifications', 's');
+        foreach ($filter as $key =>  $item) {
+            $builder->setParameter('values', $item['values']);
+            $builder->setParameter('name', $item['name']);
+
+            $builder->andWhere("s.name = :name AND s.value IN (:values) ");
+//                ->andWhere('');
+        }
+        return $builder->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

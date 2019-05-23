@@ -62,6 +62,13 @@
 
                 <div class="col-lg-9">
 
+                    {% if form is defined %}
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    {% endif %}
+
+
                     {% if categories is not null %}
                     <div class="col" style="padding-bottom: 1rem">
                         <div class="viewed_title_container">

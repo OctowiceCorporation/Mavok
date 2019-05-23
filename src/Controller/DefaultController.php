@@ -12,15 +12,20 @@ use App\Entity\NovaPoshtaCity;
 use App\Entity\NovaPoshtaPostOffice;
 use App\Entity\Product;
 use App\Entity\Specification;
+use App\Form\FilterForm;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
+use App\Repository\SpecificationRepository;
+use App\Service\FilterService;
 use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use function GuzzleHttp\Psr7\str;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\CategoryService;
 use App\Mappers\Category as CategoryMapper;
@@ -34,7 +39,8 @@ class DefaultController extends AbstractController
 
         return $this->render('index.html.twig');
     }
-    public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService)
+
+    public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request)
     {
         $slug = rtrim($slug,'/');
         $array = explode('/', $slug);
@@ -90,12 +96,53 @@ class DefaultController extends AbstractController
 
         }
         elseif (!$last_category->getProducts()->isEmpty()){
+            $filter= $filterService->getSpecificationsFromCategory($last_category);
+            $form = $this->createForm(FilterForm::class, null, ['filter' => $filter]);
+            $form->handleRequest($request);
+            if($form->isSubmitted()){
+                $data = $form->getData();
+                $filter = $filter->toArray();
+                foreach ($filter as $index => $item) {
+                    $filter[$index]['values'] = $data[$index];
+                    if(empty($filter[$index]['values']))
+                        unset($filter[$index]);
+                }
+
+                $products = $filterService->getProductsFromFilter($filter, $last_category->getId());
+                $arr = [];
+                foreach ($products as $product) {
+                    $arr[$product->getId()]['name'] = $product->getName();
+                    foreach ($product->getSpecifications() as $item) {
+                        $arr[$product->getId()]['specif'][] = $item->getName().' .. '.$item->getValue();
+                    }
+                }
+                $products = new ArrayCollection();
+                foreach ($last_category->getProducts() as $product) {
+                    $found = true;
+                    foreach ($filter as $item) {
+//                        if(empty($item['is_countable'])){d
+                        $spec = [];
+                        foreach ($product->getSpecifications() as $specification) {
+                            $spec[$specification->getName()] = $specification->getValue();
+                        }
+                            if(!isset($spec[$item['name']]) || !in_array(strtolower($spec[$item['name']]), $item['values'])){
+                                $found = false;
+                                break;
+                            }
+//                        }
+                        
+                    }
+                    if($found) {
+                        $products->add($productService->getProductPrice($product));
+                    }
+                }
+                return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
+            }
             $products = new ArrayCollection();
             foreach ($last_category->getProducts() as $product) {
                 $products->add($productService->getProductPrice($product));
             }
-            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products]);
-
+            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
         }
     }
 

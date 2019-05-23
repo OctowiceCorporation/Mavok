@@ -19,6 +19,30 @@ class SpecificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Specification::class);
     }
 
+    public function getSpecificationFromCategory(int $id)
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.name','s.unit','s.value', 's.id')
+            ->leftJoin('s.product', 'p')->addSelect('p.name AS product_name')
+            ->leftJoin('p.category', 'c')->addSelect('c.name AS category_name')->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()->getResult();
+    }
+
+    public function getProductsFromFilter($filter)
+    {
+        $builder = $this->createQueryBuilder('s');
+        $builder->leftJoin('s.product', 'p');
+        foreach ($filter as $key =>  $item) {
+            $builder->setParameter('values', $item['values']);
+            $builder->setParameter('name', $item['name']);
+
+            $builder->andWhere("s.name = :name")
+                ->andWhere('s.value IN (:values) ');
+        }
+        return $builder->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Specification[] Returns an array of Specification objects
     //  */
