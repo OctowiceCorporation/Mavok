@@ -17,7 +17,8 @@ class FilterService
 
     /**
      * FilterService constructor.
-     * @param $specificationRepository
+     * @param SpecificationRepository $specificationRepository
+     * @param ProductRepository $productRepository
      */
     public function __construct(SpecificationRepository $specificationRepository, ProductRepository $productRepository)
     {
@@ -26,7 +27,7 @@ class FilterService
     }
 
 
-    public function getSpecificationsFromCategory(Category $category): ArrayCollection
+    public function getSpecificationsFromCategory(Category $category): array
     {
         $specifications = [];
         foreach($this->specificationRepository->getSpecificationFromCategory($category->getId()) as $item){
@@ -40,7 +41,7 @@ class FilterService
         foreach ($specifications as $key => $specification) {
             $specifications[$key]['values'] = array_unique($specifications[$key]['values']);
         }
-        return new ArrayCollection(array_values($specifications));
+        return array_values($specifications);
     }
 
     public function getProductsFromFilter(array $filter, int $id)

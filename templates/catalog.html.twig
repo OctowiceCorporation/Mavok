@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/styles/shop_styles.css">
     <link rel="stylesheet" type="text/css" href="/styles/shop_responsive.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 {% endblock %}
 {% block body %}
@@ -21,7 +22,6 @@
             <div class="row">
                 <div class="col-lg-3">
 
-                    <!-- Shop Sidebar -->
                     <div class="shop_sidebar">
                         <div class="sidebar_section filter_by_section">
                             <div class="sidebar_title">Filter By</div>
@@ -64,7 +64,16 @@
 
                     {% if form is defined %}
                         {{ form_start(form) }}
-                        {{ form_widget(form) }}
+                        {% for fo in form %}
+                            {% if fo.vars.attr.min is defined %}
+                                <div class="gabela">
+                                    {{ form_widget(fo) }}
+                                    <div class="slider-label">{{ fo.vars.label }}<span style="padding-left: 15px" class="slider-value"></span></div>
+                                    <div class="slider-range" min="{{ fo.vars.attr.min }}" max="{{ fo.vars.attr.max }}" value="{% if fo.vars.value is not empty%}{{ fo.vars.value }}{% else %}{{ fo.vars.attr.min ~ ';' ~    fo.vars.attr.max }}{% endif %}"></div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+{#                        {{ form_widget(form) }}#}
                         {{ form_end(form) }}
                     {% endif %}
 
@@ -177,4 +186,21 @@
     <script src="/plugins/parallax-js-master/parallax.min.js"></script>
     <script src="/js/shop_custom.js"></script>
     <script src="/js/main.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script><script>
+    $( function() {
+        $('.slider-range').each(function () {
+            $( $(this) ).slider({
+                range: true,
+                min: parseInt($(this).attr('min')),
+                max: parseInt($(this).attr('max')),
+                values: [ parseInt($(this).attr('value').split(';')[0]), parseInt($(this).attr('value').split(';')[1]) ],
+                slide: function( event, ui ) {
+                    $(this).parent().find('.text-slider').val(ui.values[ 0 ]+';'+ui.values[ 1 ]);
+                    $(this).parent().find('.slider-value').html(ui.values[ 0 ]+';'+ui.values[ 1 ]);
+                }
+            });
+        })
+    } );
+</script>
+
 {% endblock %}

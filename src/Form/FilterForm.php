@@ -6,6 +6,8 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,13 +18,15 @@ class FilterForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $filter = $options['filter'];
-        foreach ($filter as $key =>  $item) {
-            if(!empty($item['is_countable'])){
-                $builder->add($key, ChoiceType::class,[
-                    'label' => $item['name'].' . '.$item['is_countable'],
-                    'choices' => $item['values'],
-                    'expanded' => true,
-                    'multiple' => true,
+        foreach ($filter as $key => $item) {
+            if(!empty($item['is_countable']) && $item['min'] != $item['max']){
+                $builder->add($key, HiddenType::class,[
+                    'label' => $item['name'].', '.$item['is_countable'],
+                    'attr' => [
+                        'class' => 'text-slider',
+                        'min' => $item['min'],
+                        'max' => $item['max'],
+                    ]
                     ]);
             }
             else{

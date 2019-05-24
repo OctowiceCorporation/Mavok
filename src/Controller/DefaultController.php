@@ -97,14 +97,27 @@ class DefaultController extends AbstractController
         }
         elseif (!$last_category->getProducts()->isEmpty()){
             $filter= $filterService->getSpecificationsFromCategory($last_category);
+            foreach ($filter as &$item) {
+                if(!empty($item['is_countable'])){
+                    foreach ($item['values'] as &$value) {
+                        $value = preg_replace('/[^\\d.]+/', '', $value);
+                    }
+                    $item['min'] = min($item['values']);
+                    $item['max'] = max($item['values']);
+                }
+
+            }
             $form = $this->createForm(FilterForm::class, null, ['filter' => $filter]);
             $form->handleRequest($request);
             if($form->isSubmitted()){
                 $data = $form->getData();
-                $filter = $filter->toArray();
+//                $filter = $filter->toArray();
                 foreach ($filter as $index => $item) {
-                    $filter[$index]['values'] = $data[$index];
-                    if(empty($filter[$index]['values']))
+                    if(!is_array($data[$index]))
+                        $filter[$index]['values'] = explode(';',$data[$index]);
+                    else
+                        $filter[$index]['values'] = $data[$index];
+                    if(empty($filter[$index]['values']) || empty($filter[$index]['values'][0]))
                         unset($filter[$index]);
                 }
 
@@ -119,18 +132,24 @@ class DefaultController extends AbstractController
                 $products = new ArrayCollection();
                 foreach ($last_category->getProducts() as $product) {
                     $found = true;
+                    $spec = [];
+                    foreach ($product->getSpecifications() as $specification) {
+                        $spec[$specification->getName()] = $specification->getValue();
+                    }
                     foreach ($filter as $item) {
-//                        if(empty($item['is_countable'])){d
-                        $spec = [];
-                        foreach ($product->getSpecifications() as $specification) {
-                            $spec[$specification->getName()] = $specification->getValue();
-                        }
-                            if(!isset($spec[$item['name']]) || !in_array(strtolower($spec[$item['name']]), $item['values'])){
+                        if(empty($item['is_countable'])) {
+                            if (!isset($spec[$item['name']]) || !in_array(strtolower($spec[$item['name']]), $item['values'])) {
                                 $found = false;
                                 break;
                             }
-//                        }
-                        
+                        }
+                        else{
+                            if(!isset($spec[$item['name']]) || ($spec[$item['name']] < $item['values'][0] || $spec[$item['name']] > $item['values'][1])){
+                                $found = false;
+                                break;
+                            }
+                        }
+
                     }
                     if($found) {
                         $products->add($productService->getProductPrice($product));
