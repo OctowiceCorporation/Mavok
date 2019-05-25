@@ -5,16 +5,15 @@ namespace App\Service;
 
 
 use App\Entity\Category;
+use App\Mappers\Category as CategoryMapper;
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryService
 {
     private $categoryRepository;
 
-    /**
-     * CategoryService constructor.
-     * @param CategoryRepository $categoryRepository
-     */
     public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
@@ -79,5 +78,60 @@ class CategoryService
                 $this->callbackCategory($item,$array['sub'][$item->getId()]);
             }
         }
+    }
+
+    public function getCategories()
+    {
+
+        $categories = new ArrayCollection();
+        foreach ($this->categoryRepository->findBy(['parent' => null]) as $category) {
+            $categories->add(CategoryMapper::entityToDto($category, substr($this->generateUrlFromCategory($category), 1)));
+        }
+        return $categories;
+    }
+
+    public function generateRoute(array $array)
+    {
+        $count = count($array);
+        $result['found'] = false;
+        $result['gabela'] = false;
+        $result['cat'] = new Category();
+        foreach ($array as $key => $item) {
+            if($count != $key+1){
+                $cat = $this->categoryRepository->findOneBy(['slug' => $item]);
+
+                if(!empty($cat->getParent()) && $key == 0)
+                    $result['gabela'] = true;
+                if($cat->getChildren()->isEmpty())
+                   $result['gabela'] = true;
+                foreach ($this->categoryRepository->findOneBy(['slug' => $item])->getChildren() as $child) {
+                    if($child->getSlug() == $array[$key+1]){
+                        $result['found'] = true;
+                        break;
+                    }
+                }
+            }
+            if($count == 1) {
+                $cat = $this->categoryRepository->findOneBy(['slug' => $item]);
+                if(!empty($cat->getParent()))
+                    $result['gabela'] = true;
+            }
+        }
+        return $result;
+    }
+
+    public function isLastCategory(array $array)
+    {
+        $last_category = $this->categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
+        $categories = new ArrayCollection();
+        $products = new ArrayCollection();
+            foreach ($last_category->getChildren() as $child) {
+                $categories->add(CategoryMapper::entityToDto($child, substr($this->generateUrlFromCategory($child), 1)));
+            }
+            foreach ($this->getChildProducts($last_category) as $childProduct) {
+                $products->add($this->getProductPrice($childProduct));
+            }
+
+        return [$categories,$array];
     }
 }

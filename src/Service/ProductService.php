@@ -4,7 +4,9 @@
 namespace App\Service;
 
 
+use App\Entity\Category;
 use App\Entity\Product;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class ProductService
 {
@@ -53,6 +55,15 @@ class ProductService
                 break;
         }
 
+    }
+
+    public function getProducts(Category $last_category)
+    {
+        $products = new ArrayCollection();
+        foreach ($last_category->getProducts() as $product) {
+            $products->add($this->getProductPrice($product));
+        }
+        return $products;
     }
 
 }

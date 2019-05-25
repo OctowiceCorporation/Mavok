@@ -42,125 +42,30 @@ class DefaultController extends AbstractController
 
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request)
     {
-        $slug = rtrim($slug,'/');
-        $array = explode('/', $slug);
+        $array = explode('/', rtrim($slug,'/'));
         if(empty($array[0])){
-            $categories = new ArrayCollection();
-            foreach ($categoryRepository->findBy(['parent' => null]) as $category) {
-                $categories->add(CategoryMapper::entityToDto($category, substr($categoryService->generateUrlFromCategory($category), 1)));
-            }
-            return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => null]);
+            return $this->render('catalog.html.twig', ['categories' => $categoryService->getCategories(), 'products' => null]);
         }
-        $count = count($array);
-        foreach ($array as $key => $item) {
-            if($count != $key+1){
-                $found = false;
-                $cat = $categoryRepository->findOneBy(['slug' => $item]);
-                if(empty($cat))
-                    return new Response('Product not found', 404);
-                if(!empty($cat->getParent()) && $key == 0)
-                    return $this->redirectToRoute('category',['slug'=>substr($categoryService->generateUrlFromCategory($cat->getParent()), 1)] );
-                if($cat->getChildren()->isEmpty())
-                    return $this->redirectToRoute('category',['slug'=>substr($categoryService->generateUrlFromCategory($cat->getParent()), 1)] );
-                foreach ($categoryRepository->findOneBy(['slug' => $item])->getChildren() as $child) {
-                    if($child->getSlug() == $array[$key+1]){
-                        $found = true;
-                        break;
-                    }
-                }
-                if(!$found)
-                    return new Response('Chain is broken', 404);
-            }
-            if($count == 1) {
-                $cat = $categoryRepository->findOneBy(['slug' => $item]);
-                if(empty($cat))
-                    return new Response('Product not found', 404);
-                if(!empty($cat->getParent()))
-                    return $this->redirectToRoute('category',['slug'=>substr($categoryService->generateUrlFromCategory($cat->getParent()), 1)]);
-            }
-        }
+        $result = $categoryService->generateRoute($array);
+        if (empty($result['cat']))
+            return new Response('Gabela',404);
+        if ($result['gabela'])
+            return $this->redirectToRoute('category', ['slug' => substr($categoryService->generateUrlFromCategory($result['cat']->getParent()), 1)]);
 
         $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
-
-        if(!$last_category->getChildren()->isEmpty()){
-            $categories = new ArrayCollection();
-            foreach ($last_category->getChildren() as $child) {
-                $categories->add(CategoryMapper::entityToDto($child, substr($categoryService->generateUrlFromCategory($child), 1)));
-            }
-            $products = new ArrayCollection();
-            foreach ($categoryService->getChildProducts($last_category) as $childProduct) {
-                $products->add($productService->getProductPrice($childProduct));
-            }
-            
+        if(!$last_category->getChildren()->isEmpty()) {
+            list($categories, $products) = $categoryService->isLastCategory($array);
             return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => $products]);
-
         }
         elseif (!$last_category->getProducts()->isEmpty()){
-            $filter= $filterService->getSpecificationsFromCategory($last_category);
-            foreach ($filter as &$item) {
-                if(!empty($item['is_countable'])){
-                    foreach ($item['values'] as &$value) {
-                        $value = preg_replace('/[^\\d.]+/', '', $value);
-                    }
-                    $item['min'] = min($item['values']);
-                    $item['max'] = max($item['values']);
-                }
-
-            }
+            $filter = $filterService->buildFilter($last_category,$filterService->getSpecificationsFromCategory($last_category));
             $form = $this->createForm(FilterForm::class, null, ['filter' => $filter]);
             $form->handleRequest($request);
             if($form->isSubmitted()){
-                $data = $form->getData();
-//                $filter = $filter->toArray();
-                foreach ($filter as $index => $item) {
-                    if(!is_array($data[$index]))
-                        $filter[$index]['values'] = explode(';',$data[$index]);
-                    else
-                        $filter[$index]['values'] = $data[$index];
-                    if(empty($filter[$index]['values']) || empty($filter[$index]['values'][0]))
-                        unset($filter[$index]);
-                }
-
-                $products = $filterService->getProductsFromFilter($filter, $last_category->getId());
-                $arr = [];
-                foreach ($products as $product) {
-                    $arr[$product->getId()]['name'] = $product->getName();
-                    foreach ($product->getSpecifications() as $item) {
-                        $arr[$product->getId()]['specif'][] = $item->getName().' .. '.$item->getValue();
-                    }
-                }
-                $products = new ArrayCollection();
-                foreach ($last_category->getProducts() as $product) {
-                    $found = true;
-                    $spec = [];
-                    foreach ($product->getSpecifications() as $specification) {
-                        $spec[$specification->getName()] = $specification->getValue();
-                    }
-                    foreach ($filter as $item) {
-                        if(empty($item['is_countable'])) {
-                            if (!isset($spec[$item['name']]) || !in_array(strtolower($spec[$item['name']]), $item['values'])) {
-                                $found = false;
-                                break;
-                            }
-                        }
-                        else{
-                            if(!isset($spec[$item['name']]) || ($spec[$item['name']] < $item['values'][0] || $spec[$item['name']] > $item['values'][1])){
-                                $found = false;
-                                break;
-                            }
-                        }
-
-                    }
-                    if($found) {
-                        $products->add($productService->getProductPrice($product));
-                    }
-                }
+                $products = $filterService->isSubmited($form->getData(),$filter,$last_category);
                 return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
             }
-            $products = new ArrayCollection();
-            foreach ($last_category->getProducts() as $product) {
-                $products->add($productService->getProductPrice($product));
-            }
+            $products = $productService->getProducts($last_category);
             return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
         }
     }
