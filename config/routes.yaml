@@ -6,6 +6,9 @@ category:
     controller: App\Controller\DefaultController::categoryAction
     requirements:
         slug: '.*'
+product:
+    path: /product/{slug}
+    controller: App\Controller\ProductController::index
 header_categories:
     path: /header_categories
     controller: App\Controller\DefaultController::getHeaderCategories

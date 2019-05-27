@@ -127,6 +127,7 @@
                             <div class="product_grid_border"></div>
                             {%  for product in products %}
                             <div class="product_item is_new">
+                                <a href="{{ path('product', {'slug': product.slug}) }}">
                                 <div class="product_border"></div>
                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src="/images/{{ product.image }}" alt=""></div>
                                 <div class="product_content">
@@ -147,6 +148,7 @@
                                         <li class="product_mark product_new">Хит продаж</li>
                                     {% endif %}
                                 </ul>
+                            </a>
                             </div>
                             {% endfor %}
                         </div>
