@@ -58,7 +58,7 @@ class DefaultController extends AbstractController
             return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => $products]);
         }
         elseif (!$last_category->getProducts()->isEmpty()){
-            $filter = $filterService->buildFilter($last_category,$filterService->getSpecificationsFromCategory($last_category));
+            $filter = $filterService->buildFilter($last_category);
             $form = $this->createForm(FilterForm::class, null, ['filter' => $filter]);
             $form->handleRequest($request);
             if($form->isSubmitted()){

@@ -51,7 +51,7 @@ class FilterService
         return $this->product_repository->getProductsFromFilter($filter, $id);
     }
 
-    public function buildFilter(Category $last_category, $filter)
+    public function buildFilter(Category $last_category)
     {
         $filter= $this->getSpecificationsFromCategory($last_category);
             foreach ($filter as &$item) {
@@ -74,7 +74,7 @@ class FilterService
                 $filter[$index]['values'] = explode(';',$data[$index]);
             else
                 $filter[$index]['values'] = $data[$index];
-            if(empty($filter[$index]['values']) || empty($filter[$index]['values'][0]))
+            if(empty($filter[$index]['values']) || empty($filter[$index]['values'][0]) || (isset($filter[$index]['min']) &&$filter[$index]['values'][0] == $filter[$index]['min'] && $filter[$index]['values'][1] == $filter[$index]['max']))
                 unset($filter[$index]);
         }
 

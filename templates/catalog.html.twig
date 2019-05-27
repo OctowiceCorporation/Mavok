@@ -195,13 +195,15 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script><script>
     $( function() {
         $('.slider-range').each(function () {
+            $(this).parent().find('.slider-value').html($(this).attr('value').split(';')[0]+' - '+$(this).attr('value').split(';')[1]);
             $( $(this) ).slider({
                 range: true,
                 min: parseInt($(this).attr('min')),
                 max: parseInt($(this).attr('max')),
                 values: [ parseInt($(this).attr('value').split(';')[0]), parseInt($(this).attr('value').split(';')[1]) ],
                 slide: function( event, ui ) {
-                    $(this).parent().find('.text-slider').val(ui.values[ 0 ]+';'+ui.values[ 1 ]);
+                    console.log($(this).parent());
+                    $(this).parent().parent().find('.text-slider').val(ui.values[ 0 ]+';'+ui.values[ 1 ]);
                     $(this).parent().find('.slider-value').html(ui.values[ 0 ]+' - '+ui.values[ 1 ]);
                 }
             });
