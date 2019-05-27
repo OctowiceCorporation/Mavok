@@ -9,7 +9,7 @@ use App\Entity\Specification as SpecificationEntity;
 
 class Specification
 {
-    public function entityToDto(SpecificationEntity $entity): SpecificationDto
+    static function entityToDto(SpecificationEntity $entity): SpecificationDto
     {
         return new SpecificationDto(
             $entity->getName(),

@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Mappers\Specification;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class ProductService
@@ -64,6 +65,15 @@ class ProductService
             $products->add($this->getProductPrice($product));
         }
         return $products;
+    }
+
+    public function getSpecifications(Product $product): ArrayCollection
+    {
+        $specifications = new ArrayCollection();
+        foreach ($product->getSpecifications() as $specification) {
+            $specifications->add(Specification::entityToDto($specification));
+        }
+        return $specifications;
     }
 
 }

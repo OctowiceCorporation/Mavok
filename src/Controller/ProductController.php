@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Mappers\Specification;
 use App\Repository\ProductRepository;
 use App\Service\ProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +17,10 @@ class ProductController extends AbstractController
 
     public function index($slug, ProductRepository $productRepository, Request $request, ProductService $productService)
     {
-        $product = $productService->getProductPrice($productRepository->findOneBy(['slug' => $slug]));
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+        $specifications = $productService->getSpecifications($product);
+        $brand = $product->getBrand();
+        $product = $productService->getProductPrice($product);
         $viewed = json_decode($request->cookies->get('viewed_products'));
         if(empty($viewed))
             $viewed = [];
@@ -27,9 +31,10 @@ class ProductController extends AbstractController
         }
             
         $cookie = new Cookie('viewed_products', json_encode($viewed));
-        $response = new Response(var_dump($viewed));
+        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand]));
         $response->headers->setCookie($cookie);
 
         return $response;
+
     }
 }
