@@ -9,6 +9,9 @@ category:
 product:
     path: /product/{slug}
     controller: App\Controller\ProductController::index
+add_to_basket:
+    path: /add_to_basket
+    controller: App\Controller\DeliveryController:addToBasket
 header_categories:
     path: /header_categories
     controller: App\Controller\DefaultController::getHeaderCategories

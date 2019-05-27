@@ -94,5 +94,19 @@ $(document).ready(function () {
         });
     }
 
+    $(document).on('click','.add_to_basket', function () {
+        let element = $(this);
+        $.ajax({
+            method: "POST",
+            url: '/add_to_basket',
+            data: {
+                'slug': $(this).val(),
+            }
+        })
+            .done(function() {
+                element.html('Уже в корзине <i class="fas fa-check"></i>').css('background-color','green');
+            });
+    })
+
 
 });
