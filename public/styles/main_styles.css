@@ -2226,6 +2226,9 @@ select option
 .scrolling-wrapper::-webkit-scrollbar {
 	display: none;
 }
+.line_item {
+	display: inline-block;
+}
 .arrivals_slider
 {
 	width: 100%;

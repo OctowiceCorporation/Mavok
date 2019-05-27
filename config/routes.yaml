@@ -15,4 +15,3 @@ add_to_basket:
 header_categories:
     path: /header_categories
     controller: App\Controller\DefaultController::getHeaderCategories
-
