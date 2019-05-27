@@ -8,15 +8,16 @@ use App\Entity\Category;
 use App\Mappers\Category as CategoryMapper;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\Response;
 
 class CategoryService
 {
     private $categoryRepository;
+    private $productService;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoryRepository $categoryRepository, ProductService $productService)
     {
         $this->categoryRepository = $categoryRepository;
+        $this->productService = $productService;
     }
 
     private function callbackGetProducts(Category $category, array &$array)
@@ -129,9 +130,9 @@ class CategoryService
                 $categories->add(CategoryMapper::entityToDto($child, substr($this->generateUrlFromCategory($child), 1)));
             }
             foreach ($this->getChildProducts($last_category) as $childProduct) {
-                $products->add($this->getProductPrice($childProduct));
+                $products->add($this->productService->getProductPrice($childProduct));
             }
 
-        return [$categories,$array];
+        return [$categories,$products];
     }
 }
