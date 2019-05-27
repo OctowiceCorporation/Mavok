@@ -35,9 +35,7 @@ class DefaultController extends AbstractController
 
     public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, EntityManagerInterface $manager)
     {
-        $mainCategories = $categoryRepository->findBy(['parent'=>null]);
-
-        return $this->render('index.html.twig');
+        return $this->render('checkout.html.twig');
     }
 
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request)
