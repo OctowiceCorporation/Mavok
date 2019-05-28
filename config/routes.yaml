@@ -12,6 +12,9 @@ product:
 add_to_basket:
     path: /add_to_basket
     controller: App\Controller\DeliveryController:addToBasket
+checkout:
+    path: /checkout
+    controller: App\Controller\DeliveryController:checkout
 basket_view:
     path: /basket
     controller: App\Controller\DeliveryController:basketView

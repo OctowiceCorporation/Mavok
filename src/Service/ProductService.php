@@ -21,7 +21,7 @@ class ProductService
     }
 
 
-    public function getProductPrice(Product $product): \App\DTO\Product
+    public function getProductPrice(Product $product, int $amount = null): \App\DTO\Product
     {
         $currency = $product->getCurrencyName();
         if ($currency === "UAH")

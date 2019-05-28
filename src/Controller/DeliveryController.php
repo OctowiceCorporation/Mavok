@@ -5,6 +5,8 @@ namespace App\Controller;
 
 
 use App\Repository\ProductRepository;
+use App\Service\ProductService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,9 +34,41 @@ class DeliveryController extends AbstractController
         return new Response(null);
     }
 
-    public function basketView(SessionInterface $session)
+    public function basketView(SessionInterface $session, ProductRepository $productRepository, ProductService $productService)
     {
-        dd($session->get('basket'));
+        $basket = $session->get('basket');
+        $products = new ArrayCollection();
+        $total = 0;
+        if(empty($basket))
+            return $this->render('cart.html.twig');
+        foreach ($basket as $index => $item) {
+            $product = $productService->getProductPrice($productRepository->findOneBy(['id' => $index]))->setAmount($item);
+            $products->add($product);
+            if(!empty($product->getProductValue())){
+                if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale()))
+                    $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount();
+                else
+                    $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount();
+            }
+            else{
+                if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale()))
+                    $total += $product->getWholesalePrice()*$product->getAmount();
+                else
+                    $total += $product->getRetailPrice()*$product->getAmount();
+            }
+        }
+
+
+        return $this->render('cart.html.twig',['products' => $products, 'total' => $total]);
+    }
+
+    public function checkout(SessionInterface $session)
+    {
+        if(empty($session->get('basket')))
+            return $this->redirectToRoute('basket_view');
+
+
+        return $this->render('checkout.html.twig');
     }
 
     public function minusProduct($id)

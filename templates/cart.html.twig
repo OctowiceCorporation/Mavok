@@ -16,6 +16,7 @@
 {% block body %}
     <!-- Cart -->
 
+    {% if products is defined %}
     <div class="cart_section">
         <div class="container">
             <div class="row">
@@ -24,106 +25,82 @@
                         <div class="cart_title">Shopping Cart</div>
                         <div class="cart_items">
                             <ul class="cart_list">
-                                <li class="cart_item clearfix">
-                                    <div class="cart_item_image"><img src="images/shopping_cart.jpg" alt=""></div>
-                                    <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                                        <div class="cart_item_name cart_info_col">
-                                            <div class="cart_item_title">Name</div>
-                                            <div class="cart_item_text">MacBook Air 13</div>
-                                        </div>
-                                        <div class="cart_item_quantity cart_info_col">
-                                            <div class="cart_item_title">Quantity</div>
-                                            <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
-                                                <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-                                                <div class="quantity_buttons">
-                                                    <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
-                                                    <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                {% for product in products %}
+                                    <li class="cart_item clearfix">
+                                        <div class="cart_item_image"><img src="/images/{{ product.image }}" alt=""></div>
+                                        <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                            <div class="cart_item_name cart_info_col">
+                                                <div class="cart_item_title">Название</div>
+                                                <div class="cart_item_text"><a href="{{ path('product', {'slug': product.slug}) }}" target="_blank">{{ product.name }}</a></div>
+                                            </div>
+                                            <div class="cart_item_quantity cart_info_col">
+                                                <div class="cart_item_title">Количество</div>
+                                                <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
+                                                    <input id="quantity_input" type="text" value="{{ product.amount }}">
+                                                    <div class="quantity_buttons">
+                                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cart_item_price cart_info_col">
+                                                <div class="cart_item_title">Цена</div>
+                                                <div class="cart_item_text">
+                                                    {% if product.ProductValue is not null%}
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                            Опт {{ (product.WholesalePrice * product.ProductValue) }} UAH / {{ product.WholesalePrice }} {{ product.currencyName }}
+                                                        {% else %}
+                                                            Розница {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                            Опт {{ (product.WholesalePrice) }} UAH
+                                                        {% else %}
+                                                            Розница {{ (product.retailPrice) }} UAH
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="cart_item_total cart_info_col">
+                                                <div class="cart_item_title">Итого</div>
+                                                <div class="cart_item_text">
+                                                    {% if product.ProductValue is not null %}
+                                                        {{ (product.retailPrice * product.ProductValue * product.amount) }} UAH
+                                                    {% else %}
+                                                        {{ product.retailPrice * product.amount}} UAH
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="cart_item_price cart_info_col">
-                                            <div class="cart_item_title">Price</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                        <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Total</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="cart_item clearfix">
-                                    <div class="cart_item_image"><img src="images/shopping_cart.jpg" alt=""></div>
-                                    <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                                        <div class="cart_item_name cart_info_col">
-                                            <div class="cart_item_title">Name</div>
-                                            <div class="cart_item_text">MacBook Air 13</div>
-                                        </div>
-                                        <div class="cart_item_quantity cart_info_col">
-                                            <div class="cart_item_title">Quantity</div>
-                                            <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
-                                                <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-                                                <div class="quantity_buttons">
-                                                    <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
-                                                    <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cart_item_price cart_info_col">
-                                            <div class="cart_item_title">Price</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                        <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Total</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="cart_item clearfix">
-                                    <div class="cart_item_image"><img src="images/shopping_cart.jpg" alt=""></div>
-                                    <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                                        <div class="cart_item_name cart_info_col">
-                                            <div class="cart_item_title">Name</div>
-                                            <div class="cart_item_text">MacBook Air 13</div>
-                                        </div>
-                                        <div class="cart_item_quantity cart_info_col">
-                                            <div class="cart_item_title">Quantity</div>
-                                            <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
-                                                <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-                                                <div class="quantity_buttons">
-                                                    <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
-                                                    <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cart_item_price cart_info_col">
-                                            <div class="cart_item_title">Price</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                        <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Total</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
 
                         <!-- Order Total -->
                         <div class="order_total">
                             <div class="order_total_content text-md-right">
-                                <div class="order_total_title">Order Total:</div>
-                                <div class="order_total_amount">$2000</div>
+                                <div class="order_total_title">Итого:</div>
+                                <div class="order_total_amount"><span id="total">{{ total }}</span> UAH</div>
                             </div>
                         </div>
 
                         <div class="cart_buttons">
-                            <button type="button" class="button cart_button_checkout">Checkout</button>
+                            <a href="{{ path('checkout') }}">
+                                <button type="button" class="button cart_button_checkout">Оформить заказ</button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {% else %}
+        <div class="container">
+            <h3>Габела, пустая корзина</h3>
+            <a style="align-content: center" href="{{ path('index') }}">На главную</a>
+        </div>
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -137,4 +114,6 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="js/cart_custom.js"></script>
 <script src="js/product_custom.js"></script>
+<script src="js/main.js"></script>
+
 {% endblock %}

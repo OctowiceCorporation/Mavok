@@ -26,6 +26,7 @@ class Product
     private $image;
     private $currency_name;
     private $brand_id;
+    private $amount;
 
     public function __construct(int $category_id, string $name, float $retail_price, DateTimeInterface $created_at, DateTimeInterface $updated_at, bool $is_available, bool $is_visible, bool $special_offer, string $slug, string $description = null, float $wholesale_price = null, int $minimum_wholesale = null, float $sale = null, float $product_value = null, string $product_unit = null, string $currency_name = null, int $brand_id = null, string $image = null)
     {
@@ -148,4 +149,17 @@ class Product
     {
         $this->image = $image;
     }
+
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    public function setAmount($amount): self
+    {
+        $this->amount = $amount;
+        return $this;
+    }
+
+
 }
