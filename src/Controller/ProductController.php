@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Mappers\Specification;
 use App\Repository\ProductRepository;
 use App\Service\ProductService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,16 @@ class ProductController extends AbstractController
         $response->headers->setCookie($cookie);
 
         return $response;
+    }
 
+    public function getRecentlyViewed(Request $request, ProductService $productService, ProductRepository $productRepository)
+    {
+        $viewed = json_decode($request->cookies->get('viewed_products'));
+        $products = new ArrayCollection();
+        foreach ($viewed as $item) {
+            $products->add($productService->getProductPrice($productRepository->findOneBy(['slug' => $item])));
+        }
+        return $this->render('recently_viewed.html.twig',
+            ['products' => $products]);
     }
 }
