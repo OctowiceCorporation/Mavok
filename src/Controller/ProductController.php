@@ -41,6 +41,8 @@ class ProductController extends AbstractController
     public function getRecentlyViewed(Request $request, ProductService $productService, ProductRepository $productRepository)
     {
         $viewed = json_decode($request->cookies->get('viewed_products'));
+        if(empty($viewed))
+            return new Response(null, 200);
         $products = new ArrayCollection();
         foreach ($viewed as $item) {
             $products->add($productService->getProductPrice($productRepository->findOneBy(['slug' => $item])));
