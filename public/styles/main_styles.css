@@ -2218,17 +2218,6 @@ select option
 	font-weight: 500;
 	margin-bottom: -29px;
 }
-.scrolling-wrapper {
-	overflow-x: scroll;
-	overflow-y: hidden;
-	white-space: nowrap;
-}
-.scrolling-wrapper::-webkit-scrollbar {
-	display: none;
-}
-.line_item {
-	display: inline-block;
-}
 .arrivals_slider
 {
 	width: 100%;

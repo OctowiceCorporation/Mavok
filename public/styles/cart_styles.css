@@ -1257,6 +1257,7 @@ select option
 .cart_item_name
 {
 	margin-left: 7.53%;
+	max-width: 100px;
 }
 .cart_item_title
 {
@@ -1268,6 +1269,7 @@ select option
 {
 	font-size: 18px;
 	margin-top: 35px;
+	max-width: 100px;
 }
 .cart_item_text span
 {
