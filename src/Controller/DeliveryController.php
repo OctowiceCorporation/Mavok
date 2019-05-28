@@ -32,6 +32,11 @@ class DeliveryController extends AbstractController
         return new Response(null);
     }
 
+    public function basketView(SessionInterface $session)
+    {
+        dd($session->get('basket'));
+    }
+
     public function minusProduct($id)
     {
         $basket = $this->session->get('basket');
