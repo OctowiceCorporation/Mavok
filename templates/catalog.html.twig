@@ -126,18 +126,18 @@
                         <div class="product_grid">
                             <div class="product_grid_border"></div>
                             {%  for product in products %}
-                            <div class="product_item is_new">
+                            <div class="product_item is_new" style="height: 400px">
                                 <a href="{{ path('product', {'slug': product.slug}) }}">
                                 <div class="product_border"></div>
                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src="/images/{{ product.image }}" alt=""></div>
-                                <div class="product_content">
+                                <div class="product_content" style="height: 150px">
                                     <div class="product_price">
                                         {% if product.ProductValue is not null %}
-                                            {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}</div>
+                                            {{ (product.retailPrice * product.ProductValue) }} UAH</div>
                                         {% else %}
                                             {{ product.retailPrice }} UAH</div>
                                         {% endif %}
-                                    <div style="width : 150px; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;" class="product_name"><div><a href="#" tabindex="0">{{ product.name }}</a></div></div>
+                                    <div style="width : 150px; height: 100px; overflow:hidden;" class="product_name"><p>{{ product.name }}</p></div>
                                 </div>
                             <div class="button_container">
                                 <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Add to Cart</button>

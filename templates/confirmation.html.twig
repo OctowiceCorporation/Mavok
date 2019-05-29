@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block stylesheets %}
+        <title>Mavoc</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="OneTech shop project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+        <link href="plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+        <link rel="stylesheet" type="text/css" href="plugins/slick-1.8.0/slick.css">
+        <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
+        <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+    {% endblock %}
+</head>
+<!-- Header -->
+<header style="width: 60vw; margin: auto; border-right: thin solid #dadada; border-left: thin solid #dadada; background: rgba(14, 140, 228, 0.1);">
+    <!-- Top Bar -->
+    <div class="top_bar">
+        <div class="container">
+            <div class="row">
+                <div class="col d-flex flex-row">
+                    <div class="top_bar_contact_item">
+                        <div class="top_bar_icon"><i class="fas fa-phone"></i></div>+38 068 005 3570
+                    </div>
+                    <div class="top_bar_contact_item">
+                        <div class="top_bar_icon"><i class="fas fa-envelope"></i></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Header Main -->
+    <div class="header_main">
+        <div class="container">
+            <div class="row">
+                <!-- Logo -->
+                <div style="text-align: center">
+                    <div class="logo_container" style="padding-left: 2rem">
+                        <div class="logo"><a style="font-size: 55px" href="{{ path('index') }}">Mavoc</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<body style="width: 60vw; margin: auto; border-right: thin solid #dadada; border-left: thin solid #dadada;">
+    <div style="text-align: center; padding-top: 2rem">
+        <h2>
+            Thanks for order!
+        </h2>
+        <h4 style="padding-right: 7rem; padding-left: 7rem; margin: unset">
+            You'll receive an email when your items are shipped. If you have any questions, Call us 1-800-1234-5678.
+        </h4>
+    </div>
+    <div style="padding-top: 2rem">
+        <table style="width: 80%; margin: auto; border: solid thin #dadada; background: rgba(14, 140, 228, 0.1);">
+            <tr style="border-bottom: thin solid #dadada">
+                <td style="width: 50%;text-align: center; border-right: thin solid #dadada">
+                    <h4>SUMMARY:</h4>
+                </td>
+                <td style="padding-left: 2rem; text-align: center; padding-right: 2rem">
+                    <h4>SHIPPING ADDRESS:</h4>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 50%; padding-left: 2rem; padding-right: 2rem; border-right: thin solid #dadada">
+                    Order #:	945645546<br>
+                    Order Date:	Oct 21, 2017<br>
+                    Order Total:	$80.67<br>
+                </td>
+                <td style="padding-left: 2rem; padding-right: 2rem">
+                    Andry Petrin<br>
+                    78 Somewhere St<br>
+                    Somewhere, Canada 99743<br>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="padding-top: 3rem">
+        <table style="width: 80%; margin: auto; border-bottom: solid thin #dadada;">
+            <tr style="border-bottom: thin solid #dadada">
+                <td style="width: 25%;text-align: center; border-right: thin solid #dadada">
+                    <h4 class="font-weight-bold">
+                        ITEMS ORDERED
+                    </h4>
+                </td>
+                <td style=" width: 35%; margin: auto; text-align: center; border-right: thin solid #dadada">
+                    <h4>Name</h4>
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center; border-right: thin solid #dadada">
+                    <h4>Qnt</h4>
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center;">
+                    <h4>Price</h4>
+                </td>
+            </tr>
+            <tr style="margin-top: 1rem; margin-bottom: 1rem;border-bottom: thin solid #dadada">
+                <td style="width: 25%;text-align: center;">
+                    <img src="{{ asset('images/best_1.png') }}">
+                </td>
+                <td style=" width: 35%; margin: auto; text-align: center;">
+                    Отвод под пайку с наружной резьбой 18х1/2" (арт. 4092G) IBP (Великобритания)
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center;">
+                    <h4>2</h4>
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center;">
+                    <h4>220 UAN</h4>
+                </td>
+            </tr>
+            <tr style="margin-top: 1rem; margin-bottom: 1rem; border-bottom: thin solid #dadada">
+                <td style="width: 25%;text-align: center;">
+                    <img src="{{ asset('images/best_2.png') }}">
+                </td>
+                <td style=" width: 35%; margin: auto; text-align: center;">
+                    Отвод под пайку с наружной резьбой 18х1/2" (арт. 4092G) IBP (Великобритания)
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center;">
+                    <h4>2</h4>
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center;">
+                    <h4>220 UAN</h4>
+                </td>
+            </tr>
+            <tr style="margin-top: 1rem; margin-bottom: 1rem; border-bottom: thin solid #dadada">
+                <td style="width: 25%;text-align: center;">
+                    <img src="{{ asset('images/best_3.png') }}">
+                </td>
+                <td style=" width: 35%; margin: auto; text-align: center;">
+                    Отвод под пайку с наружной резьбой 18х1/2" (арт. 4092G) IBP (Великобритания)
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center;">
+                    <h4>2</h4>
+                </td>
+                <td style=" width: 15%; margin: auto; text-align: center;">
+                    <h4>220 UAN</h4>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin-bottom: 2rem; margin-top: 1rem">
+        <div style="float: right; width: 50%; padding-right: 6rem;">
+            <table>
+                <tr>
+                    <td style="width: 80%"><h4>Subtotal (3 items):</h4></td>
+                    <td><h4>$40.57</h4></td>
+                </tr>
+                <tr>
+                    <td style="width: 80%"><h4>Flat-rate Shipping:</h4></td>
+                    <td><h4>FREE</h4></td>
+                </tr>
+                <tr>
+                    <td style="width: 80%"><h4>Discount:</h4></td>
+                    <td><h4>$40.57</h4></td>
+                </tr>
+                <tr>
+                    <td style="width: 80%"><h4>Order Total:</h4></td>
+                    <td><h4>$40.57</h4></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+<!-- Footer -->
+<footer class="footer" style="background: rgba(14, 140, 228, 0.1); margin-top: 9rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 footer_col">
+                <div class="footer_column footer_contact">
+                    <div class="logo_container">
+                        <div class="logo"><a href="#">Mavoc</a></div>
+                    </div>
+                    <div class="footer_title">Got Question? Call Us 24/7</div>
+                    <div class="footer_phone">+38 068 005 3570</div>
+                    <div class="footer_contact_text">
+                        <p>17 Princess Road, London</p>
+                        <p>Grester London NW18JR, UK</p>
+                    </div>
+                    <div class="footer_social">
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fab fa-google"></i></a></li>
+                            <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-2">
+                <div class="footer_column">
+                    <div class="footer_title">Find it Fast</div>
+                    <ul class="footer_list">
+                        <li><a href="#">Computers &amp; Laptops</a></li>
+                        <li><a href="#">Cameras &amp; Photos</a></li>
+                        <li><a href="#">Hardware</a></li>
+                        <li><a href="#">Smartphones &amp; Tablets</a></li>
+                        <li><a href="#">TV &amp; Audio</a></li>
+                    </ul>
+                    <div class="footer_subtitle">Gadgets</div>
+                    <ul class="footer_list">
+                        <li><a href="#">Car Electronics</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="footer_column">
+                    <ul class="footer_list footer_list_2">
+                        <li><a href="#">Video Games &amp; Consoles</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Cameras &amp; Photos</a></li>
+                        <li><a href="#">Hardware</a></li>
+                        <li><a href="#">Computers &amp; Laptops</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="footer_column">
+                    <div class="footer_title">Customer Care</div>
+                    <ul class="footer_list">
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Order Tracking</a></li>
+                        <li><a href="#">Wish List</a></li>
+                        <li><a href="#">Customer Services</a></li>
+                        <li><a href="#">Returns / Exchange</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Product Support</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
+                        <div class="copyright_content">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> Copyright ©<script>
+                                document.write(new Date().getFullYear());
+                            </script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div>
+                        <div class="logos ml-sm-auto">
+                            <ul class="logos_list">
+                                <li><a href="#"><img src="images/logos_1.png" alt=""></a></li>
+                                <li><a href="#"><img src="images/logos_2.png" alt=""></a></li>
+                                <li><a href="#"><img src="images/logos_3.png" alt=""></a></li>
+                                <li><a href="#"><img src="images/logos_4.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>
