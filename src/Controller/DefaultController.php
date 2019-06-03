@@ -22,6 +22,8 @@ use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use function GuzzleHttp\Psr7\str;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -38,7 +40,7 @@ class DefaultController extends AbstractController
         return $this->render('index.html.twig');
     }
 
-    public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request)
+    public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination)
     {
         $array = explode('/', rtrim($slug,'/'));
         if(empty($array[0])){
@@ -53,6 +55,11 @@ class DefaultController extends AbstractController
         $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
         if(!$last_category->getChildren()->isEmpty()) {
             list($categories, $products) = $categoryService->isLastCategory($array);
+            $products = $pagination->paginate(
+                $products,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 20)
+            );
             return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => $products]);
         }
         elseif (!$last_category->getProducts()->isEmpty()){
@@ -64,6 +71,11 @@ class DefaultController extends AbstractController
                 return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
             }
             $products = $productService->getProducts($last_category);
+            $products = $pagination->paginate(
+                $products,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 20)
+            );
             return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
         }
     }

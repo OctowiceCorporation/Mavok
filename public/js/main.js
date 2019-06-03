@@ -18,7 +18,7 @@ $(document).ready(function () {
                 if(is_sub_exist){
                     li.addClass('header_hassubs');
                     li.append('<i style="position: absolute; right: 0; display: inline-block; padding: 1em" class="fas fa-chevron-right open-ul"></i>');
-                    let ul = $('<ul style="display: none"></ul>');
+                    let ul = $('<ul style="display: none;"></ul>');
                     li.append(ul);
                     Object.keys(category['sub']).forEach(function (key) {
                         callback_category(ul, category['sub'][key]);

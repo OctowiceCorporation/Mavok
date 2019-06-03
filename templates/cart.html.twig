@@ -48,15 +48,15 @@
                                                 <div class="cart_item_text">
                                                     {% if product.ProductValue is not null%}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            Опт {{ (product.WholesalePrice * product.ProductValue) }} UAH / {{ product.WholesalePrice }} {{ product.currencyName }}
+                                                            {{ (product.WholesalePrice * product.ProductValue) }} UAH
                                                         {% else %}
-                                                            Розница {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}
+                                                            {{ (product.retailPrice * product.ProductValue) }} UAH
                                                         {% endif %}
                                                     {% else %}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            Опт {{ (product.WholesalePrice) }} UAH
+                                                            {{ (product.WholesalePrice) }} UAH
                                                         {% else %}
-                                                            Розница {{ (product.retailPrice) }} UAH
+                                                            {{ (product.retailPrice) }} UAH
                                                         {% endif %}
                                                     {% endif %}
                                                 </div>
