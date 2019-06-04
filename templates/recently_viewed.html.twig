@@ -29,8 +29,9 @@
                                 <div style="width : 150px; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;" class="recently_viewed_name"><div><a href="{{ path('product', {'slug': product.slug}) }}" tabindex="0">{{ product.name }}</a></div></div>
                         </div>
                         <div class="button_container" style="text-align: center">
-                            <button type="button" class="button cart_button add_to_basket text-light" value="{{ product.slug }}">Add to Cart</button>
+                            <button style="font-size: large; font-weight: bold; width: 80%; border: unset" type="button" class="button cart_button add_to_basket text-light" value="{{ product.slug }}">Add to Cart</button>
                         </div>
+
 
                         <ul class="recently_viewed_marks">
                             {% if product.sale is not null %}
