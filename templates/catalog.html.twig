@@ -67,7 +67,7 @@
                                         <div class="sidebar_subtitle">{{ form_label(fo) }}</div>
                                         <div class="filter_price">
                                             <div class="slider-range" min="{{ fo.vars.attr.min }}" max="{{ fo.vars.attr.max }}" value="{% if fo.vars.value is not empty%}{{ fo.vars.value }}{% else %}{{ fo.vars.attr.min ~ ';' ~    fo.vars.attr.max }}{% endif %}"></div>
-                                            <div class="slider-label" style="padding: 0"><span style="padding-left: 15px" class="slider-value"></span></div>
+                                            <div class="slider-label" style="padding-top: 10px;"><span style="padding-left: 15px" class="slider-value"></span></div>
                                         </div></div>
                                 {% else %}
                                     <div class="sidebar_section">
@@ -144,8 +144,6 @@
                             <div class="button_container">
                                 <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Add to Cart</button>
                             </div>
-
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
                                 <ul class="product_marks">
                                     {% if product.sale is not null %}
                                         <li class="product_mark product_discount">-{{ product.sale }}%</li>

@@ -177,6 +177,12 @@ label.form-check-label {
 	-ms-user-select: none;
 	user-select: none;
 }
+label[for='filter_form__token'] {
+	display: none;
+}
+.col-form-label {
+	font-size: 1rem;
+}
 .clear
 {
 	clear: both;
@@ -1726,7 +1732,7 @@ select option
 }
 .filter_price
 {
-	margin-top: 28px;
+	margin-top: 13px;
 }
 .slider_range
 {

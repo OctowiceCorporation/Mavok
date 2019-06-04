@@ -16,7 +16,8 @@
                     <div class="scrolling-wrapper">
                         <!-- Recently Viewed Item -->
                         {% for product in products %}
-                        <div class="recently_viewed_item is_new line_item ml-3"">
+                        <a href="{{ path('product', {'slug': product.slug}) }}" tabindex="0">
+                        <div class="recently_viewed_item is_new line_item ml-3">
                                 <div class="recently_viewed_border"></div>
                                 <div class="recently_viewed_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src="/images/{{ product.image }}" alt=""></div>
                                 <div class="recently_viewed_content" style="text-align: center">
@@ -26,11 +27,12 @@
                                     {% else %}
                                     {{ product.retailPrice }} UAH</div>
                                 {% endif %}
-                                <div style="width : 150px; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;" class="recently_viewed_name"><div><a href="{{ path('product', {'slug': product.slug}) }}" tabindex="0">{{ product.name }}</a></div></div>
+                                <div style="width : 150px; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;" class="recently_viewed_name">{{ product.name }}</div>
                         </div>
                         <div class="button_container" style="text-align: center">
                             <button style="font-size: large; font-weight: bold; width: 80%; border: unset" type="button" class="button cart_button add_to_basket text-light" value="{{ product.slug }}">Add to Cart</button>
                         </div>
+                        </a>
 
 
                         <ul class="recently_viewed_marks">
