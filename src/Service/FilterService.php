@@ -64,7 +64,12 @@ class FilterService
                 }
 
             }
-            return $filter;
+            foreach ($filter as $key =>$item) {
+                if (count($item['values']) == 1) {
+                    unset($filter[$key]);
+                }
+            }
+            return array_values($filter);
     }
 
     public function isSubmited(array $data, array $filter, Category $last_category)

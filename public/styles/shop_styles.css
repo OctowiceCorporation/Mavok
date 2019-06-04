@@ -148,6 +148,35 @@ section
 	position: relative;
 	box-sizing: border-box;
 }
+input[type=checkbox].form-check-input {
+	position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=checkbox].form-check-input + label.form-check-label {
+	padding-left:30px;
+	height:25px;
+	display:inline-block;
+	line-height:25px;
+	background-repeat:no-repeat;
+	background-position: 0 0;
+	font-size:15px;
+	vertical-align:middle;
+	cursor:pointer;
+
+}
+
+input[type=checkbox].form-check-input:checked + label.form-check-label {
+	background-position: 0 -25px;
+}
+label.form-check-label {
+	background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_391ce065f36b1460c4845fa9b5173fba.png);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
 .clear
 {
 	clear: both;
@@ -1397,9 +1426,8 @@ select option
 	width: 20%;
 	background: #FFFFFF;
 	cursor: pointer;
-	padding-top: 40px;
-	padding-bottom: 24px;
 	text-align: center;
+	padding: 40px 3px 24px 3px;
 }
 .product_border
 {

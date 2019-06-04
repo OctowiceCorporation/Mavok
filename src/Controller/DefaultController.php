@@ -16,13 +16,9 @@ use App\Form\FilterForm;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
-use App\Repository\SpecificationRepository;
 use App\Service\FilterService;
 use App\Service\ProductService;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use function GuzzleHttp\Psr7\str;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +26,6 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\CategoryService;
-use App\Mappers\Category as CategoryMapper;
 
 class DefaultController extends AbstractController
 {
@@ -55,6 +50,11 @@ class DefaultController extends AbstractController
         $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
         if(!$last_category->getChildren()->isEmpty()) {
             list($categories, $products) = $categoryService->isLastCategory($array);
+            $pagination->setCustomParameters([
+                'position' => 'centered',
+                'size' => 'large',
+                'rounded' => true,
+            ]);
             $products = $pagination->paginate(
                 $products,
                 $request->query->getInt('page', 1),
@@ -68,6 +68,11 @@ class DefaultController extends AbstractController
             $form->handleRequest($request);
             if($form->isSubmitted()){
                 $products = $filterService->isSubmited($form->getData(),$filter,$last_category);
+                $products = $pagination->paginate(
+                    $products,
+                    $request->query->getInt('page', 1),
+                    $request->query->getInt('limit', 20)
+                );
                 return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
             }
             $products = $productService->getProducts($last_category);
