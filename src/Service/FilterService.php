@@ -69,6 +69,7 @@ class FilterService
                     unset($filter[$key]);
                 }
             }
+            $filter = array_map("unserialize", array_unique(array_map("serialize", $filter)));
             return array_values($filter);
     }
 
