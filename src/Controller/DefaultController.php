@@ -33,15 +33,16 @@ class DefaultController extends AbstractController
 
     public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService, EntityManagerInterface $manager)
     {
-        $mainCategories = $categoryRepository->findBy(['parent' => null]);
-        $specialProducts = $productRepository->getSpecialProducts();
-        $specialCollection = new ArrayCollection();
-        foreach ($specialProducts as $specialProduct) {
-            $specialCollection->add($productService->getProductPrice($specialProduct));
-        }
-        return $this->render('index.html.twig',
-            ['mainCategories' => $mainCategories,
-             'specialProducts' => $specialCollection]);
+//        $mainCategories = $categoryRepository->findBy(['parent' => null]);
+//        $specialProducts = $productRepository->getSpecialProducts();
+//        $specialCollection = new ArrayCollection();
+//        foreach ($specialProducts as $specialProduct) {
+//            $specialCollection->add($productService->getProductPrice($specialProduct));
+//        }
+//        return $this->render('index.html.twig',
+//            ['mainCategories' => $mainCategories,
+//             'specialProducts' => $specialCollection]);
+        return $this->render('admin_index.html.twig');
     }
 
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination)
