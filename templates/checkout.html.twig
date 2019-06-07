@@ -245,7 +245,7 @@
                                 let select = $('<select required></select>').addClass('form-control').attr('id', 'checkout_form_post');
                                 select.append('<option disabled selected value> Выберите отделение </option>');
                                 Object.keys(array[element.val()]['post_offices']).forEach(function (key) {
-                                    select.append('<option value="'+key+'">Отделение №'+array[element.val()]['post_offices'][key]['number']+', '+array[element.val()]['post_offices'][key]['address']+'</option>')
+                                    select.append('<option value="'+key+'">Отделение № '+array[element.val()]['post_offices'][key]['number']+' , '+array[element.val()]['post_offices'][key]['address']+'</option>')
                                 });
                                 cities.append(select);
 

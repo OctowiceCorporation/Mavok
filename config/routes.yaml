@@ -24,3 +24,15 @@ basket_view:
 header_categories:
     path: /header_categories
     controller: App\Controller\DefaultController::getHeaderCategories
+admin:
+    path: /adminPage
+    controller: App\Controller\Admin\MainController:index
+categories:
+    path: /adminPage/categories
+    controller: App\Controller\Admin\CategoryController:categoriesView
+add_sub_category:
+    path: /adminPage/add_sub_category/{id}
+    controller: App\Controller\Admin\CategoryController:add_sub_category
+products:
+    path: /adminPage/products
+    controller: App\Controller\Admin\MainController:productsView
