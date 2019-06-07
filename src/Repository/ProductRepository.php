@@ -28,6 +28,15 @@ class ProductRepository extends ServiceEntityRepository
         return $builder->getQuery();
     }
 
+    public function getSpecialProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.special_offer = 1')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

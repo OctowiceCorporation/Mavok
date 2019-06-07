@@ -18,6 +18,7 @@ use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
 use App\Service\FilterService;
 use App\Service\ProductService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -30,9 +31,17 @@ use App\Service\CategoryService;
 class DefaultController extends AbstractController
 {
 
-    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, EntityManagerInterface $manager)
+    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService, EntityManagerInterface $manager)
     {
-        return $this->render('index.html.twig');
+        $mainCategories = $categoryRepository->findBy(['parent' => null]);
+        $specialProducts = $productRepository->getSpecialProducts();
+        $specialCollection = new ArrayCollection();
+        foreach ($specialProducts as $specialProduct) {
+            $specialCollection->add($productService->getProductPrice($specialProduct));
+        }
+        return $this->render('index.html.twig',
+            ['mainCategories' => $mainCategories,
+             'specialProducts' => $specialCollection]);
     }
 
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination)
@@ -50,11 +59,6 @@ class DefaultController extends AbstractController
         $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
         if(!$last_category->getChildren()->isEmpty()) {
             list($categories, $products) = $categoryService->isLastCategory($array);
-            $pagination->setCustomParameters([
-                'position' => 'centered',
-                'size' => 'large',
-                'rounded' => true,
-            ]);
             $products = $pagination->paginate(
                 $products,
                 $request->query->getInt('page', 1),
