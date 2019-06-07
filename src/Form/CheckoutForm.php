@@ -30,11 +30,21 @@ class CheckoutForm extends AbstractType
             ->add('email', EmailType::class,[
                 'label' => 'E-Mail'
             ])
-            ->add('phone', NumberType::class,[
+            ->add('phone', TextType::class,[
                 'label' => 'Телефон'
             ])
+            ->add('type', ChoiceType::class,[
+                'label' => 'Тип доставки',
+                'choices' => [
+                    'Самовывоз' => 1,
+                    'Новая Почта' => 2,
+                    'Другое' => 3
+                ]
+            ])
+            ->add('data', HiddenType::class)
             ->add('comment', TextareaType::class,[
-                'label' => 'Комментарий'
+                'label' => 'Комментарий',
+                'required' => false
             ])
             ->add('save', SubmitType::class, ['label' => 'Подтвердить заказ'])->getForm();
     }

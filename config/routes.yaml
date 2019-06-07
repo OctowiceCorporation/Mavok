@@ -15,6 +15,9 @@ add_to_basket:
 checkout:
     path: /checkout
     controller: App\Controller\DeliveryController:checkout
+post_offices:
+    path: /post_offices
+    controller: App\Controller\DeliveryController:getPostOffices
 basket_view:
     path: /basket
     controller: App\Controller\DeliveryController:basketView
