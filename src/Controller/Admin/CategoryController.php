@@ -7,6 +7,8 @@ namespace App\Controller\Admin;
 use App\Entity\Category;
 use App\Form\AddCategoryForm;
 use App\Repository\CategoryRepository;
+use App\Service\UploadFileService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,7 +20,7 @@ class CategoryController extends AbstractController
     }
 
 
-    public function add_sub_category($id, CategoryRepository $categoryRepository, Request $request)
+    public function add_sub_category($id, CategoryRepository $categoryRepository, Request $request, UploadFileService $fileService, EntityManagerInterface $manager)
     {
         $form = $this->createForm(AddCategoryForm::class);
         $form->handleRequest($request);
@@ -30,8 +32,11 @@ class CategoryController extends AbstractController
                 ->setDescription($data->getDescription())
                 ->setUsdValue($data->getUsd())
                 ->setEurValue($data->getEur());
-            //TODO UploadImage;
-            dd($category, $data);
+            if(!empty($data->getImage()))
+                $category->setImage($fileService->upload($data->getImage()));
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute('categories');
         }
 
         return $this->render('admin/edit_subcategory.html.twig', ['form' => $form->createView()]);

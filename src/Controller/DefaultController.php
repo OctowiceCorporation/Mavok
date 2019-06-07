@@ -87,6 +87,8 @@ class DefaultController extends AbstractController
             );
             return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
         }
+        else
+            return $this->render('catalog.html.twig',['categories' => null, 'products' => null]);
     }
 
     public function parceNP(EntityManagerInterface $em)

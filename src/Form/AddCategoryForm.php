@@ -39,17 +39,21 @@ class AddCategoryForm extends AbstractType
                 'required' => false,
             ])
             ->add('usd', TextType::class,[
-                'label' => 'Стоимость доллара, формат: "26,34"',
+                'label' => 'Стоимость доллара, формат: "26.34"',
                 'attr' => [
                     'step' => '0.001',
-                    'pattern' => '[0-9]+([\.,][0-9]+)?',
+                    'pattern' => '[0-9]+([\.][0-9]+)?',
                     'min' => 0,
-                    'max' => 100,
                 ],
                 'required' => false
             ])
             ->add('eur', IntegerType::class,[
-                'label' => 'Стоимость евро, формат: "26,34"',
+                'label' => 'Стоимость евро, формат: "26.34"',
+                'attr' => [
+                    'step' => '0.001',
+                    'pattern' => '[0-9]+([\.][0-9]+)?',
+                    'min' => 0,
+                ],
                 'required' => false
             ])
             ->add('save', SubmitType::class, ['label' => 'Добавить категорию'])

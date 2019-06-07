@@ -7,6 +7,7 @@ parameters:
     locale: 'ru'
     eur_value: 30
     usd_value: 26
+    app.uploads_dir: '%kernel.project_dir%/public/uploads/'
 
 services:
     # default configuration for services in *this* file
@@ -29,6 +30,9 @@ services:
         arguments:
             - '%usd_value%'
             - '%eur_value%'
+    App\Service\UploadFileService:
+        arguments:
+            - '%app.uploads_dir%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

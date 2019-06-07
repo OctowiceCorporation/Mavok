@@ -104,7 +104,7 @@
                     </div>
                     {% endif %}
 
-                    {% if products is not null %}
+
                     <div class="shop_content">
                         <div class="shop_bar clearfix">
                             <div class="shop_product_count"><span>{{ products|length }}</span> products found</div>
@@ -160,7 +160,7 @@
 
 
                         <!-- Shop Page Navigation -->
-
+                    {% if products is not null %}
                     <div class="navigation pt-4">
                         {{ knp_pagination_render(products, null, {}, {
                             'size': 'large',
