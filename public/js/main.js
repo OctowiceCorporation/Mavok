@@ -6,9 +6,11 @@ $(document).ready(function () {
     })
         .done(function(msg) {
             let array = JSON.parse(msg);
+            console.log(array);
             let parent = $('#header_dropdown');
             Object.keys(array).forEach(function (key) {
-                callback_category(parent, array[key]);
+                if(array[key]['is_visible'] === true)
+                    callback_category(parent, array[key]);
             });
             function callback_category(element, category) {
                 let is_sub_exist = false;
@@ -21,7 +23,8 @@ $(document).ready(function () {
                     let ul = $('<ul style="display: none;"></ul>');
                     li.append(ul);
                     Object.keys(category['sub']).forEach(function (key) {
-                        callback_category(ul, category['sub'][key]);
+                        if(category['sub'][key]['is_visible'] === true)
+                            callback_category(ul, category['sub'][key]);
                     });
                 }
                 element.append(li);

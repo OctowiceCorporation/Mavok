@@ -26,7 +26,7 @@
                         is_sub_exist = true;
 
                     let li = $('<li></li>').addClass('alert alert-light').append($('<a style="display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a>'));
-                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" class="btn btn-info">Редактировать категорию</a>');
+                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" class="btn btn-info">Редактировать категорию</a> <a href="/adminPage/get_products_by_category/'+category['id']+'" role="button" class="btn btn-info">Показать товары</a>');
                     if(!category['has_products'] && !is_sub_exist)
                         li.append('<a role="button" class="btn btn-info">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" role="button" class="btn btn-info">Добавить подкатегорию</a>');
                     else if(category['has_products'] && !is_sub_exist)

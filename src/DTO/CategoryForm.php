@@ -11,22 +11,25 @@ class CategoryForm
     private $image;
     private $usd;
     private $eur;
+    private $is_visible;
 
     /**
      * CategoryForm constructor.
      * @param $name
      * @param $description
-     * @param $image
      * @param $usd
      * @param $eur
+     * @param $is_visible
+     * @param $image
      */
-    public function __construct($name, $description, $usd, $eur, $image = null)
+    public function __construct($name, $description, $usd, $eur, $is_visible, $image = null)
     {
         $this->name = $name;
         $this->description = $description;
         $this->image = $image;
         $this->usd = $usd;
         $this->eur = $eur;
+        $this->is_visible = $is_visible;
     }
 
 
@@ -119,6 +122,24 @@ class CategoryForm
         $this->eur = $eur;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsVisible()
+    {
+        return $this->is_visible;
+    }
+
+    /**
+     * @param mixed $is_visible
+     */
+    public function setIsVisible($is_visible): void
+    {
+        $this->is_visible = $is_visible;
+    }
+
+
 
 
 }

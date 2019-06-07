@@ -72,6 +72,7 @@ class CategoryService
     {
         $array['name'] = $category->getName();
         $array['link'] = $this->generateUrlFromCategory($category);
+        $array['is_visible'] = $category->getIsVisible();
         $array['id'] = $category->getId();
         if($category->getProducts()->isEmpty())
             $array['has_products'] = false;

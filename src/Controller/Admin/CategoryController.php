@@ -34,7 +34,8 @@ class CategoryController extends AbstractController
                 ->setName($data->getName())
                 ->setDescription($data->getDescription())
                 ->setUsdValue($data->getUsd())
-                ->setEurValue($data->getEur());
+                ->setEurValue($data->getEur())
+                ->setIsVisible($data->getIsVisible());
             if(!empty($data->getImage()))
                 $category->setImage($fileService->upload($data->getImage()));
             $manager->persist($category);
@@ -61,7 +62,8 @@ class CategoryController extends AbstractController
                 ->setName($data->getName())
                 ->setDescription($data->getDescription())
                 ->setUsdValue($data->getUsd())
-                ->setEurValue($data->getEur());
+                ->setEurValue($data->getEur())
+                ->setIsVisible($data->getIsVisible());
             if(!empty($data->getImage()))
                 $category->setImage($fileService->upload($data->getImage()));
             $manager->persist($category);

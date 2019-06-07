@@ -39,3 +39,6 @@ edit_category:
 products:
     path: /adminPage/products
     controller: App\Controller\Admin\MainController:productsView
+get_products_by_category:
+    path: /adminPage/get_products_by_category/{id}
+    controller: App\Controller\Admin\ProductController:getProducts

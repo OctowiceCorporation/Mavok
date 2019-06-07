@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\DTO\CategoryForm;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -33,6 +34,15 @@ class AddCategoryForm extends AbstractType
             ->add('image', FileType::class,[
                 'label' => 'Изображение',
                 'required' => false,
+            ])
+            ->add('is_visible', ChoiceType::class,[
+                'label' => 'Отображение',
+                'choices'=>[
+                    'Да' => true,
+                    'Нет' => false,
+                ],
+                'expanded' => true,
+                'multiple' => false,
             ])
             ->add('usd', TextType::class,[
                 'label' => 'Стоимость доллара, формат: "26.34"',

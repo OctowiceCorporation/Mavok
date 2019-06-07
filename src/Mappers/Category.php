@@ -29,7 +29,8 @@ class Category
             $entity->getName(),
             $entity->getDescription(),
             $entity->getUsdValue(),
-            $entity->getEurValue()
+            $entity->getEurValue(),
+            $entity->getIsVisible()
         );
     }
 }

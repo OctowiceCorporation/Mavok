@@ -21,6 +21,27 @@ class ProductService
     }
 
 
+    public function getProductsFromCategory(Category $category): ArrayCollection
+    {
+        $products = new ArrayCollection();
+        $this->callbackGetProducts($category, $products);
+
+        return $products;
+    }
+
+    private function callbackGetProducts(Category $category, ArrayCollection &$products){
+        if(!$category->getProducts()->isEmpty()){
+            foreach ($category->getProducts() as $product) {
+                $products->add($product);
+            }
+        }
+        if(!$category->getChildren()->isEmpty()){
+            foreach ($category->getChildren() as $child) {
+                $this->callbackGetProducts($child, $products);
+            }
+        }
+    }
+
     public function getProductPrice(Product $product, int $amount = null): \App\DTO\Product
     {
         $currency = $product->getCurrencyName();
