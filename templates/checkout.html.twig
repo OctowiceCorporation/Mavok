@@ -9,15 +9,24 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="css/style.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
+
+
 {% endblock %}
 
 {% block body %}
+
+
 
 <!--Main layout-->
     <div class="container wow fadeIn">
 
         <!-- Heading -->
         <h2 class="my-5 h2 text-center">Checkout form</h2>
+
+        {{ form_start(form) }}
+        {{ form_end(form) }}
 
         <!--Grid row-->
         <div class="row">
@@ -182,7 +191,7 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
+
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
@@ -196,9 +205,60 @@
         // Animations initialization
         new WOW().init();
     </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#header_dropdown').hide();
+            $(document).on('change','#checkout_form_type',function () {
+                if ($("#checkout_form_city" ).length)
+                    $("#checkout_form_city").closest('.form-group').remove();
+                if ($("#checkout_form_post" ).length)
+                    $('#checkout_form_post').closest('.form-group').remove();
+                let element = $(this);
+                if(Number($(this).val()) === 1){
+                    element.closest('.form-group').append('Тут будет адрес самовывоза');
+                }
+                if(Number($(this).val()) === 2){
+                    $.ajax({
+                        method: "POST",
+                        url: '/post_offices',
+                    })
+                        .done(function(posts) {
+                            let array = JSON.parse(posts);
+                            let cities = $('<div></div>').addClass('form-group').append('<label class="required" for="checkout_form_city">Населенный пункт</label>');
+                            let select = $('<select required></select>').addClass('form-control').attr('id', 'checkout_form_city');
+                            select.append('<option disabled selected value> Выберите населенный пункт </option>');
+
+                            Object.keys(array).forEach(function (key) {
+                                select.append('<option value="'+key+'">'+array[key]['city']+'</option>')
+                            });
+                            cities.append(select);
+                            element.closest('.form-group').after(cities);
+                            $('#checkout_form_city').chosen();
+
+                            $(document).on('change','#checkout_form_city',function () {
+                                if ($("#checkout_form_post" ).length)
+                                    $('#checkout_form_post').closest('.form-group').remove();
+                                let element = $(this);
+                                let cities = $('<div></div>').addClass('form-group').append('<label class="required" for="checkout_form_post">Отделение</label>');
+                                let select = $('<select required></select>').addClass('form-control').attr('id', 'checkout_form_post');
+                                select.append('<option disabled selected value> Выберите отделение </option>');
+                                Object.keys(array[element.val()]['post_offices']).forEach(function (key) {
+                                    select.append('<option value="'+key+'">Отделение №'+array[element.val()]['post_offices'][key]['number']+', '+array[element.val()]['post_offices'][key]['address']+'</option>')
+                                });
+                                cities.append(select);
+
+                                element.closest('.form-group').after(cities);
+                                $('#checkout_form_post').chosen();
+                                $(document).on('change','#checkout_form_post',function () {
+                                    $('#checkout_form_data').val($("#checkout_form_post option:selected").text());
+                                })
+                            });
+                        });
+                }
+            })
+
         })
     </script>
 {% endblock %}

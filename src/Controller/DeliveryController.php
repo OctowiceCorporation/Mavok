@@ -4,7 +4,9 @@
 namespace App\Controller;
 
 
+use App\Form\CheckoutForm;
 use App\Repository\ProductRepository;
+use App\Service\NovaPoshtaService;
 use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,13 +64,35 @@ class DeliveryController extends AbstractController
         return $this->render('cart.html.twig',['products' => $products, 'total' => $total]);
     }
 
-    public function checkout(SessionInterface $session)
+    public function checkout(SessionInterface $session, Request $request)
     {
         if(empty($session->get('basket')))
             return $this->redirectToRoute('basket_view');
 
+        $form = $this->createForm(CheckoutForm::class);
+        $form->handleRequest($request);
 
-        return $this->render('checkout.html.twig');
+        if($form->isSubmitted()){
+            $data = $form->getData();
+            switch ($data['type']){
+                case 1:
+                    $data['type'] = 'Самовывоз';
+                    break;
+                case 2:
+                    $data['type'] = 'Новая почта';
+                    break;
+                case 3:
+                    $data['type'] = 'Другое';
+                    break;
+            }
+            dd($data);
+        }
+
+
+
+
+
+        return $this->render('checkout.html.twig', ['form' => $form->createView()]);
     }
 
     public function minusProduct($id)
@@ -86,6 +110,11 @@ class DeliveryController extends AbstractController
     {
 //        $this->session->remove('basket');
         return new Response(null);
+    }
+
+    public function getPostOffices(NovaPoshtaService $novaPoshtaService)
+    {
+        return new Response(json_encode($novaPoshtaService->getJson()));
     }
 
 }
