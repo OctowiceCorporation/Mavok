@@ -6,12 +6,8 @@ namespace App\Form;
 
 use App\DTO\CategoryForm;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -45,7 +41,7 @@ class AddCategoryForm extends AbstractType
                     'pattern' => '[0-9]+([\.][0-9]+)?',
                     'min' => 0,
                 ],
-                'required' => false
+                'required' => false,
             ])
             ->add('eur', IntegerType::class,[
                 'label' => 'Стоимость евро, формат: "26.34"',
@@ -54,7 +50,7 @@ class AddCategoryForm extends AbstractType
                     'pattern' => '[0-9]+([\.][0-9]+)?',
                     'min' => 0,
                 ],
-                'required' => false
+                'required' => false,
             ])
             ->add('save', SubmitType::class, ['label' => 'Добавить категорию'])
             ->getForm();

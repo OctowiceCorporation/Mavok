@@ -85,6 +85,14 @@
 
                 <div class="col-lg-9">
 
+                    {% if category is defined %}
+                        {{ category.name }}<br>
+                        {% if category.image is not null %}
+                            <img src="/images/{{ category.image }}">
+                        {% endif %}
+                        {{ category.description|raw }}
+                    {% endif %}
+
 
                     {% if categories is not null %}
                     <div class="col" style="padding-bottom: 1rem">

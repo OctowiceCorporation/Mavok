@@ -7,7 +7,7 @@ parameters:
     locale: 'ru'
     eur_value: 30
     usd_value: 26
-    app.uploads_dir: '%kernel.project_dir%/public/uploads/'
+    app.uploads_dir: '%kernel.project_dir%/public/images/'
 
 services:
     # default configuration for services in *this* file

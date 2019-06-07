@@ -33,6 +33,9 @@ categories:
 add_sub_category:
     path: /adminPage/add_sub_category/{id}
     controller: App\Controller\Admin\CategoryController:add_sub_category
+edit_category:
+    path: /adminPage/edit_category/{id}
+    controller: App\Controller\Admin\CategoryController:edit_category
 products:
     path: /adminPage/products
     controller: App\Controller\Admin\MainController:productsView

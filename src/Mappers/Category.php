@@ -5,6 +5,7 @@ namespace App\Mappers;
 
 
 use App\DTO\Category as CategoryDto;
+use App\DTO\CategoryForm;
 use App\Entity\Category as CategoryEntity;
 
 class Category
@@ -20,6 +21,15 @@ class Category
             $entity->getParent() ? $entity->getParent()->getId() : null,
             $entity->getDescription(),
             $entity->getImage()
+        );
+    }
+
+    static function entityToFormDTO(CategoryEntity $entity): CategoryForm{
+        return new CategoryForm(
+            $entity->getName(),
+            $entity->getDescription(),
+            $entity->getUsdValue(),
+            $entity->getEurValue()
         );
     }
 }

@@ -64,7 +64,7 @@ class DefaultController extends AbstractController
                 $request->query->getInt('page', 1),
                 $request->query->getInt('limit', 20)
             );
-            return $this->render('catalog.html.twig', ['categories' => $categories, 'products' => $products]);
+            return $this->render('catalog.html.twig', ['categories' => $categories, 'category' => $last_category, 'products' => $products]);
         }
         elseif (!$last_category->getProducts()->isEmpty()){
             $filter = $filterService->buildFilter($last_category);
@@ -77,7 +77,7 @@ class DefaultController extends AbstractController
                     $request->query->getInt('page', 1),
                     $request->query->getInt('limit', 20)
                 );
-                return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
+                return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'category' => $last_category, 'form' => $form->createView()]);
             }
             $products = $productService->getProducts($last_category);
             $products = $pagination->paginate(
@@ -85,7 +85,7 @@ class DefaultController extends AbstractController
                 $request->query->getInt('page', 1),
                 $request->query->getInt('limit', 20)
             );
-            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
+            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products,  'category' => $last_category,'form' => $form->createView()]);
         }
         else
             return $this->render('catalog.html.twig',['categories' => null, 'products' => null]);

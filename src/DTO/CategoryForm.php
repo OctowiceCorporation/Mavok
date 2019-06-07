@@ -13,6 +13,24 @@ class CategoryForm
     private $eur;
 
     /**
+     * CategoryForm constructor.
+     * @param $name
+     * @param $description
+     * @param $image
+     * @param $usd
+     * @param $eur
+     */
+    public function __construct($name, $description, $usd, $eur, $image = null)
+    {
+        $this->name = $name;
+        $this->description = $description;
+        $this->image = $image;
+        $this->usd = $usd;
+        $this->eur = $eur;
+    }
+
+
+    /**
      * @return mixed
      */
     public function getName()
