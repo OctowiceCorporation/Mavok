@@ -30,7 +30,13 @@
                 </div>
 
                 <div class="col-lg-5 order-lg-2 order-1">
-                    <div class="image_selected"><img src="/images/{{ product.image.get(0).ImagePath }}" alt=""></div>
+                    <div class="image_selected"><img src=
+                {% if product.image.get(0).ImagePath is defined %}
+                     "/images/{{ product.image.get(0).ImagePath }}"
+                {% else %}
+                    "/no-image.png"
+                {% endif %}
+                alt=""></div>
                 </div>
 
                 <!-- Description -->

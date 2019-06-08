@@ -27,6 +27,38 @@ class ProductFormDTO
     private $amount;
     private $specification;
 
+    /**
+     * ProductFormDTO constructor.
+     * @param $category
+     * @param $name
+     * @param $wholesale_price
+     * @param $retail_price
+     * @param $is_available
+     * @param $is_visible
+     * @param $special_offer
+     * @param $minimum_wholesale
+     * @param $product_value
+     * @param $product_unit
+     * @param $currency_name
+     * @param $brand
+     * @param $specification
+     */
+    public function __construct($category = null, $name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $minimum_wholesale = null, $product_unit = null, $currency_name = null, $brand = null, $specification = null)
+    {
+        $this->category = $category;
+        $this->name = $name;
+        $this->wholesale_price = $wholesale_price;
+        $this->retail_price = $retail_price;
+        $this->is_available = $is_available;
+        $this->is_visible = $is_visible;
+        $this->special_offer = $special_offer;
+        $this->minimum_wholesale = $minimum_wholesale;
+        $this->product_unit = $product_unit;
+        $this->currency_name = $currency_name;
+        $this->brand = $brand;
+        $this->specification = $specification;
+    }
+
 
     /**
      * @return mixed

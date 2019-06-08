@@ -1,15 +1,18 @@
-{% extends '/admin/admin_index.html.twig' %}
+{% extends 'admin/admin_index.html.twig' %}
+
 {% block style %}
-<style>
-    select.form-control:not([size]):not([multiple]) {
-        height: auto!important;
-    }
-</style>
+    <style>
+        select.form-control:not([size]):not([multiple]) {
+            height: auto!important;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    {{ form_start(form, {'attr': {'id': 'add_product_form'}}) }}
+    {{ form_start(form, {'attr': {'id': 'edit_product_form'}}) }}
+
     {{ form_end(form) }}
+
 {% endblock %}
 
 {% block javasprict %}
@@ -19,47 +22,56 @@
 
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 300,
-                popover: {
-                    image: [],
-                    link: [],
-                    air: []
-                },
-                codemirror: {
-                    theme: 'paper'
+
+<script>
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            height: 300,
+            popover: {
+                image: [],
+                link: [],
+                air: []
+            },
+            codemirror: {
+                theme: 'paper'
+            }
+        });
+        let array = JSON.parse($('#add_product_form_specification').val());
+        let div = $('<div></div>').addClass('form-group').html('<label>Характеристики</label> ' +
+            '<div class="form-row"> <div class="col-3">Название</div> <div class="col-3">Единица измерения</div> <div class="col-3">Значение</div>');
+        Object.keys(array).forEach(function (key) {
+            if(array[key]['unit'] === null)
+                array[key]['unit'] = "";
+            div.append('<div class="form-row specification-row"> <div class="col-3"> <input type="text" class="form-control specification-name" placeholder="Название" value="'+array[key]['name']+'"> </div> <div class="col"> <input type="text" class="form-control specification-unit" placeholder="Единица измерения" value="'+array[key]['unit']+'"> </div> <div class="col"> <input type="text" class="form-control specification-value" placeholder="Значение" value="'+array[key]['value']+'"> </div> <div class="col"><button type="button" class="btn btn-secondary remove-specification">Удалить характеристику</button></div> </div>');
+        });
+            div.append('<div id="first-specification" class="form-row specification-row"> <div class="col-3"> <input type="text" class="form-control specification-name" placeholder="Название"> </div> <div class="col"> <input type="text" class="form-control specification-unit" placeholder="Единица измерения"> </div> <div class="col"> <input type="text" class="form-control specification-value" placeholder="Значение"> </div> <div class="col"><button type="button" class="btn btn-secondary add-specification">Добавить характеристику</button></div> </div>');
+        $('#add_product_form_specification').after(div);
+
+
+        $(document).on('click', '.add-specification', function () {
+            $(this).closest('.form-row').after('<div class="form-row specification-row"> <div class="col-3"> <input type="text" class="form-control specification-name" placeholder="Название"> </div> <div class="col"> <input type="text" class="form-control specification-unit" placeholder="Единица измерения"> </div> <div class="col"> <input type="text" class="form-control specification-value" placeholder="Значение"> </div> <div class="col"><button type="button" class="btn btn-secondary add-specification">Добавить характеристику</button></div> </div>');
+            $(this).removeClass('add-specification').addClass('remove-specification').html('Удалить характеристику');
+        });
+        $(document).on('click', '.remove-specification', function () {
+            $(this).closest('.form-row').remove();
+        });
+        $(document).on('submit', '#edit_product_form',function () {
+            let specifications = $('.specification-row');
+            let array = [];
+
+            $(specifications).each(function (key) {
+                if($(this).find('.specification-name').val() !== "" && $(this).find('.specification-value').val() !== ""){
+                    array[key] = [];
+                    array[key][0] = $(this).find('.specification-name').val();
+                    array[key][1] = $(this).find('.specification-unit').val();
+                    array[key][2] = $(this).find('.specification-value').val();
+
                 }
             });
+            $('#add_product_form_specification').val(JSON.stringify(array));
+        })
+    });
+</script>
 
-            let div = $('<div></div>').addClass('form-group').html('<label for="first-specification">Характеристики</label> ' +
-                '<div class="form-row"> <div class="col-3">Название</div> <div class="col-3">Единица измерения</div> <div class="col-3">Значение</div>' +
-                '<div id="first-specification" class="form-row specification-row"> <div class="col-3"> <input type="text" class="form-control specification-name" placeholder="Название"> </div> <div class="col"> <input type="text" class="form-control specification-unit" placeholder="Единица измерения"> </div> <div class="col"> <input type="text" class="form-control specification-value" placeholder="Значение"> </div> <div class="col"><button type="button" class="btn btn-secondary add-specification">Добавить характеристику</button></div> </div>');
-            $('#add_product_form_specification').after(div);
-
-            $(document).on('click', '.add-specification', function () {
-                $(this).closest('.form-row').after('<div class="form-row specification-row"> <div class="col-3"> <input type="text" class="form-control specification-name" placeholder="Название"> </div> <div class="col"> <input type="text" class="form-control specification-unit" placeholder="Единица измерения"> </div> <div class="col"> <input type="text" class="form-control specification-value" placeholder="Значение"> </div> <div class="col"><button type="button" class="btn btn-secondary add-specification">Добавить характеристику</button></div> </div>');
-                $(this).removeClass('add-specification').addClass('remove-specification').html('Удалить характеристику');
-            });
-            $(document).on('click', '.remove-specification', function () {
-                $(this).closest('.form-row').remove();
-            });
-            $(document).on('submit', '#add_product_form',function (e) {
-                let specifications = $('.specification-row');
-                let array = [];
-
-                $(specifications).each(function (key) {
-                    if($(this).find('.specification-name').val() !== "" && $(this).find('.specification-value').val() !== ""){
-                        array[key] = [];
-                        array[key][0] = $(this).find('.specification-name').val();
-                        array[key][1] = $(this).find('.specification-unit').val();
-                        array[key][2] = $(this).find('.specification-value').val();
-
-                    }
-                });
-                $('#add_product_form_specification').val(JSON.stringify(array));
-            })
-        });
-    </script>
 {% endblock %}
+

@@ -19,6 +19,8 @@ class ProductController extends AbstractController
     public function index($slug, ProductRepository $productRepository, Request $request, ProductService $productService)
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
+        if(empty($product))
+            return new Response('Product not found', 404);
         $specifications = $productService->getSpecifications($product);
         $brand = $product->getBrand();
         $product = $productService->getProductPrice($product);
@@ -57,7 +59,9 @@ class ProductController extends AbstractController
             return new Response(null, 200);
         $products = new ArrayCollection();
         foreach ($viewed as $item) {
-            $products->add($productService->getProductPrice($productRepository->findOneBy(['slug' => $item])));
+            $prod = $productRepository->findOneBy(['slug' => $item]);
+            if(!empty($prod))
+                $products->add($productService->getProductPrice($prod));
         }
         return $this->render('recently_viewed.html.twig',
             ['products' => $products]);

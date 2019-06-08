@@ -161,6 +161,16 @@ class Product
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    
+
+    /**
      * @return mixed
      */
     public function getSlug()
@@ -441,7 +451,6 @@ class Product
     {
         if ($this->specifications->contains($specification)) {
             $this->specifications->removeElement($specification);
-            // set the owning side to null (unless already changed)
             if ($specification->getProduct() === $this) {
                 $specification->setProduct(null);
             }

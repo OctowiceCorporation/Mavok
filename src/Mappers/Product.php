@@ -50,4 +50,26 @@ class Product
             $formDTO->getBrand()
         );
     }
+
+    static function EntityToFormDTO(ProductEntity $product): ProductFormDTO
+    {
+        $specif = [];
+        foreach ($product->getSpecifications() as $key => $specification) {
+            $specif[$key] = ['name' => $specification->getName(), 'unit' => $specification->getUnit(), 'value' => $specification->getValue()];
+        }
+        return new ProductFormDTO(
+            $product->getCategory(),
+            $product->getName(),
+            $product->getWholesalePrice(),
+            $product->getRetailPrice(),
+            $product->getIsAvailable(),
+            $product->getIsVisible(),
+            $product->getSpecialOffer(),
+            $product->getMinimumWholesale(),
+            $product->getProductUnit(),
+            $product->getCurrencyName(),
+            $product->getBrand(),
+            json_encode($specif)
+        );
+    }
 }

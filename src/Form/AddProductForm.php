@@ -7,12 +7,12 @@ namespace App\Form;
 use App\DTO\CategoryForm;
 use App\DTO\ProductFormDTO;
 use App\Entity\Brand;
+use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,9 +21,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddProductForm extends AbstractType
 {
+    private $rep;
+
+    /**
+     * AddProductForm constructor.
+     * @param $rep
+     */
+    public function __construct(CategoryRepository $rep)
+    {
+        $this->rep = $rep;
+    }
+
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $categories = $this->rep->findAll();
+        foreach ($categories as $key => $category) {
+            if(!$category->getChildren()->isEmpty())
+                unset($categories[$key]);
+        }
+
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Название'
@@ -34,6 +52,10 @@ class AddProductForm extends AbstractType
                 'attr' => [
                     'class' => 'summernote',
                 ]
+            ])
+            ->add('category', ChoiceType::class,[
+                'choices' => $categories,
+                'choice_label' => 'name',
             ])
             ->add('images', FileType::class,[
                 'label' => 'Изображение',
