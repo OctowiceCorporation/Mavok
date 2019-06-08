@@ -22,7 +22,7 @@ class CategoryForm
      * @param $is_visible
      * @param $image
      */
-    public function __construct($name, $description, $usd, $eur, $is_visible, $image = null)
+    public function __construct($name = null, $description = null, $usd = null, $eur = null, $is_visible = null, $image = null)
     {
         $this->name = $name;
         $this->description = $description;
