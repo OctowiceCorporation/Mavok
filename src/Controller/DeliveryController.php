@@ -85,12 +85,7 @@ class DeliveryController extends AbstractController
                     $data['type'] = 'Другое';
                     break;
             }
-            dd($data);
         }
-
-
-
-
 
         return $this->render('checkout.html.twig', ['form' => $form->createView()]);
     }

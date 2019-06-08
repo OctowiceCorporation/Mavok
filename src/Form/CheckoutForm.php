@@ -45,8 +45,7 @@ class CheckoutForm extends AbstractType
             ->add('comment', TextareaType::class,[
                 'label' => 'Комментарий',
                 'required' => false
-            ])
-            ->add('save', SubmitType::class, ['label' => 'Подтвердить заказ'])->getForm();
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -6,7 +6,6 @@ namespace App\Controller;
 
 
 use App\Entity\Category;
-use App\Entity\Currency;
 use App\Entity\Image;
 use App\Entity\NovaPoshtaCity;
 use App\Entity\NovaPoshtaPostOffice;
@@ -17,32 +16,40 @@ use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
 use App\Service\FilterService;
+use App\Service\MailerService;
 use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\CategoryService;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class DefaultController extends AbstractController
 {
 
     public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService, EntityManagerInterface $manager)
     {
-//        $mainCategories = $categoryRepository->findBy(['parent' => null]);
-//        $specialProducts = $productRepository->getSpecialProducts();
-//        $specialCollection = new ArrayCollection();
-//        foreach ($specialProducts as $specialProduct) {
-//            $specialCollection->add($productService->getProductPrice($specialProduct));
-//        }
-//        return $this->render('index.html.twig',
-//            ['mainCategories' => $mainCategories,
-//             'specialProducts' => $specialCollection]);
-        return $this->render('admin_index.html.twig');
+        $mainCategories = $categoryRepository->findBy(['parent' => null]);
+        $specialProducts = $productRepository->getSpecialProducts();
+        $specialCollection = new ArrayCollection();
+        foreach ($specialProducts as $specialProduct) {
+            $specialCollection->add($productService->getProductPrice($specialProduct));
+        }
+        $saleProducts = $productRepository->getSaleProducts();
+        $saleCollection = new ArrayCollection();
+        foreach ($saleProducts as $saleProduct) {
+            $saleCollection->add($productService->getProductPrice($saleProduct));
+        }
+        return $this->render('index.html.twig',
+            ['mainCategories' => $mainCategories,
+             'specialProducts' => $specialCollection,
+             'saleProducts' => $saleCollection]);
     }
 
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination)
@@ -88,6 +95,58 @@ class DefaultController extends AbstractController
             );
             return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'form' => $form->createView()]);
         }
+    }
+
+    public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, \Swift_Mailer $mailer, MailerService $mailerService, SessionInterface $session)
+    {
+        $info['name'] = $request->get('name');
+        $info['surname'] = $request->get('surname');
+        $info['email'] = $request->get('email');
+        $info['delivery']['type'] = $request->get('type');
+        if ($request->get('type') == 2) {
+            $info['delivery']['city'] = $request->get('city');
+            $info['delivery']['data'] = $request->get('data');
+        }
+        $basket = $session->get('basket');
+
+        $products = new ArrayCollection();
+        $total = 0;
+
+        foreach ($basket as $index => $item) {
+            $product = $productService->getProductPrice($productRepository->findOneBy(['id' => $index]))->setAmount($item);
+            $products->add($product);
+            if(!empty($product->getProductValue())){
+                if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale()))
+                    $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount();
+                else
+                    $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount();
+            }
+            else{
+                if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale()))
+                    $total += $product->getWholesalePrice()*$product->getAmount();
+                else
+                    $total += $product->getRetailPrice()*$product->getAmount();
+            }
+        }
+
+        $mail = new Swift_Message('Вы оформили заказ на сайте Mavok!');
+        $mail->setFrom('dzhezik@gmail.com')
+            ->setTo('dzhezik@gmail.com')
+            ->setBody(
+                $this->renderView(
+                    'confirmation.html.twig',
+                    [
+                        'name' => $info['name'],
+                        'surname' =>$info['surname'],
+                        'delivery' => $info['delivery'],
+                        'products' => $products,
+                        'total' =>$total
+                    ]
+                ),
+                'text/html'
+            );
+        $mailer->send($mail);
+        return $this->redirectToRoute('index');
     }
 
     public function parceNP(EntityManagerInterface $em)

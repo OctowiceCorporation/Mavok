@@ -20,174 +20,36 @@
 
 
 <!--Main layout-->
-    <div class="container wow fadeIn">
+    <div class="container wow fadeIn col-6">
 
         <!-- Heading -->
         <h2 class="my-5 h2 text-center">Checkout form</h2>
 
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'id':'checkout_form'} } ) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.surname) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.phone) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.data) }}
+        {{ form_row(form.comment) }}
+        <button type="submit" class="btn btn-outline-primary btn-lg mb-3" id="send-button">Подтвердить заказ</button>
         {{ form_end(form) }}
 
-        <!--Grid row-->
-        <div class="row">
-
-            <!--Grid column-->
-            <div class="col-md-8 mb-4">
-
-                <!--Card-->
-                <div class="card">
-
-                    <!--Card content-->
-                    <form class="card-body">
-
-                        <!--Grid row-->
-                        <div class="row">
-
-                            <!--Grid column-->
-                            <div class="col-md-6 mb-2">
-
-                                <!--firstName-->
-                                <div class="md-form ">
-                                    <input type="text" id="firstName" class="form-control">
-                                    <label for="firstName" class="">First name</label>
-                                </div>
-
-                            </div>
-                            <!--Grid column-->
-
-                            <!--Grid column-->
-                            <div class="col-md-6 mb-2">
-
-                                <!--lastName-->
-                                <div class="md-form">
-                                    <input type="text" id="lastName" class="form-control">
-                                    <label for="lastName" class="">Last name</label>
-                                </div>
-
-                            </div>
-                            <!--Grid column-->
-
-                        </div>
-                        <!--Grid row-->
-
-                        <!--email-->
-                        <div class="md-form mb-5">
-                            <input type="text" id="email" class="form-control" placeholder="youremail@example.com">
-                            <label for="email" class="">Email</label>
-                        </div>
-
-                        <!--phone-->
-                        <div class="md-form mb-5">
-                            <input type="text" id="phone" class="form-control" placeholder="+38(050)">
-                            <label for="phone" class="">Phone number</label>
-                        </div>
-
-                        <div class="d-block my-3">
-                            <label>Shipping method</label>
-                            <div class="custom-control custom-radio">
-                                <input id="ukrposhta" name="shippingMethod" type="radio" class="custom-control-input" checked required>
-                                <label class="custom-control-label" for="ukrposhta">Ukrposhta</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input id="novaposhta" name="shippingMethod" type="radio" class="custom-control-input" required>
-                                <label class="custom-control-label" for="novaposhta">Novaposhta</label>
-                            </div>
-                        </div>
-
-                        <!--Grid row-->
-                        <div class="row">
-
-                            <!--Grid column-->
-                            <div class="col-lg-4 col-md-12 mb-4">
-
-                                <label for="country">Oblast'</label>
-                                <select class="custom-select d-block w-100" id="oblast" required>
-                                    <option value="">Choose...</option>
-                                    <option>Kyivska</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please select a valid oblast'.
-                                </div>
-
-                            </div>
-                            <!--Grid column-->
-
-                            <!--Grid column-->
-                            <div class="col-lg-4 col-md-6 mb-4">
-
-                                <label for="state">City</label>
-                                <select class="custom-select d-block w-100" id="city" required>
-                                    <option value="">Choose...</option>
-                                    <option>Kyiv</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid city.
-                                </div>
-
-                            </div>
-                            <!--Grid column-->
-
-                            <!--Grid column-->
-                            <div class="col-lg-4 col-md-6 mb-4">
-
-                                <label for="zip">Zip-code</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Zip code required.
-                                </div>
-
-                            </div>
-                            <!--Grid column-->
-
-                        </div>
-                        <!--Grid row-->
-
-                        <hr>
-
-                        <div class="d-block my-3">
-                            <label>Chehlist' babos method</label>
-                            <div class="custom-control custom-radio">
-                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                                <label class="custom-control-label" for="credit">Credit card</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input id="nalichka" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                <label class="custom-control-label" for="nalichka">Nalichka</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-number">Credit card number</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Credit card number is required
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-expiration">Expiration</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Expiration date required
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-expiration">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Security code required
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
-
-                    </form>
-
-            </div>
+        <div class="modal fade" tabindex="-1" role="dialog" id="contactModal">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <br>
+                        <p class="text-dark h3">Thank you!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 {% endblock %}
 {% block javascripts %}
@@ -260,5 +122,35 @@
             })
 
         })
+    </script>
+    <script>
+        $('#checkout_form').on('submit', function(event){
+            event.preventDefault();
+            submitForm();
+        });
+
+        function submitForm(){
+            var name = $('#checkout_form_name').val();
+            var surname = $('#checkout_form_surname').val();
+            var email = $('#checkout_form_email').val();
+            var type = $('#checkout_form_type').val();
+            var city = $('#checkout_form_city').val();
+            var data = $('#checkout_form_data').val();
+
+            $.ajax({
+                url: "/sendMail",
+                data: {
+                    name: name,
+                    surname: surname,
+                    email: email,
+                    type: type,
+                    city : city,
+                    data: data
+                },
+            })
+                .done(function () {
+                    $('#contactModal').modal('show');
+                })
+        }
     </script>
 {% endblock %}

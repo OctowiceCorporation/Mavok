@@ -24,3 +24,6 @@ basket_view:
 header_categories:
     path: /header_categories
     controller: App\Controller\DefaultController::getHeaderCategories
+sendMail:
+    path: /sendMail
+    controller: App\Controller\DefaultController::sendMail
