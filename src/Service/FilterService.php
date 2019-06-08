@@ -62,7 +62,6 @@ class FilterService
                     $item['min'] = min($item['values']);
                     $item['max'] = max($item['values']);
                 }
-
             }
             foreach ($filter as $key =>$item) {
                 if (count($item['values']) == 1) {

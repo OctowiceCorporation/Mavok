@@ -27,3 +27,21 @@ header_categories:
 sendMail:
     path: /sendMail
     controller: App\Controller\DefaultController::sendMail
+admin:
+    path: /adminPage
+    controller: App\Controller\Admin\MainController:index
+categories:
+    path: /adminPage/categories
+    controller: App\Controller\Admin\CategoryController:categoriesView
+add_sub_category:
+    path: /adminPage/add_sub_category/{id}
+    controller: App\Controller\Admin\CategoryController:add_sub_category
+edit_category:
+    path: /adminPage/edit_category/{id}
+    controller: App\Controller\Admin\CategoryController:edit_category
+products:
+    path: /adminPage/products
+    controller: App\Controller\Admin\MainController:productsView
+get_products_by_category:
+    path: /adminPage/get_products_by_category/{id}
+    controller: App\Controller\Admin\ProductController:getProducts

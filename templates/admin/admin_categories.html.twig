@@ -1,0 +1,52 @@
+{% extends '/admin/admin_index.html.twig' %}
+
+
+
+{% block body %}
+    <div id="admin-categories"></div>
+{% endblock %}
+
+{% block javasprict %}
+    <script>
+        $(document).ready(function () {
+        $.ajax({
+            method: "POST",
+            url: '/header_categories',
+        })
+            .done(function(msg) {
+                let array = JSON.parse(msg);
+                console.log(array);
+                let parent = $('#admin-categories');
+                Object.keys(array).forEach(function (key) {
+                    callback_category(parent, array[key]);
+                });
+                function callback_category(element, category) {
+                    let is_sub_exist = false;
+                    if(category['sub'].length === undefined)
+                        is_sub_exist = true;
+
+                    let li = $('<li></li>').addClass('alert alert-light').append($('<a style="display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a>'));
+                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" class="btn btn-info">Редактировать категорию</a> <a href="/adminPage/get_products_by_category/'+category['id']+'" role="button" class="btn btn-info">Показать товары</a>');
+                    if(!category['has_products'] && !is_sub_exist)
+                        li.append('<a role="button" class="btn btn-info">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" role="button" class="btn btn-info">Добавить подкатегорию</a>');
+                    else if(category['has_products'] && !is_sub_exist)
+                        li.append('<a href="#" role="button" class="btn btn-info">Добавить товар</a>');
+                    else
+                        li.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" class="btn btn-info">Добавить подкатегорию</a>');
+
+
+                    if(is_sub_exist){
+                        let ul = $('<ul></ul>');
+                        li.append(ul);
+                        Object.keys(category['sub']).forEach(function (key) {
+                            callback_category(ul, category['sub'][key]);
+                        });
+                    }
+                    element.append(li);
+
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

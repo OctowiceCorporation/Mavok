@@ -16,6 +16,7 @@ class FilterForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->setMethod('GET');
         $filter = $options['filter'];
         foreach ($filter as $key => $item) {
             if(!empty($item['is_countable']) && $item['min'] != $item['max']){
@@ -27,6 +28,13 @@ class FilterForm extends AbstractType
                         'max' => $item['max'],
                     ]
                     ]);
+            }
+            elseif((isset($item['min']) && $item['min'] == $item['max'])){
+                $builder->add($key, HiddenType::class,[
+                    'attr' => [
+                        'class' => 'disabled'
+                    ]
+                ]);
             }
             else{
                 $builder->add($key, ChoiceType::class,[

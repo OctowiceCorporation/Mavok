@@ -45,6 +45,17 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function getProductsQuery(int $id = null)
+    {
+        $query =  $this->createQueryBuilder('p');
+
+        if(!empty($id)){
+            $query->where('p.category = :id')
+                ->setParameter('id', $id);
+        }
+
+        return $query->getQuery();
+    }
 
     // /**
     //  * @return Product[] Returns an array of Product objects
