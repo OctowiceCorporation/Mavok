@@ -148,6 +148,7 @@ class DefaultController extends AbstractController
                 'text/html'
             );
         $mailer->send($mail);
+        $session->remove('basket');
         return $this->redirectToRoute('index');
     }
 
@@ -633,6 +634,7 @@ class DefaultController extends AbstractController
         dd($root, $categories, $products);
 
     }
+
 
     public function getNP(NovaPoshtaCityRepository $cityRepository, $slug, CategoryRepository $categoryRepository)
     {

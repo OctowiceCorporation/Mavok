@@ -65,80 +65,32 @@
                 </div>
             </div>
         </div>
-        <!-- Categories -->
-            <div class="container">
-                <div class="col" style="padding-bottom: 1rem">
-                    <div class="viewed_title_container">
-                        <h3 class="viewed_title font-weight-bold">Категории</h3>
-                    </div>
-                </div>
-                <div class="row no-gutters" style="padding-top: 1rem; padding-bottom: 1rem">
-                    {% for category in mainCategories %}
-                        <a  href="{{ path('category', {'slug': category.slug}) }}">
-                            <div class="col-3 py-4">
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/images/{{ category.image }}" alt=""></div>
-                                <div style="text-align: center; margin-top: 0.7rem">
-                                    <div><a class="text-dark font-weight-bold">{{ category.name }}</a></div>
-                                </div>
-                            </div>
-                        </a>
-                    {% endfor %}
+    <!-- Categories -->
+        <div class="container">
+            <div class="col" style="padding-bottom: 1rem">
+                <div class="viewed_title_container">
+                    <h3 class="viewed_title font-weight-bold">Категории</h3>
                 </div>
             </div>
-        <!-- Best Sellers -->
-            <div class="container">
-                    <div class="col" style="padding-bottom: 1rem; padding-top: 1rem">
-                        <div class="viewed_title_container">
-                            <div class="tabs clearfix tabs-right">
-                                <div class="new_arrivals_title font-weight-bold">Хиты продаж</div>
-                                <ul class="clearfix">
-                                    <li class="active">
-                                        <a href="#">Посмотреть все</a>
-                                    </li>
-                                </ul>
-                                <div class="tabs_line"><span></span></div>
+            <div class="row no-gutters" style="padding-top: 1rem; padding-bottom: 1rem">
+                {% for category in mainCategories %}
+                    <a  href="{{ path('category', {'slug': category.slug}) }}">
+                        <div class="col-3 py-4">
+                            <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/images/{{ category.image }}" alt=""></div>
+                            <div style="text-align: center; margin-top: 0.7rem">
+                                <div><a class="text-dark font-weight-bold">{{ category.name }}</a></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="scrolling-wrapper">
-                        {% for specialProduct in specialProducts %}
-                            <a href="{{ path('product', {'slug': specialProduct.slug }) }}">
-                                <div class="arrivals_slider_item card" style="display: inline-block; border: unset; width: 22%">
-                                    <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                        <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                            <img src="/images/{{ specialProduct.image }}" alt="">
-                                        </div>
-                                        <div class="product_content">
-                                            <div class="product_price">
-                                                {% if specialProduct.ProductValue is not null %}
-                                                {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
-                                            {% else %}
-                                            {{ specialProduct.retailPrice }} UAH
-                                            </div>
-                                        </div>
-                                        {% endif %}
-                                        <div style="width : 150px; height: 100px; overflow:hidden;" class="product_name"><p>{{ specialProduct.name }}</p></div>
-
-                                        <ul class="product_marks">
-                                                {% if specialProduct.sale is not null %}
-                                                    <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
-                                                {% endif %}
-                                                {% if specialProduct.specialOffer == 1 %}
-                                                    <li class="product_mark product_new">Хит продаж</li>
-                                                {% endif %}
-                                         </ul>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
-            <!-- Sale Products -->
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    <!-- Best Sellers -->
         <div class="container">
             <div class="col" style="padding-bottom: 1rem; padding-top: 1rem">
                 <div class="viewed_title_container">
                     <div class="tabs clearfix tabs-right">
-                        <div class="new_arrivals_title font-weight-bold">Скидки</div>
+                        <div class="new_arrivals_title font-weight-bold">Хиты продаж</div>
                         <ul class="clearfix">
                             <li class="active">
                                 <a href="#">Посмотреть все</a>
@@ -149,7 +101,7 @@
                 </div>
             </div>
             <div class="scrolling-wrapper">
-                {% for specialProduct in saleProducts %}
+                {% for specialProduct in specialProducts %}
                     <a href="{{ path('product', {'slug': specialProduct.slug }) }}">
                         <div class="arrivals_slider_item card" style="display: inline-block; border: unset; width: 22%">
                             <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
@@ -160,21 +112,21 @@
                                     <div class="product_price">
                                         {% if specialProduct.ProductValue is not null %}
                                         {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
-                                        {% else %}
-                                        {{ specialProduct.retailPrice }} UAH
+                                    {% else %}
+                                    {{ specialProduct.retailPrice }} UAH
                                     </div>
                                 </div>
                                 {% endif %}
-                                <div style="width : 150px; height: 100px; overflow:hidden;" class="product_name"><p>{{ specialProduct.name }}</p></div>
+                                <div style="width : 150px; overflow:hidden;" class="product_name"><p>{{ specialProduct.name }}</p></div>
 
                                 <ul class="product_marks">
-                                    {% if specialProduct.sale is not null %}
-                                        <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
-                                    {% endif %}
-                                    {% if specialProduct.specialOffer == 1 %}
-                                        <li class="product_mark product_new">Хит продаж</li>
-                                    {% endif %}
-                                </ul>
+                                        {% if specialProduct.sale is not null %}
+                                            <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
+                                        {% endif %}
+                                        {% if specialProduct.specialOffer == 1 %}
+                                            <li class="product_mark product_new">Хит продаж</li>
+                                        {% endif %}
+                                 </ul>
                             </div>
                         </div>
                     </a>

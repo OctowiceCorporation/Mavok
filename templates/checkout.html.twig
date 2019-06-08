@@ -33,23 +33,30 @@
         {{ form_row(form.type) }}
         {{ form_row(form.data) }}
         {{ form_row(form.comment) }}
-        <button type="submit" class="btn btn-outline-primary btn-lg mb-3" id="send-button">Подтвердить заказ</button>
+        <button type="submit" class="btn btn-outline-primary btn-lg mb-3">Подтвердить заказ</button>
         {{ form_end(form) }}
-
-        <div class="modal fade" tabindex="-1" role="dialog" id="contactModal">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <br>
-                        <p class="text-dark h3">Thank you!</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
+    </div>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <h4>
+                        Спасибо за заказ!<br>
+                        Письмо с подтвержением отправлено вам на почту.
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ path('index') }}">
+                        <button type="button" class="btn btn-primary" style="font-size: 15px">На главную</button>
+                    </a>
                 </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
 {% block javascripts %}
@@ -67,7 +74,6 @@
         // Animations initialization
         new WOW().init();
     </script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -149,7 +155,7 @@
                 },
             })
                 .done(function () {
-                    $('#contactModal').modal('show');
+                    $('#modal').modal('show');
                 })
         }
     </script>
