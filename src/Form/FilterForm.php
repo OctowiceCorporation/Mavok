@@ -29,6 +29,13 @@ class FilterForm extends AbstractType
                     ]
                     ]);
             }
+            elseif((isset($item['min']) && $item['min'] == $item['max'])){
+                $builder->add($key, HiddenType::class,[
+                    'attr' => [
+                        'class' => 'disabled'
+                    ]
+                ]);
+            }
             else{
                 $builder->add($key, ChoiceType::class,[
                     'label' => $item['name'],

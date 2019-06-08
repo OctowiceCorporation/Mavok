@@ -70,11 +70,13 @@
                                             <div class="slider-label" style="padding-top: 10px;"><span style="padding-left: 15px" class="slider-value"></span></div>
                                         </div></div>
                                 {% else %}
-                                    <div class="sidebar_section">
-                                        <div class="sidebar_subtitle">{{ form_label(fo) }}</div>
-                                        {{ form_widget(fo) }}
-                                    </div>
-                                    <br>
+                                    {% if fo.vars.attr.class is not defined %}
+                                        <div class="sidebar_section">
+                                            <div class="sidebar_subtitle">{{ form_label(fo) }}</div>
+                                            {{ form_widget(fo) }}
+                                        </div>
+                                        <br>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                             {{ form_end(form, {'render_rest': false}) }}
