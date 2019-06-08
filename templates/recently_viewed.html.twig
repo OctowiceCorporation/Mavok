@@ -19,7 +19,7 @@
                         <a href="{{ path('product', {'slug': product.slug}) }}" tabindex="0">
                         <div class="recently_viewed_item is_new line_item ml-3">
                                 <div class="recently_viewed_border"></div>
-                                <div class="recently_viewed_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src="/images/{{ product.image }}" alt=""></div>
+                                <div class="recently_viewed_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src="/images/{{ product.image.get(0).ImagePath }}" alt=""></div>
                                 <div class="recently_viewed_content" style="text-align: center">
                                     <div class="recently_viewed_price">
                                         {% if product.ProductValue is not null %}

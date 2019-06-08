@@ -31,7 +31,7 @@ class Product
             $entity->getProductUnit(),
             $entity->getCurrencyName(),
             $entity->getBrand()->getId(),
-            $entity->getImages()->get(0)->getImagePath()
+            $entity->getImages()
         );
     }
 
