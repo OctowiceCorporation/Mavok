@@ -4,10 +4,17 @@
 namespace App\Controller\Admin;
 
 
+use App\Entity\Image;
+use App\Entity\Specification;
+use App\Form\AddProductForm;
+use App\Mappers\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Service\CategoryService;
 use App\Service\ProductService;
+use App\Service\UploadFileService;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,5 +39,43 @@ class ProductController extends AbstractController
         );
 
         return $this->render('admin/admin_product.html.twig', ['products' => $products]);
+    }
+
+    public function addProduct($id, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService)
+    {
+        $category = $categoryRepository->findOneBy(['id' => $id]);
+        if(empty($category))
+            return new Response('Category not found', 404);
+
+        $form = $this->createForm(AddProductForm::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()) {
+            $data = $form->getData();
+            $product = Product::FormDTOToEntity($data);
+            $product->setCategory($category);
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            foreach ($data->getImages() as $upload_image) {
+                $image = new Image();
+                $image->setProduct($product);
+                $image->setImagePath($fileService->upload($upload_image));
+                $entityManager->persist($image);
+            }
+
+            foreach (json_decode($data->getSpecification()) as $item) {
+                $spec = new Specification();
+                $spec->setName($item[0]);
+                $spec->setUnit($item[1]);
+                $spec->setValue($item[2]);
+                $spec->setProduct($product);
+                $entityManager->persist($spec);
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('product', ['slug' => $product->getSlug()]);
+        }
+        return $this->render('admin/edit_product.html.twig',['form' => $form->createView()]);
+
     }
 }

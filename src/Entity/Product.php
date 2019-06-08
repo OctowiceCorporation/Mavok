@@ -121,8 +121,31 @@ class Product
      */
     private $brand;
 
-    public function __construct()
+    /**
+     * Product constructor.
+     * @param $name
+     * @param $description
+     * @param null $currency_name
+     * @param $wholesale_price
+     * @param $retail_price
+     * @param $is_available
+     * @param $is_visible
+     * @param $special_offer
+     * @param $product_unit
+     * @param $brand
+     */
+    public function __construct($name = null, $description = null, $currency_name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $product_unit = null, $brand = null)
     {
+        $this->name = $name;
+        $this->description = $description;
+        $this->wholesale_price = $wholesale_price;
+        $this->retail_price = $retail_price;
+        $this->is_available = $is_available;
+        $this->is_visible = $is_visible;
+        $this->special_offer = $special_offer;
+        $this->product_unit = $product_unit;
+        $this->brand = $brand;
+        $this->currency_name = $currency_name;
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
         $this->is_visible = true;

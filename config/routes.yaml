@@ -45,3 +45,6 @@ products:
 get_products_by_category:
     path: /adminPage/get_products_by_category/{id}
     controller: App\Controller\Admin\ProductController:getProducts
+add_product:
+    path: /adminPage/add_product/{id}
+    controller: App\Controller\Admin\ProductController:addProduct

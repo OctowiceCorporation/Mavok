@@ -97,8 +97,6 @@ class DeliveryController extends AbstractController
             unset($basket[$id]);
         else
             $basket[$id] -= 1;
-
-
     }
 
     public function clearBasket()
