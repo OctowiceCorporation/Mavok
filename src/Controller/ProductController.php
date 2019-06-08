@@ -38,6 +38,18 @@ class ProductController extends AbstractController
         return $response;
     }
 
+    public function searchProduct($text, ProductRepository $productRepository)
+    {
+        $products = $productRepository->searchProducts($text);
+        $array = [];
+        foreach ($products as $key => $product) {
+            $array[$key]['name'] = $product->getName();
+            $array[$key]['slug'] = $product->getSlug();
+            $array[$key]['category'] = $product->getCategory()->getName();
+        }
+        return new Response(json_encode($array));
+    }
+
     public function getRecentlyViewed(Request $request, ProductService $productService, ProductRepository $productRepository)
     {
         $viewed = json_decode($request->cookies->get('viewed_products'));

@@ -9,6 +9,9 @@ category:
 product:
     path: /product/{slug}
     controller: App\Controller\ProductController::index
+search_product:
+    path: /search_product/{text}
+    controller: App\Controller\ProductController::searchProduct
 add_to_basket:
     path: /add_to_basket
     controller: App\Controller\DeliveryController:addToBasket
@@ -48,3 +51,4 @@ get_products_by_category:
 add_product:
     path: /adminPage/add_product/{id}
     controller: App\Controller\Admin\ProductController:addProduct
+

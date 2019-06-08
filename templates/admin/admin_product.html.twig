@@ -6,17 +6,17 @@
             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
         </div>
         <div class="card-body">
+            <div id="product-loader" style="position: absolute; display: none; width: 100%; height: 100%; z-index: 100000; background-image: url('/loader.gif'); background-repeat: no-repeat; background-position: top center"></div>
             <div class="table-responsive">
-                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6">
-                        </div><div class="col-sm-12 col-md-6"><div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row">
+                            <div class="col-sm-12 col-md-6"><div id="dataTable_filter" class="dataTables_filter"><label>Искать товары:<input id="admin-product-search" type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label><button id="admin-product-search-button" style="margin-left: 5px" class="btn btn-secondary">Искать</button></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <thead>
                                 <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 86.0024px;">Name</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 131.002px;">Position</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 61.0024px;">Office</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31.0024px;">Age</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 69.0024px;">Start date</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;">Salary</th></tr>
                                 </thead>
                                 <tfoot>
                                 <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Age</th><th rowspan="1" colspan="1">Start date</th><th rowspan="1" colspan="1">Salary</th></tr>
                                 </tfoot>
-                                <tbody>
+                                <tbody id="product-tbody">
                                 {% for product in products %}
                                 <tr role="row" class="odd">
                                     <td class="sorting_1"><a target="_blank" href="{{ path('product', {'slug': product.slug}) }}">{{ product.name }}</a></td>
@@ -38,4 +38,44 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javasprict %}
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '#admin-product-search-button',function () {
+                let text = $('#admin-product-search').val();
+                if(/\S/.test(text)){
+                    $('#product-loader').show();
+                    $.ajax({
+                        method: "GET",
+                        url: "/search_product/" + text,
+                    })
+                        .done(function (result) {
+                            result = JSON.parse(result);
+                            $('#product-tbody').find('tr').remove();
+                            $('.pagination').remove();
+                            let tr;
+                            Object.keys(result).forEach(function (key) {
+                                tr = $('<tr role="row" class="odd"></tr>');
+                                tr.append('<td>'+result[key]['name']+'</td>');
+                                tr.append('<td>'+result[key]['name']+'</td>');
+                                tr.append('<td>'+result[key]['name']+'</td>');
+                                tr.append('<td>'+result[key]['name']+'</td>');
+                                tr.append('<td>'+result[key]['name']+'</td>');
+                                tr.append('<td>'+result[key]['name']+'</td>');
+
+                                $('#product-tbody').append(tr);
+                            });
+                            $('#product-loader').hide();
+                        })
+                        .fail(function () {
+                            alert("Error. Something went wrong.");
+                            $('#product-loader').hide();
+                        });
+                }
+            });
+
+        });
+    </script>
 {% endblock %}
