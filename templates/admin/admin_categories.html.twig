@@ -1,7 +1,5 @@
 {% extends '/admin/admin_index.html.twig' %}
 
-
-
 {% block body %}
     <div id="admin-categories"></div>
 {% endblock %}
@@ -25,18 +23,18 @@
                     if(category['sub'].length === undefined)
                         is_sub_exist = true;
 
-                    let li = $('<li></li>').addClass('alert alert-light').append($('<a style="display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a>'));
-                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" class="btn btn-info">Редактировать категорию</a> <a href="/adminPage/get_products_by_category/'+category['id']+'" role="button" class="btn btn-info">Показать товары</a>');
-                    if(!category['has_products'] && !is_sub_exist)
-                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" class="btn btn-info">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" role="button" class="btn btn-info">Добавить подкатегорию</a>');
+                    let li = $('<li></li>').addClass('alert alert-light mb-2').append($('<a style="display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a>'));
+                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" style="float: right" class="btn btn-primary mx-2">Редактировать категорию</a> <a href="/adminPage/get_products_by_category/'+category['id']+'" role="button" style="float: right" class="btn btn-success mx-2">Показать товары</a>');
+                    if(!category['has_products'] && is_sub_exist )
+                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right" class="btn btn-info mx-2">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" role="button"  style="float: right" class="btn btn-warning mx-2">Добавить подкатегорию</a>');
                     else if(category['has_products'] && !is_sub_exist)
-                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" class="btn btn-info">Добавить товар</a>');
+                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right" class="btn btn-info mx-2">Добавить товар</a>');
                     else
-                        li.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" class="btn btn-info">Добавить подкатегорию</a>');
+                        li.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" style="float: right" class="btn btn-info mx-2">Добавить подкатегорию</a>');
 
 
                     if(is_sub_exist){
-                        let ul = $('<ul></ul>');
+                        let ul = $('<ul></ul>').addClass('my-3');
                         li.append(ul);
                         Object.keys(category['sub']).forEach(function (key) {
                             callback_category(ul, category['sub'][key]);
