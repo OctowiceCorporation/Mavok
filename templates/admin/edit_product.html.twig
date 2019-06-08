@@ -1,4 +1,11 @@
 {% extends '/admin/admin_index.html.twig' %}
+{% block style %}
+<style>
+    select.form-control:not([size]):not([multiple]) {
+        height: auto!important;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
     {{ form_start(form, {'attr': {'id': 'add_product_form'}}) }}
