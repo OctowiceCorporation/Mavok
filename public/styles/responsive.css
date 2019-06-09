@@ -408,6 +408,11 @@
 	#resp_logo {
 		display: inline-block!important;
 	}
+	#container {
+		width:100%;
+		padding: unset;
+		margin: unset;
+	}
 	.logo_container, .wishlist_cart
 	{
 		height: 72px;

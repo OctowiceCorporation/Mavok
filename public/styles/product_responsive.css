@@ -390,6 +390,18 @@
 	{
 		height: 72px;
 	}
+	#logo_container {
+		display: none;
+	}
+	#basket {
+		display: none;
+	}
+	#resp_basket {
+		display: inline-block!important;
+	}
+	#resp_logo {
+		display: inline-block!important;
+	}
 	.logo a
 	{
 		font-size: 24px;

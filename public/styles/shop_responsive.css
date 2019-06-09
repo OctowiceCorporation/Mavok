@@ -326,6 +326,18 @@
 		padding-top: 1rem;
 		padding-bottom: 1rem;
 	}
+	#logo_container {
+		display: none;
+	}
+	#basket {
+		display: none;
+	}
+	#resp_basket {
+		display: inline-block!important;
+	}
+	#resp_logo {
+		display: inline-block!important;
+	}
 	#filter {
 		display: none;
 	}
