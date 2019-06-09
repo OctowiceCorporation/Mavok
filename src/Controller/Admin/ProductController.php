@@ -39,7 +39,9 @@ class ProductController extends AbstractController
             $request->query->getInt('limit', 30)
         );
 
-        return $this->render('admin/admin_product.html.twig', ['products' => $products]);
+        return $this->render('admin/admin_product.html.twig', [
+            'products' => $products,
+            'category' => $category]);
     }
 
     public function addProduct($id, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService)
