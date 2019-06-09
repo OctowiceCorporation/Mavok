@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'ru'
+    minimal_order_price: 1000
     eur_value: 30
     usd_value: 26
     app.uploads_dir: '%kernel.project_dir%/public/images/'

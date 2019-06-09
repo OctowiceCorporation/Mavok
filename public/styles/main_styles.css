@@ -517,6 +517,7 @@ section
 .logo
 {
 	top: 50%;
+	padding-right: 15px;
 	-webkit-transform: translateY(-50%);
 	-moz-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);

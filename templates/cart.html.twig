@@ -15,7 +15,6 @@
 {% endblock %}
 {% block body %}
     <!-- Cart -->
-
     {% if products is defined %}
     <div class="cart_section">
         <div class="container">
@@ -27,7 +26,7 @@
                             <ul class="cart_list">
                                 {% for product in products %}
                                     <li class="cart_item clearfix">
-                                        <div class="cart_item_image"><img src="/images/{{ product.image }}" alt=""></div>
+                                        <div class="cart_item_image"><img src="/images/{{ product.image.get(0).imagePath }}" alt=""></div>
                                         <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                             <div class="cart_item_name cart_info_col">
                                                 <div class="cart_item_title">Название</div>
@@ -87,7 +86,7 @@
 
                         <div class="cart_buttons">
                             <a href="{{ path('checkout') }}">
-                                <button type="button" class="button cart_button_checkout">Оформить заказ</button>
+                                <button type="button" class="button cart_button_checkout" id="checkout_button">Оформить заказ</button>
                             </a>
                         </div>
                     </div>
@@ -95,6 +94,25 @@
             </div>
         </div>
     </div>
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="border: unset">
+{#                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                            <span aria-hidden="true">&times;</span>#}
+{#                        </button>#}
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4>
+                            Извините, но минимальная сумма заказа составляет {{ minOrder }}грн.
+                        </h4>
+                    </div>
+                    <div class="modal-footer" style="border: unset">
+                        <button type="button" class="btn-primary btn" data-dismiss="modal" aria-label="Close" style="font-size: 15px">Продолжить покупки</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
         <div class="container">
             <h3>Габела, пустая корзина</h3>
@@ -115,5 +133,13 @@
 <script src="js/cart_custom.js"></script>
 <script src="js/product_custom.js"></script>
 <script src="js/main.js"></script>
+    <script>
+            document.getElementById('checkout_button').addEventListener('click', function(evt) {
+                if ({{ minOrder }} > {{ total }}) {
+                    evt.preventDefault();
+                    $('#modal').modal('show');
+                }
+            }, false);
+    </script>
 
 {% endblock %}

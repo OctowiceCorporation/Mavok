@@ -215,6 +215,8 @@
 	{
 		visibility: hidden;
 		opacity: 0;
+		padding-left: 1rem;
+		width: fit-content;
 	}
 	.char_col:not(:last-child):not(:nth-child(3))
 	{
@@ -394,6 +396,18 @@
 	{
 		display: none;
 	}
+	#logo_container {
+		display: none;
+	}
+	#basket {
+		display: none;
+	}
+	#resp_basket {
+		display: inline-block!important;
+	}
+	#resp_logo {
+		display: inline-block!important;
+	}
 	.logo_container, .wishlist_cart
 	{
 		height: 72px;
@@ -487,9 +501,9 @@
 	}
 	.main_nav
 	{
-		width: calc(100% + 30px);
-		margin-left: -15px;
-		margin-right: -15px;
+		width: calc(100% - 30px);
+		margin-left: 15px;
+		margin-right: 15px;
 		margin-top: 0px;
 	}
 	.main_nav_content

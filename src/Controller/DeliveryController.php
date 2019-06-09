@@ -38,11 +38,12 @@ class DeliveryController extends AbstractController
 
     public function basketView(SessionInterface $session, ProductRepository $productRepository, ProductService $productService)
     {
+        $minimal_order_price = $this->getParameter('minimal_order_price');
         $basket = $session->get('basket');
         $products = new ArrayCollection();
         $total = 0;
         if(empty($basket))
-            return $this->render('cart.html.twig');
+            return $this->render('cart.html.twig', ['total' => null, 'minOrder' => $minimal_order_price] );
         foreach ($basket as $index => $item) {
             $product = $productService->getProductPrice($productRepository->findOneBy(['id' => $index]))->setAmount($item);
             $products->add($product);
@@ -59,9 +60,7 @@ class DeliveryController extends AbstractController
                     $total += $product->getRetailPrice()*$product->getAmount();
             }
         }
-
-
-        return $this->render('cart.html.twig',['products' => $products, 'total' => $total]);
+        return $this->render('cart.html.twig',['products' => $products, 'total' => $total, 'minOrder' => $minimal_order_price]);
     }
 
     public function checkout(SessionInterface $session, Request $request)
@@ -90,9 +89,9 @@ class DeliveryController extends AbstractController
         return $this->render('checkout.html.twig', ['form' => $form->createView()]);
     }
 
-    public function minusProduct($id)
+    public function minusProduct($id, SessionInterface $session)
     {
-        $basket = $this->session->get('basket');
+        $basket = $session->get('basket');
         if($basket[$id] == 1)
             unset($basket[$id]);
         else

@@ -99,7 +99,7 @@
             {% for product in products %}
             <tr style="margin-top: 1rem; margin-bottom: 1rem;border-bottom: thin solid #dadada">
                 <td style="width: 25%;text-align: center;">
-                    <img src="{{ url('index') }}/{{ product.image }}">
+                    <img src="{{ url('index') }}/{{ product.image.get(0).imagePath }}">
                 </td>
                 <td style=" width: 35%; margin: auto; text-align: center;">
                     {{ product.name }}
