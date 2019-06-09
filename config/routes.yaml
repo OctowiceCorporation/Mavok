@@ -54,4 +54,10 @@ add_product:
 edit_product:
     path: /adminPage/edit_product/{id}
     controller: App\Controller\Admin\ProductController:editProduct
+brands:
+    path: /adminPage/show_brands
+    controller: App\Controller\Admin\BrandController:index
+add_brand_ajax:
+    path: /adminPage/add_brand_ajax
+    controller: App\Controller\Admin\BrandController:addBrandAjax
 

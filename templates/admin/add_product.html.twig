@@ -21,6 +21,9 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script>
         $(document).ready(function() {
+            let a = $('<a id="add-brand-button" style="text-decoration: underline; color: #4954ff; cursor: pointer">Добавить нового производителя</a>').addClass('mb-2');
+            $('#add_product_form_brand').after(a);
+            
             $('.summernote').summernote({
                 height: 300,
                 popover: {
@@ -59,12 +62,62 @@
                     }
                 });
                 $('#add_product_form_specification').val(JSON.stringify(array));
+            });
+            
+            $(document).on('click', '#add-brand-button',function () {
+                let div = $('<div></div>').addClass('form-group').html('<label for="new-brand-row">Новый производитель</label> ' +
+                    '<div id="new-brand-row" class="form-row">' +
+                    ' <div class="col">' +
+                    '   <input required="required" type="text" class="form-control brand-name" placeholder="Название">' +
+                    ' </div> <div class="col">' +
+                    ' <input required="required" type="text" class="form-control brand-country" placeholder="Страна производитель"> ' +
+                    '</div>' +
+                    ' <div class="col">' +
+                    ' <input pattern="[0-9]+([\.][0-9]+)?" type="text" class="form-control brand-usd" placeholder="Значение доллара"> ' +
+                    '</div>' +
+                    ' <div class="col">' +
+                    ' <input pattern="[0-9]+([\.][0-9]+)?" type="text" class="form-control brand-euro" placeholder="Значение евро"> ' +
+                    '</div>' +
+                    ' <div class="col"><button type="button" class="btn btn-secondary confirm-add-brand">Добавить производителя</button></div>' +
+                    ' <div class="col"><button type="button" class="btn btn-secondary cancel-brand-add">Отменить</button></div>' +
+                    ' </div>');
+                $(this).after(div);
+                $(this).removeAttr('id');
+                $(this).attr('id','no-brand-button');
+            });
+            $(document).on('click', '.cancel-brand-add',function () {
+                $(this).closest('.form-group').remove();
+                $('#no-brand-button').removeAttr('id').attr('id','add-brand-button');
+            });
+            $(document).on('click','.confirm-add-brand',function () {
+                let row = $('#new-brand-row');
+                if(!row.find('.brand-usd')[0].validity.valid || !row.find('.brand-euro')[0].validity.valid || !row.find('.brand-name')[0].validity.valid || !row.find('.brand-country')[0].validity.valid){
+                    row.find('.brand-usd')[0].reportValidity();
+                    row.find('.brand-euro')[0].reportValidity();
+                    row.find('.brand-name')[0].reportValidity();
+                    row.find('.brand-country')[0].reportValidity();
+                }
+                else{
+                    $.ajax({
+                        method: "GET",
+                        url: "/adminPage/add_brand_ajax",
+                        data:{
+                            name: row.find('.brand-name').val(),
+                            country: row.find('.brand-country').val(),
+                            usd: row.find('.brand-usd').val(),
+                            eur: row.find('.brand-euro').val()
+                        }
+                    })
+                    .done(function (result) {
+                        $('#add_product_form_brand').append('<option selected value="'+result+'">'+row.find('.brand-name').val()+'</option>');
+                        $('.cancel-brand-add').click();
+                    })
+                    .fail(function () {
+                        alert("Error. Something went wrong.");
+                        $('#product-loader').hide();
+                    });
+                }
             })
         });
-    </script>
-    <script>
-        var parent = document.getElementById('add_product_form_brand');
-        let a = $('<a href="admin_categories.html.twig">Добавить нового производителя</a>').addClass('mb-2');
-        a.insertAfter(parent);
     </script>
 {% endblock %}
