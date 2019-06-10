@@ -245,7 +245,7 @@
 	}
 	.tabs
 	{
-		padding-top: 80px;
+		padding-top: 15px;
 	}
 	.tabs.tabs-right ul
 	{
@@ -396,6 +396,15 @@
 	{
 		display: none;
 	}
+	.arrivals_slider_item {
+		width: 75%;
+	}
+	#footer_menu {
+		display: none;
+	}
+	#view_all {
+		display: none;
+	}
 	#logo_container {
 		display: none;
 	}
@@ -407,6 +416,9 @@
 	}
 	#resp_logo {
 		display: inline-block!important;
+	}
+	#view_all_resp {
+		display: inherit;
 	}
 	#container {
 		width:100%;
@@ -764,8 +776,6 @@
 	.copyright_container
 	{
 		height: auto;
-		padding-top: 30px;
-		padding-bottom: 30px;
 	}
 	.logos
 	{
