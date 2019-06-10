@@ -72,8 +72,10 @@ class FilterService
             return array_values($filter);
     }
 
-    public function isSubmited(array $data, array $filter, Category $last_category)
+    public function isSubmited(array $data, array $filter, Category $last_category, $pagination)
     {
+        if(empty($pagination))
+            $pagination = 1;
         foreach ($filter as $index => $item) {
             if(!is_array($data[$index]))
                 $filter[$index]['values'] = explode(';',$data[$index]);
@@ -84,39 +86,35 @@ class FilterService
         }
 
         $result = $last_category->getProducts();
-        $arr = [];
-        foreach ($result as $product) {
-            $arr[$product->getId()]['name'] = $product->getName();
-            foreach ($product->getSpecifications() as $item) {
-                $arr[$product->getId()]['specif'][] = $item->getName().' .. '.$item->getValue();
-            }
-        }
         $products = new ArrayCollection();
 
         foreach ($result as $product) {
-            $found = true;
-            $spec = [];
-            foreach ($product->getSpecifications() as $specification) {
-                $spec[$specification->getName()] = $specification->getValue();
-            }
+                $found = true;
+                $spec = [];
+            if(sizeof($products) <= $pagination*20){
+                foreach ($product->getSpecifications() as $specification) {
+                    $spec[$specification->getName()] = $specification->getValue();
+                }
 
-            foreach ($filter as $item) {
-                if(empty($item['is_countable'])) {
-                    if (!isset($spec[$item['name']]) || !in_array(mb_strtolower($spec[$item['name']]), $item['values'])) {
-                        $found = false;
-                        break;
+                foreach ($filter as $item) {
+                    if(empty($item['is_countable'])) {
+                        if (!isset($spec[$item['name']]) || !in_array(mb_strtolower($spec[$item['name']]), $item['values'])) {
+                            $found = false;
+                            break;
+                        }
                     }
-                }
-                else{
-                    if(!isset($spec[$item['name']]) || ($spec[$item['name']] < $item['values'][0] || $spec[$item['name']] > $item['values'][1])){
-                        $found = false;
-                        break;
+                    else{
+                        if(!isset($spec[$item['name']]) || ($spec[$item['name']] < $item['values'][0] || $spec[$item['name']] > $item['values'][1])){
+                            $found = false;
+                            break;
+                        }
                     }
                 }
             }
-            if($found) {
-                $products->add($this->productService->getProductPrice($product));
-            }
+                if($found) {
+                    $products->add($this->productService->getProductPrice($product));
+                }
+
         }
 
         return $products;
