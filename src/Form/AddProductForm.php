@@ -58,7 +58,7 @@ class AddProductForm extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('images', FileType::class,[
-                'label' => 'Изображение',
+                'label' => 'Изображения',
                 'required' => false,
                 'multiple' => true,
             ])

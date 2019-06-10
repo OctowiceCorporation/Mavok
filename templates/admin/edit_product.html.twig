@@ -69,7 +69,40 @@
                 }
             });
             $('#add_product_form_specification').val(JSON.stringify(array));
-        })
+        });
+
+        {% if images.get(0).imagePath is defined %}
+            let image = $('#add_product_form_images');
+            let formgroup = $('<div class="form-group"><div>').append('<label class="required">Уже добавленные изображения</label>');
+            let row = $('<div class="row"  style="margin-left: 0"></div>');
+            console.log(row);
+            {% for image in images %}
+                row.append('<div class="col-2 has-image"><img style="width: 100px; height: 100px; object-fit: contain" src="/images/{{ image.imagePath }}"><br><a class="delete-product-image" id="{{ image.id }}" style="text-decoration: underline; color: #4954ff; cursor: pointer">Удалить фото</a></div>');
+            {% endfor %}
+            formgroup.append(row);
+            image.closest('.form-group').after(formgroup);
+
+
+            $(document).on('click', '.delete-product-image', function () {
+                let image = $(this);
+                if($('.has-image').length === 1)
+                    image.closest('.form-group').remove();
+                else
+                    image.closest('.has-image').remove();
+
+                    // image.closest('.form-group').remove();
+                $.ajax({
+                    method: "GET",
+                    url: "/adminPage/delete_product_image/"+image.attr('id')
+                })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+                        alert("Error. Something went wrong.");
+                    });
+            });
+        {% endif %}
     });
 </script>
 
