@@ -156,7 +156,7 @@ input[type=checkbox].form-check-input + label.form-check-label {
 	padding-left:30px;
 	height:25px;
 	display:inline-block;
-	line-height:25px;
+	line-height:1;
 	background-repeat:no-repeat;
 	background-position: 0 0;
 	font-size:15px;
@@ -182,6 +182,9 @@ label[for='filter_form__token'] {
 }
 .col-form-label {
 	font-size: 1rem;
+}
+.sidebar_section {
+	line-height: 3;
 }
 .clear
 {

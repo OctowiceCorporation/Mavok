@@ -418,7 +418,10 @@
 		display: inline-block!important;
 	}
 	#view_all_resp {
-		display: inherit;
+		display: inherit!important;
+	}
+	#filter_trigger {
+		display: none;
 	}
 	#container {
 		width:100%;
@@ -506,7 +509,12 @@
 	}
 	.cart_count span
 	{
-		line-height: 21px;
+		line-height: 21px;#view_all_resp {
+		display: inherit!important;
+	}
+	#filter_trigger {
+		display: none;
+	}
 	}
 	.top_bar_user
 	{

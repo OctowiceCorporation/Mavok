@@ -26,7 +26,7 @@
     <div class="shop">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3"id="filter">
+                <div class="col-lg-3" id="filter">
                     <div class="shop_sidebar">
                         {% if form is defined %}
                             {{ form_start(form) }}
@@ -55,7 +55,7 @@
 
                 </div>
 
-                <div class="col-lg-9" style="padding-right: unset; padding-left: 20px">
+                <div class="col-lg-9">
 
                     {% if category is defined %}
                         {{ category.name }}<br>
@@ -107,12 +107,10 @@
 
 
 
-                        <div class="product_grid" style="width: 100vw">
-                            <div class="product_grid_border"></div>
+                        <div class="product_grid"">
                             {%  for product in products %}
-                            <div class="product_item is_new" style="height: 400px">
+                            <div class="product_item is_new col-lg-3 col-sm-6 px-0" style="height: 400px;">
                                 <a href="{{ path('product', {'slug': product.slug}) }}">
-                                <div class="product_border"></div>
                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src="/images/{{ product.image.get(0).imagePath }}" alt=""></div>
                                 <div class="product_content" style="height: 150px">
                                     <div class="product_price">
@@ -131,7 +129,7 @@
                                         <li class="product_mark product_discount">-{{ product.sale }}%</li>
                                     {% endif %}
                                     {% if product.specialOffer == 1 %}
-                                        <li class="product_mark product_new">Хит продаж</li>
+                                        <li class="product_mark product_new"><i class="fas fa-thumbs-up"></i></li>
                                     {% endif %}
                                 </ul>
                             </a>
@@ -195,9 +193,9 @@
     } );
     </script>
     <script>
-        $('.menu_trigger').on('click', function () {
+        $('#filter_trigger').on('click', function () {
             if ($('#filter').css('display') == 'none'){
-                $('#filter').css('display','unset');
+                $('#filter').css('display','inherit');
             }
             else {
                 $('#filter').css('display','none');

@@ -46,7 +46,6 @@ class DefaultController extends AbstractController
         foreach ($saleProducts as $saleProduct) {
             $saleCollection->add($productService->getProductPrice($saleProduct));
         }
-//        dd($specialCollection,$saleCollection);
         return $this->render('index.html.twig',
             ['mainCategories' => $mainCategories,
              'specialProducts' => $specialCollection,

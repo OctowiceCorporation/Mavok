@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
     <link rel="stylesheet" type="text/css" href="/styles/product_styles.css">
     <link rel="stylesheet" type="text/css" href="/styles/product_responsive.css">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
 {% endblock %}
 {% block body %}
     <!-- Single Product -->
@@ -21,10 +22,16 @@
             <div class="row">
 
                 <!-- Images -->
-                <div class="col-lg-2 order-lg-1 order-2" style="height: 520px; overflow-y: auto">
+                <div class="col-lg-2 order-lg-1 order-2" style="height: 520px; overflow-y: auto" id="gallery">
                     <ul class="image_list">
                         {% for image in product.image %}
                             <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" alt=""></li>
+                            <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" alt=""></li>
+                            <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" alt=""></li>
+                            <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" alt=""></li>
+                            <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" alt=""></li>
+                            <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" alt=""></li>
+
                         {% endfor %}
                     </ul>
                 </div>
@@ -42,9 +49,7 @@
                 <!-- Description -->
                 <div class="col-lg-5 order-3">
                     <div class="product_description">
-                        <div class="product_category">Laptops</div>
                         <div class="product_name">{{ product.name }}</div>
-                        <div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
                         <div class="order_info d-flex flex-row">
                             <form action="#">
                                 <div class="clearfix" style="z-index: 1000;">
@@ -68,7 +73,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="button_container">
-                                    <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Добавить в корзину <i class="fas fa-cart-plus"></i></button>
+                                    <button type="button" class="button cart_button add_to_basket " value="{{ product.slug }}">Добавить в корзину <i class="fas fa-cart-plus"></i></button>
                                 </div>
 
                             </form>
@@ -77,11 +82,11 @@
                 </div>
             </div>
             <div class="product_text">{{ product.description|raw }}</div>
-            <table class="table" style="margin-top: 3rem; width: 57.5%">
+            <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Characteristic</th>
-                    <th scope="col">Value</th>
+                    <th scope="col">Характеристика</th>
+                    <th scope="col">Значение</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -44,7 +44,7 @@ $(document).ready(function () {
             $(elements).each(function (key) {
                 if(key === 0){
                     $(this).show();
-                    $(this).css('visibility', 'visible').css('top', 0).css('opacity', 1).css('margin-top', '36px').css('border','thin solid #dadada').css('background-color', 'white').css('left',0);
+                    $(this).css('visibility', 'visible').css('top', 0).css('opacity', 1).css('margin-top', '36px').css('border','thin solid #dadada').css('background-color', 'white').css('left',0).css('width','auto');
                 }
             });
             $(not_closing).each(function (key) {

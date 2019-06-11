@@ -335,6 +335,32 @@
 	{
 		display: none;
 	}
+	.cart_section {
+		padding-top: 15px;
+	}
+	.cart_items {
+		margin-top: 10px;
+	}
+	.cart_item_text {
+		max-width: unset;
+		margin-top: unset;
+	}
+	.cart_item_name {
+		max-width: unset;
+		display: inline-flex;
+	}
+	.cart_item_quantity {
+		display: inline-flex;
+	}
+	.cart_item_image {
+		margin-top: unset;
+	}
+	.cart_item {
+		border-bottom: solid thin #dadada;
+	}
+	.product_quantity {
+		margin-top: unset;
+	}
 	.logo_container, .wishlist_cart
 	{
 		height: 72px;

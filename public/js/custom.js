@@ -177,7 +177,7 @@ $(document).ready(function()
 		{
 			var menu = $('.page_menu');
 			var menuContent = $('.page_menu_content');
-			var menuTrigger = $('.menu_trigger');
+			var menuTrigger = $('#menu_trigger');
 
 			//Open / close page menu
 			menuTrigger.on('click', function()

@@ -339,6 +339,18 @@
 		display: inline-block!important;
 	}
 	#filter {
+		display: inherit;
+	}
+	#menu_trigger {
+		display: none;
+	}
+	#filter {
+		display: none;
+	}
+	.product_grid {
+		width: 100vw;
+	}
+	.page_menu_content {
 		display: none;
 	}
 	.logo a

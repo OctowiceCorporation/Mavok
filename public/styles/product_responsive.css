@@ -213,6 +213,11 @@
 	{
 		visibility: hidden;
 		opacity: 0;
+		padding-left: 45px;
+	}
+	.header_hassubs ul {
+		padding-left: 25px;
+		margin-left: 15px;
 	}
 	.char_col:not(:last-child):not(:nth-child(3))
 	{
@@ -253,29 +258,39 @@
 	}
 	.image_list
 	{
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-		align-items: center;
-		padding-top: 15px;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		white-space: nowrap;
+		padding-top: 1rem;
 	}
 	.image_list li
 	{
-		width: calc(33.33333333% - 10px);
-		height: 220px;
-		margin-bottom: 0px;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		width: 22%;
+		background: #FFFFFF;
+		cursor: pointer;
+		padding-top: 40px;
+		padding-bottom: 24px;
+		text-align: center;
+		display: inline-block;
 	}
 	.image_list li:not(:last-child)
 	{
 		margin-right: 15px;
+		padding: 5px;
 	}
+	.image_list li:last-child
+	{
+		margin-right: 15px;
+		margin-bottom: 15px;
+		padding: unset;
+	}
+
 	.product_description
 	{
-		padding-top: 80px;
+		padding-top: 20px;
 	}
 	.newsletter_title_container
 	{
@@ -402,6 +417,35 @@
 	#resp_logo {
 		display: inline-block!important;
 	}
+	#view_all_resp {
+		display: inherit!important;
+	}
+	#filter_trigger {
+		display: none;
+	}
+	#gallery {
+		height: auto!important;
+	}
+	.product_text {
+		width: 100%;
+	}
+	.product_text img {
+		width: 100%;
+		height: auto;
+	}
+	.table {
+		width: 100%;
+	}
+	.order_info
+	{
+		margin-top: 15px;
+	}
+	.product_price {
+		margin-top: 15px;
+	}
+	.button_container {
+		margin-top: 15px;
+	}
 	.logo a
 	{
 		font-size: 24px;
@@ -485,15 +529,18 @@
 	{
 		margin-left: 0px;
 	}
+	.product_quantity input {
+		padding-left: unset;
+	}
 	.header_search
 	{
 		display: none;
 	}
 	.main_nav
 	{
-		width: calc(100% + 30px);
-		margin-left: -15px;
-		margin-right: -15px;
+		width: calc(100% - 30px);
+		margin-left: 15px;
+		margin-right: 15px;
 		margin-top: 0px;
 	}
 	.main_nav_content
@@ -502,7 +549,7 @@
 	}
 	.cat_menu_container
 	{
-		padding-left: 15px;
+		padding-left: 30px;
 	}
 	.menu_trigger_container
 	{
@@ -575,7 +622,7 @@
 	}
 	.single_product
 	{
-		padding-top: 80px;
+		padding-top: 30px;
 	}
 	.image_selected
 	{
@@ -592,6 +639,8 @@
 	.product_quantity
 	{
 		float: none;
+		margin-top: unset!important;
+		margin-left: 8px;
 	}
 	.product_color
 	{
@@ -602,9 +651,7 @@
 	{
 		font-size: 13px;
 		line-height: 32px;
-		padding-left: 25px;
-		padding-right: 25px;
-		padding-bottom: 45px;
+		padding: auto;
 	}
 	.newsletter_form
 	{
