@@ -54,6 +54,9 @@ add_product:
 edit_product:
     path: /adminPage/edit_product/{id}
     controller: App\Controller\Admin\ProductController:editProduct
+delete_product_image:
+    path: /adminPage/delete_product_image/{id}
+    controller: App\Controller\Admin\ProductController:deleteImage
 brands:
     path: /adminPage/show_brands
     controller: App\Controller\Admin\BrandController:index

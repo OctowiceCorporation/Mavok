@@ -79,7 +79,7 @@ class DefaultController extends AbstractController
             $form = $this->createForm(FilterForm::class, null, ['filter' => $filter]);
             $form->handleRequest($request);
             if($form->isSubmitted()){
-                $products = $filterService->isSubmited($form->getData(),$filter,$last_category);
+                $products = $filterService->isSubmited($form->getData(),$filter,$last_category, $request->get('page'));
                 $products = $pagination->paginate(
                     $products,
                     $request->query->getInt('page', 1),

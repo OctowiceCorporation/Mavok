@@ -10,6 +10,7 @@ use App\Entity\Specification;
 use App\Form\AddProductForm;
 use App\Mappers\Product;
 use App\Repository\CategoryRepository;
+use App\Repository\ImageRepository;
 use App\Repository\ProductRepository;
 use App\Service\CategoryService;
 use App\Service\ProductService;
@@ -84,9 +85,19 @@ class ProductController extends AbstractController
 
     }
 
+    public function deleteImage($id, ImageRepository $imageRepository, EntityManagerInterface $entityManager)
+    {
+        $image = $imageRepository->findOneBy(['id' => $id]);
+        unlink($this->getParameter('app.uploads_dir').$image->getImagePath());
+        $entityManager->remove($image);
+        $entityManager->flush();
+        return new Response('', 200);
+    }
+
     public function editProduct($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService)
     {
         $product = $productRepository->findOneBy(['id' => $id]);
+        $images =$product->getImages();
         if(empty($product))
             return new Response('Product not found', 404);
         $form = $this->createForm(AddProductForm::class, Product::EntityToFormDTO($product));
@@ -136,7 +147,7 @@ class ProductController extends AbstractController
 
         }
 
-        return $this->render('admin/edit_product.html.twig',['form' => $form->createView()]);
+        return $this->render('admin/edit_product.html.twig',['form' => $form->createView(), 'images' => $images]);
 
     }
 }
