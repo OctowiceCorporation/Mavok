@@ -164,12 +164,9 @@
 
                 </div>
             </div>
-            <div class="row px-4" id="filter_container" style="display: none">
-                <div id="filter_trigger">
-                    <div class="menu_trigger_text text-primary" style="font-size: large; text-align: center">Filter</div>
-                    <div class="cat_burger menu_burger_inner text-primary"><i style="font-size: 1.2rem" class="fas fa-filter"></i></div>
-                </div>
-            </div>
+            {% block filter %}
+            
+            {% endblock %}
         </div>
     </nav>
     <!-- Menu -->
