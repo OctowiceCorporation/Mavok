@@ -30,13 +30,13 @@
                         is_sub_exist = true;
 
                     let li = $('<li style="border: solid thin #dadada"></li>').addClass('alert alert-light mb-2 pb-3').append($('<a style="display: inline;" href="/category'+category["link"]+'">'+category["name"]+'</a>'));
-                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" style="float: right" class="btn btn-primary mx-2">Редактировать категорию</a> <a href="/adminPage/get_products_by_category/'+category['id']+'" role="button" style="float: right" class="btn btn-success mx-2">Показать товары</a>');
-                    if(!category['has_products'] && is_sub_exist )
-                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right" class="btn btn-info mx-2">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" role="button"  style="float: right" class="btn btn-warning mx-2">Добавить подкатегорию</a>');
+                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-primary mx-2">Редактировать категорию</a><a href="/adminPage/get_products_by_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-success mx-2">Показать товары</a>');
+                    if(!category['has_products'] && !is_sub_exist )
+                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" role="button"  style="float: right; line-height: 1" class="btn btn-warning mx-2">Добавить подкатегорию</a>');
                     else if(category['has_products'] && !is_sub_exist)
-                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right" class="btn btn-info mx-2">Добавить товар</a>');
+                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить товар</a>');
                     else
-                        li.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" style="float: right" class="btn btn-info mx-2">Добавить подкатегорию</a>');
+                        li.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить подкатегорию</a>');
 
 
                     if(is_sub_exist){

@@ -7,6 +7,10 @@
         <h6 class="m-0 font-weight-bold text-primary h3">
             Производители
         </h6>
+
+        <p style="float: right">
+            <a href="{{ path('add_brand') }}">Добавить производителя</a>
+        </p>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -26,7 +30,7 @@
                                     <td>{{ brand.country }}</td>
                                     <td>{{ brand.eurValue }}</td>
                                     <td>{{ brand.usdValue }}</td>
-                                    <td><a href="{{ path('edit_product', {'id': brand.id}) }}">Редактировать товар</a> </td>
+                                    <td><a href="{{ path('edit_brand', {'id': brand.id}) }}">Редактировать производителя</a> </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

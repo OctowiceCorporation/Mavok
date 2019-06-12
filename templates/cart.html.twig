@@ -63,10 +63,18 @@
                                             <div class="cart_item_total cart_info_col">
                                                 <div class="cart_item_title">Итого</div>
                                                 <div class="cart_item_text">
-                                                    {% if product.ProductValue is not null %}
-                                                        {{ (product.retailPrice * product.ProductValue * product.amount) }} UAH
+                                                    {% if product.ProductValue is not null%}
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                            {{ (product.WholesalePrice * product.ProductValue * product.amount) }} UAH
+                                                        {% else %}
+                                                            {{ (product.retailPrice * product.ProductValue * product.amount) }} UAH
+                                                        {% endif %}
                                                     {% else %}
-                                                        {{ product.retailPrice * product.amount}} UAH
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                            {{ (product.WholesalePrice * product.amount) }} UAH
+                                                        {% else %}
+                                                            {{ (product.retailPrice * product.amount) }} UAH
+                                                        {% endif %}
                                                     {% endif %}
                                                 </div>
                                             </div>

@@ -63,4 +63,10 @@ brands:
 add_brand_ajax:
     path: /adminPage/add_brand_ajax
     controller: App\Controller\Admin\BrandController:addBrandAjax
+add_brand:
+    path: /adminPage/add_brand
+    controller: App\Controller\Admin\BrandController:addBrand
+edit_brand:
+    path: /adminPage/edit_brand/{id}
+    controller: App\Controller\Admin\BrandController:editBrand
 

@@ -19,6 +19,40 @@ class Brand
         $this->country = $country;
     }
 
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param float $usd_value
+     */
+    public function setUsdValue(float $usd_value): void
+    {
+        $this->usd_value = $usd_value;
+    }
+
+    /**
+     * @param float $eur_value
+     */
+    public function setEurValue(float $eur_value): void
+    {
+        $this->eur_value = $eur_value;
+    }
+
+    /**
+     * @param string $country
+     */
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
+    }
+
+
+
     public function getName(): ?string
     {
         return $this->name;
