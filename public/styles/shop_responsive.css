@@ -344,6 +344,9 @@
 	#resp_basket {
 		font-size: large;
 	}
+	#filter_container {
+		display: inherit!important;
+	}
 	#filter {
 		display: inherit;
 		transition: all 500ms linear;
