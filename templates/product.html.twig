@@ -19,7 +19,6 @@
 
     <div class="single_product">
         <div class="container">
-            {{ dump(product)}}
             <div class="row">
 
                 <!-- Images -->
@@ -36,6 +35,7 @@
                 {% if product.image.get(0).ImagePath is defined %}
                      "/images/{{ product.image.get(0).ImagePath }}"
                 {% else %}
+                    "/no-image.png"
                     "/no-image.png"
                 {% endif %}
                 alt=""></div>

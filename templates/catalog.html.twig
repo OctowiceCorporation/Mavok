@@ -1,5 +1,40 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
+    <style>
+        #filter-submit{
+            height:70px !important;
+            width:220px !important;
+            margin-left: 500px;
+            background-color: #fcfcfc;
+            border: 1px solid #dadada;
+            z-index: 2;
+            padding: 4%;
+        }
+        #filter-submit:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: -11px;
+            width: 20px;
+            height: 20px;
+            -webkit-transform: translateY(-50%) rotate(46deg);
+            -ms-transform: translateY(-50%) rotate(45deg);
+            background-color: #fcfcfc;
+            border-left: 1px solid #dadada;
+            border-bottom: 1px solid #dadada;
+            z-index: -1;
+        }
+        #mobile-filter-submit{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding-left: 2%;
+            padding-right: 2%;
+            width: 100%;
+            z-index: 4;
+        }
+    </style>
     <title>Shop</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +61,7 @@
     <div class="shop">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3" id="filter">
+                <div class="col-lg-3" style="z-index: 2" id="filter">
                     <div class="shop_sidebar">
                         {% if form is defined %}
                             {{ form_start(form) }}
@@ -49,10 +84,10 @@
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
+                            <div id="mobile-filter-submit"></div>
                             {{ form_end(form, {'render_rest': false}) }}
                         {% endif %}
                     </div>
-
                 </div>
 
                 <div class="col-lg-9">
@@ -166,7 +201,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <div id="filter-submit" style="display: none"></div>
 {% endblock %}
 {% block filter %}
     {% if categories is null %}
@@ -216,6 +251,10 @@
         })
     } );
 
+    if ($(window).width() < 575) {
+        $('#filter_form_save').css('width', '100%').appendTo($('#mobile-filter-submit'));
+
+
         $('#filter_trigger').on('click', function () {
             if ($('#filter').css('display') === 'none'){
                 $('#filter').slideDown(500);
@@ -224,6 +263,23 @@
                 $('#filter').hide();
             }
         });
+    }
+    else {
+        $('#filter_form_save').css('width', '100%').appendTo($('#filter-submit'));
+
+        $(document).on('click mousedown', '.slider-range', function () {
+            if(!$(this).find($('#filter-submit')).length){
+                $('#filter-submit').css('position','absolute').css('top', '-30px').css('left', '-75%').css('z-index', '3');
+                $('#filter-submit').hide().appendTo($(this)).show('medium');
+            }
+        });
+        $(document).on('click mousedown', '.form-check', function () {
+            if(!$(this).find($('#filter-submit')).length){
+                $('#filter-submit').css('position','absolute').css('top', '-13px').css('left', '-75%').css('z-index', '3');
+                $('#filter-submit').hide().appendTo($(this)).show('medium');
+            }
+        })
+    }
     </script>
 
 {% endblock %}
