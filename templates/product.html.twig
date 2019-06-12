@@ -45,10 +45,19 @@
                 <div class="col-lg-5 order-3">
                     <div class="product_description">
                         <div class="product_name">{{ product.name }}</div>
+                        {% if product.wholesalePrice is not null and product.minimumWholesale is not null %}
+                            <div>
+                                Оптовая цена: {% if product.ProductValue is not null %}
+                                {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}
+                            {% else %}
+                                {{ product.retailPrice }} UAH
+                                {% endif %} - при заказе от {{ product.minimumWholesale }} штук
+                            </div>
+                        {% endif %}
+                        <div></div>
                         <div class="order_info d-flex flex-row">
                             <form action="#">
                                 <div class="clearfix" style="z-index: 1000;">
-
                                     <!-- Product Quantity -->
                                     <div class="product_quantity clearfix">
                                         <span class="text-dark" style="font-weight: 500;">Кол-во: </span>
@@ -59,7 +68,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="product_price">
                                     {% if product.ProductValue is not null %}
                                         {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}
