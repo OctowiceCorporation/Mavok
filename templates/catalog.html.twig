@@ -32,6 +32,8 @@
             padding-left: 2%;
             padding-right: 2%;
             width: 100%;
+            margin: auto;
+            text-align: center;
             z-index: 4;
         }
     </style>
@@ -160,7 +162,15 @@
                                         {% else %}
                                             {{ product.retailPrice }} UAH</div>
                                         {% endif %}
-                                    <div style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;" class="product_name"><p>{{ product.name }}</p></div>
+                                    <div style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;" class="product_name">
+                                        <p>
+                                            {% if product.name | length > 52 %}
+                                                {{ product.name | slice(0,52) }}...
+                                            {% else %}
+                                                {{ product.name }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
                                 </div>
                             <div class="button_container">
                                 <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Add to Cart</button>
@@ -243,7 +253,6 @@
                 max: parseInt($(this).attr('max')),
                 values: [ parseInt($(this).attr('value').split(';')[0]), parseInt($(this).attr('value').split(';')[1]) ],
                 slide: function( event, ui ) {
-                    console.log($(this).parent());
                     $(this).parent().parent().find('.text-slider').val(ui.values[ 0 ]+';'+ui.values[ 1 ]);
                     $(this).parent().find('.slider-value').html(ui.values[ 0 ]+' - '+ui.values[ 1 ]);
                 }
@@ -252,7 +261,7 @@
     } );
 
     if ($(window).width() < 575) {
-        $('#filter_form_save').css('width', '100%').appendTo($('#mobile-filter-submit'));
+        $('#filter_form_save').css('width','80%').css('border-radius','5rem').appendTo($('#mobile-filter-submit'));
 
 
         $('#filter_trigger').on('click', function () {
@@ -265,18 +274,18 @@
         });
     }
     else {
-        $('#filter_form_save').css('width', '100%').appendTo($('#filter-submit'));
+        $('#filter_form_save').css('width', '100%').css('border-radius','5rem').appendTo($('#filter-submit'));
 
         $(document).on('click mousedown', '.slider-range', function () {
             if(!$(this).find($('#filter-submit')).length){
                 $('#filter-submit').css('position','absolute').css('top', '-30px').css('left', '-75%').css('z-index', '3');
-                $('#filter-submit').hide().appendTo($(this)).show('medium');
+                $('#filter-submit').hide().appendTo($(this)).fadeIn('medium');
             }
         });
         $(document).on('click mousedown', '.form-check', function () {
             if(!$(this).find($('#filter-submit')).length){
                 $('#filter-submit').css('position','absolute').css('top', '-13px').css('left', '-75%').css('z-index', '3');
-                $('#filter-submit').hide().appendTo($(this)).show('medium');
+                $('#filter-submit').hide().appendTo($(this)).fadeIn('medium');
             }
         })
     }
