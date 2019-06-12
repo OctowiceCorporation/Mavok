@@ -419,6 +419,7 @@
 	}
 	#view_all_resp {
 		display: inherit!important;
+		padding-left: 7rem;
 	}
 	#filter_trigger {
 		display: none;
@@ -860,5 +861,7 @@
 
 @media only screen and (max-width: 400px)
 {
-	
+	#view_all_resp {
+		padding-left: 5rem;
+	}
 }

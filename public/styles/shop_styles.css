@@ -1421,6 +1421,16 @@ select option
 	background: #FFFFFF;
 	z-index: 1;
 }
+#pagination_sm {
+	display: none;
+}
+#filter_container {
+	margin: auto;
+	width: 40%;
+}
+#resp_basket {
+	display: none;
+}
 .product_item
 {
 	display: -webkit-box;
