@@ -58,10 +58,10 @@
                 <div class="col-lg-9">
 
                     {% if category is defined %}
-                        {{ category.name }}<br>
-                        {% if category.image is not null %}
-                            <img style="width: 100%; height: 300px; object-fit: contain" src="/images/{{ category.image }}">
-                        {% endif %}
+                        <h3>{{ category.name }}</h3>
+{#                        {% if category.image is not null %}#}
+{#                            <img style="width: 100%; height: 300px; object-fit: contain" src="/images/{{ category.image }}">#}
+{#                        {% endif %}#}
                         {{ category.description|raw }}
                     {% endif %}
 
@@ -147,13 +147,18 @@
 
                         <!-- Shop Page Navigation -->
                     {% if products is not null %}
-                    <div class="navigation pt-4">
+                    <div class="navigation pt-4" id="pagination_lg">
                         {{ knp_pagination_render(products, null, {}, {
                             'size': 'large',
                             'rounded': true,
                         }) }}
                     </div>
-
+                    <div class="navigation pt-4" id="pagination_sm" style="float: right">
+                        {{ knp_pagination_render(products, null, {}, {
+                            'size': 'medium',
+                            'rounded': true,
+                        }) }}
+                    </div>
                     </div>
 
                     {% endif %}

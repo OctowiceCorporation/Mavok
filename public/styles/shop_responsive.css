@@ -322,6 +322,9 @@
 	{
 		height: 72px;
 	}
+	.shop_content {
+		margin-top: 15px;
+	}
 	.shop {
 		padding-top: 1rem;
 		padding-bottom: 1rem;
@@ -338,11 +341,12 @@
 	#resp_logo {
 		display: inline-block!important;
 	}
+	#resp_basket {
+		font-size: large;
+	}
 	#filter {
 		display: inherit;
-	}
-	#menu_trigger {
-		display: none;
+		transition: all 500ms linear;
 	}
 	#filter {
 		display: none;
@@ -350,9 +354,7 @@
 	.product_grid {
 		width: 100vw;
 	}
-	.page_menu_content {
-		display: none;
-	}
+
 	.logo a
 	{
 		font-size: 24px;
@@ -658,7 +660,16 @@
 
 @media only screen and (max-width: 479px)
 {
-	
+	#pagination_lg {
+		display: none;
+	}
+	#pagination_sm {
+		display: inline;
+	}
+	#resp_basket {
+		padding-left: 4rem;
+	}
+}
 }
 
 /************
@@ -667,5 +678,21 @@
 
 @media only screen and (max-width: 400px)
 {
-	
+	#resp_basket {
+		padding-left: 3rem;
+	}
+}
+
+/************
+15. 320px
+************/
+
+@media only screen and (max-width: 320px)
+{
+	#filter_container {
+		width: 50%;
+	}
+	#resp_basket {
+		padding-left: 2rem;
+	}
 }
