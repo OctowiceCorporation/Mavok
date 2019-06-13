@@ -54,6 +54,7 @@ class DefaultController extends AbstractController
 
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination)
     {
+        $sort = $request->get('sort_by');
         $array = explode('/', rtrim($slug,'/'));
         if(empty($array[0])){
             return $this->render('catalog.html.twig', ['categories' => $categoryService->getCategories(), 'products' => null]);
@@ -72,7 +73,7 @@ class DefaultController extends AbstractController
                 $request->query->getInt('page', 1),
                 $request->query->getInt('limit', 20)
             );
-            return $this->render('catalog.html.twig', ['categories' => $categories, 'category' => $last_category, 'products' => $products]);
+            return $this->render('catalog.html.twig', ['categories' => $categories, 'category' => $last_category, 'products' => $products, 'sort' => $sort]);
         }
         elseif (!$last_category->getProducts()->isEmpty()){
             $filter = $filterService->buildFilter($last_category);
@@ -80,23 +81,62 @@ class DefaultController extends AbstractController
             $form->handleRequest($request);
             if($form->isSubmitted()){
                 $products = $filterService->isSubmited($form->getData(),$filter,$last_category, $request->get('page'));
+                if(!empty($sort)){//TODO sortservice
+                    switch ($sort){
+                        case 'name':
+                            $products = $products->toArray();
+
+                            usort($products, function($a, $b)
+                            {
+                                return strcmp($a->getName(), $b->getName());
+                            });
+                            break;
+                        case 'date':
+                            //TODO Kadyrov suka, v ProductDTO tupo new DATETIME napisal vmesto togo shtobi s entity vityanut`
+                            break;
+                    }
+                }
                 $products = $pagination->paginate(
                     $products,
                     $request->query->getInt('page', 1),
                     $request->query->getInt('limit', 20)
                 );
-                return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'category' => $last_category, 'form' => $form->createView()]);
+                return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'category' => $last_category, 'form' => $form->createView(), 'sort' => $sort]);
             }
+
+
             $products = $productService->getProducts($last_category);
+
+            if(!empty($sort)){
+                switch ($sort){
+                    case 'name':
+                        $products = $products->toArray();
+
+                        usort($products, function($a, $b)
+                        {
+                            return strcmp($a->getName(), $b->getName());
+                        });
+                        break;
+                    case 'date':
+                        $products = $products->toArray();
+
+                        usort($products, function($a, $b)
+                        {
+                            return strcmp($a->getName(), $b->getName());
+                        });
+                        break;
+                }
+            }
+
             $products = $pagination->paginate(
                 $products,
                 $request->query->getInt('page', 1),
                 $request->query->getInt('limit', 20)
             );
-            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products,  'category' => $last_category,'form' => $form->createView()]);
+            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products,  'category' => $last_category,'form' => $form->createView(), 'sort' => $sort]);
         }
         else
-            return $this->render('catalog.html.twig',['categories' => null, 'products' => null]);
+            return $this->render('catalog.html.twig',['categories' => null, 'products' => null, 'sort' => $sort]);
     }
 
     public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, \Swift_Mailer $mailer, MailerService $mailerService, SessionInterface $session)

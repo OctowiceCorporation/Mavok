@@ -66,7 +66,7 @@
                 <div class="col-lg-3" style="z-index: 2" id="filter">
                     <div class="shop_sidebar">
                         {% if form is defined %}
-                            {{ form_start(form) }}
+                            {{ form_start(form, {'attr': {'id': 'form_filter'}}) }}
                             {% for fo in form %}
                                 {% if fo.vars.attr.min is defined %}
                                     <div class="sidebar_section">
@@ -133,9 +133,10 @@
                                     <li>
                                         <span class="sorting_text">highest rated<i class="fas fa-chevron-down"></span></i>
                                         <ul>
-                                            <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'>name</li>
-                                            <li class="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>ascending price</li>
-                                            <li class="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>descending price</li>
+
+                                            <li class="shop_sorting_button" ><a onclick=getUrl('name');> name</a></li>
+                                            <li class="shop_sorting_button">ascending price</li>
+                                            <li class="shop_sorting_button">descending price</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -190,6 +191,7 @@
 
 
 
+                    <input id="sorting_type" type="hidden" value="{{ sort }}">
                         <!-- Shop Page Navigation -->
                     {% if products is not null %}
                     <div class="navigation pt-4" id="pagination_lg">
@@ -211,6 +213,7 @@
                 </div>
             </div>
         </div>
+    </div>
     <div id="filter-submit" style="display: none"></div>
 {% endblock %}
 {% block filter %}
@@ -289,6 +292,25 @@
             }
         })
     }
+
+
+    function getUrl(sorting_type) {
+        let link = window.location.href;
+        let url = new URL(link);
+        let params = new URLSearchParams(url.search.slice(1));
+
+        params.set('sort_by', sorting_type);
+        location.href = '?'+params.toString();
+    }
+
+    $('#form_filter').on('submit', function (e) {
+        e.preventDefault();
+        let url = new URL(window.location.href +'?' + $(this).serialize());
+        let params = new URLSearchParams(url.search.slice(1));
+
+        params.set('sort_by', $('#sorting_type').val());
+        location.href = '?'+params.toString();
+    })
     </script>
 
 {% endblock %}

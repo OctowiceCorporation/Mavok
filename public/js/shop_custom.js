@@ -339,16 +339,7 @@ $(document).ready(function()
         });
 
         // Sort based on the value from the sorting_type dropdown
-        sortingButtons.each(function()
-        {
-        	$(this).on('click', function()
-        	{
-        		$('.sorting_text').text($(this).text());
-        		var option = $(this).attr('data-isotope-option');
-        		option = JSON.parse(option);
-				$('.product_grid').isotope(option);
-        	});
-        });
+
 
 	}
 
