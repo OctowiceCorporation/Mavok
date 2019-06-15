@@ -18,6 +18,7 @@ use App\Repository\ProductRepository;
 use App\Service\FilterService;
 use App\Service\MailerService;
 use App\Service\ProductService;
+use App\Service\SortService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -52,7 +53,7 @@ class DefaultController extends AbstractController
              'saleProducts' => $saleCollection]);
     }
 
-    public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination)
+    public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination, SortService $sortService)
     {
         $sort = $request->get('sort_by');
         $array = explode('/', rtrim($slug,'/'));
@@ -81,20 +82,9 @@ class DefaultController extends AbstractController
             $form->handleRequest($request);
             if($form->isSubmitted()){
                 $products = $filterService->isSubmited($form->getData(),$filter,$last_category, $request->get('page'));
-                if(!empty($sort)){//TODO sortservice
-                    switch ($sort){
-                        case 'name':
-                            $products = $products->toArray();
-
-                            usort($products, function($a, $b)
-                            {
-                                return strcmp($a->getName(), $b->getName());
-                            });
-                            break;
-                        case 'date':
-                            //TODO Kadyrov suka, v ProductDTO tupo new DATETIME napisal vmesto togo shtobi s entity vityanut`
-                            break;
-                    }
+                if(!empty($sort)){
+                    $products = $products->toArray();
+                    $sortService->sort($sort, $products);
                 }
                 $products = $pagination->paginate(
                     $products,
@@ -108,23 +98,9 @@ class DefaultController extends AbstractController
             $products = $productService->getProducts($last_category);
 
             if(!empty($sort)){
-                switch ($sort){
-                    case 'name':
-                        $products = $products->toArray();
-
-                        usort($products, function($a, $b)
-                        {
-                            return strcmp($a->getName(), $b->getName());
-                        });
-                        break;
-                    case 'date':
-                        $products = $products->toArray();
-
-                        usort($products, function($a, $b)
-                        {
-                            return strcmp($a->getName(), $b->getName());
-                        });
-                        break;
+                if(!empty($sort)){
+                    $products = $products->toArray();
+                    $sortService->sort($sort, $products);
                 }
             }
 
