@@ -162,11 +162,23 @@ input[type=checkbox].form-check-input + label.form-check-label {
 	font-size:15px;
 	vertical-align:middle;
 	cursor:pointer;
-
+	transition: all 250ms cubic-bezier(.4,.0,.23,1);
 }
 
 input[type=checkbox].form-check-input:checked + label.form-check-label {
 	background-position: 0 -25px;
+	animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+}
+@keyframes shrink-bounce{
+	0%{
+		transform: scale(1);
+	}
+	33%{
+		transform: scale(.85);
+	}
+	100%{
+		transform: scale(1);
+	}
 }
 label.form-check-label {
 	background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_391ce065f36b1460c4845fa9b5173fba.png);
