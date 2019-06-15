@@ -128,15 +128,17 @@
                         <div class="shop_bar clearfix">
                             <div class="shop_product_count"><span>{{ products|length }}</span> products found</div>
                             <div class="shop_sorting">
-                                <span>Sort by:</span>
                                 <ul>
                                     <li>
-                                        <span class="sorting_text">highest rated<i class="fas fa-chevron-down"></span></i>
+                                        <span>Сортировать по:</span>
+                                        <span class="sorting_text">
+                                            <i class="fas fa-chevron-down"></span></i>
                                         <ul>
 
-                                            <li class="shop_sorting_button" ><a onclick=getUrl('name');> name</a></li>
-                                            <li class="shop_sorting_button">ascending price</li>
-                                            <li class="shop_sorting_button">descending price</li>
+                                            <li class="shop_sorting_button" ><a onclick=getUrl('name');>По названию</a></li>
+                                            <li class="shop_sorting_button"><a onclick=getUrl('date');>По новизне</a></li>
+                                            <li class="shop_sorting_button"><a onclick=getUrl('price_up');>По возрастанию цены</a></li>
+                                            <li class="shop_sorting_button"><a onclick=getUrl('price_down');>По убыванию цены</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -305,9 +307,8 @@
 
     $('#form_filter').on('submit', function (e) {
         e.preventDefault();
-        let url = new URL(window.location.href +'?' + $(this).serialize());
+        let url = new URL(window.location.href.split('?')[0] +'?' + $(this).serialize());
         let params = new URLSearchParams(url.search.slice(1));
-
         params.set('sort_by', $('#sorting_type').val());
         location.href = '?'+params.toString();
     })
