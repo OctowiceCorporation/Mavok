@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Category;
+use App\Repository\BrandRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SpecificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,24 +16,33 @@ class FilterService
     private $specificationRepository;
     private $product_repository;
     private $productService;
+    private $brandRepository;
 
     /**
      * FilterService constructor.
      * @param SpecificationRepository $specificationRepository
      * @param ProductRepository $productRepository
+     * @param ProductService $productService
      */
-    public function __construct(SpecificationRepository $specificationRepository, ProductRepository $productRepository, ProductService $productService)
+    public function __construct(SpecificationRepository $specificationRepository, ProductRepository $productRepository, ProductService $productService, BrandRepository $brandRepository)
     {
         $this->specificationRepository = $specificationRepository;
         $this->product_repository = $productRepository;
         $this->productService = $productService;
+        $this->brandRepository = $brandRepository;
     }
 
 
     public function getSpecificationsFromCategory(Category $category): array
     {
         $specifications = [];
+        $manuf = ['name' => 'Производитель', 'is_countable' => null, 'values' => []];
+        $country = ['name' => 'Страна производитель', 'is_countable' => null, 'values' => []];
         foreach($this->specificationRepository->getSpecificationFromCategory($category->getId()) as $item){
+            if(!empty($item['manufacturer']))
+                $manuf['values'][$item['manufacturer']] = mb_strtolower($item['manufacturer']);
+            if(!empty($item['country']))
+                $country['values'][$item['country']] = mb_strtolower($item['country']);
             if(!isset($specifications[$item['name']])){
                 $specifications[$item['name']] = [];
                 $specifications[$item['name']]['name'] = $item['name'];
@@ -43,6 +53,10 @@ class FilterService
         foreach ($specifications as $key => $specification) {
             $specifications[$key]['values'] = array_unique($specifications[$key]['values']);
         }
+
+
+        $specifications = [$manuf['name'] => $manuf, $country['name'] => $country] + $specifications;
+
         return array_values($specifications);
     }
 
@@ -95,6 +109,8 @@ class FilterService
                 foreach ($product->getSpecifications() as $specification) {
                     $spec[$specification->getName()] = $specification->getValue();
                 }
+                $spec['Производитель'] = $product->getBrand()->getName();
+                $spec['Страна производитель'] = $product->getBrand()->getCountry();
 
                 foreach ($filter as $item) {
                     if(empty($item['is_countable'])) {

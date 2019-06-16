@@ -48,9 +48,9 @@
                         {% if product.wholesalePrice is not null and product.minimumWholesale is not null %}
                             <div>
                                 Оптовая цена: {% if product.ProductValue is not null %}
-                                {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}
+                                {{ (product.wholesalePrice * product.ProductValue) }} UAH / {{ product.wholesalePrice }} {{ product.currencyName }}
                             {% else %}
-                                {{ product.retailPrice }} UAH
+                                {{ product.wholesalePrice }} UAH
                                 {% endif %} - при заказе от {{ product.minimumWholesale }} штук
                             </div>
                         {% endif %}

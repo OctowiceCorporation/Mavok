@@ -138,7 +138,6 @@
                                             <li class="shop_sorting_button" ><a onclick=getUrl('name');>По названию</a></li>
                                             <li class="shop_sorting_button"><a onclick=getUrl('date');>По новизне</a></li>
                                             <li class="shop_sorting_button"><a onclick=getUrl('price_up');>По возрастанию цены</a></li>
-                                            <li class="shop_sorting_button"><a onclick=getUrl('price_down');>По убыванию цены</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -265,7 +264,7 @@
         })
     } );
 
-    if ($(window).width() < 575) {
+    if ($(window).width() < 992) {
         $('#filter_form_save').css('width','80%').css('border-radius','5rem').appendTo($('#mobile-filter-submit'));
 
 

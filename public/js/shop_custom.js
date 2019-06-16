@@ -90,30 +90,7 @@ $(document).ready(function()
 			var list = $('.custom_list');
 		}
 
-		placeholder.on('click', function (ev)
-		{
-			if(list.hasClass('active'))
-			{
-				list.removeClass('active');
-			}
-			else
-			{
-				list.addClass('active');
-			}
 
-			$(document).one('click', function closeForm(e)
-			{
-				if($(e.target).hasClass('clc'))
-				{
-					$(document).one('click', closeForm);
-				}
-				else
-				{
-					list.removeClass('active');
-				}
-			});
-
-		});
 
 		$('.custom_list a').on('click', function (ev)
 		{

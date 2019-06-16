@@ -24,6 +24,7 @@ class SpecificationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->select('s.name','s.unit','s.value', 's.id')
             ->leftJoin('s.product', 'p')->addSelect('p.name AS product_name')
+            ->leftJoin('p.brand', 'b')->addSelect('b.country')->addSelect('b.name AS manufacturer')
             ->leftJoin('p.category', 'c')->addSelect('c.name AS category_name')->where('c.id = :id')
             ->setParameter('id', $id)
             ->getQuery()->getResult();

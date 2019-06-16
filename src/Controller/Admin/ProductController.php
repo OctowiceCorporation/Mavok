@@ -85,6 +85,18 @@ class ProductController extends AbstractController
 
     }
 
+    public function searchProduct($text, ProductRepository $productRepository)
+    {
+        $products = $productRepository->searchProducts($text);
+        $array = [];
+        foreach ($products as $key => $product) {
+            $array[$key]['name'] = $product->getName();
+            $array[$key]['slug'] = $product->getSlug();
+            $array[$key]['category'] = $product->getCategory()->getName();
+        }
+        return new Response(json_encode($array));
+    }
+
     public function deleteImage($id, ImageRepository $imageRepository, EntityManagerInterface $entityManager)
     {
         $image = $imageRepository->findOneBy(['id' => $id]);

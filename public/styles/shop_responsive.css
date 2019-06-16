@@ -673,7 +673,7 @@
 		padding-left: 4rem;
 	}
 }
-}
+
 
 /************
 14. 400px
@@ -690,7 +690,7 @@
 15. 320px
 ************/
 
-@media only screen and (max-width: 320px)
+@media only screen and (max-width: 576px)
 {
 	#filter_container {
 		width: 50%;
