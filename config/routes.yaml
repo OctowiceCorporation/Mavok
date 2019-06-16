@@ -9,9 +9,12 @@ category:
 product:
     path: /product/{slug}
     controller: App\Controller\ProductController::index
+product_search:
+    path: /product_search/
+    controller: App\Controller\ProductController::searchProduct
 search_product:
     path: /search_product/{text}
-    controller: App\Controller\ProductController::searchProduct
+    controller: App\Controller\Admin\ProductController::searchProduct
 add_to_basket:
     path: /add_to_basket
     controller: App\Controller\DeliveryController:addToBasket

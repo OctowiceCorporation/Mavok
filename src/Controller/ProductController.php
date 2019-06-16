@@ -8,6 +8,8 @@ use App\Mappers\Specification;
 use App\Repository\ProductRepository;
 use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
+use function GuzzleHttp\Promise\queue;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,16 +42,24 @@ class ProductController extends AbstractController
         return $response;
     }
 
-    public function searchProduct($text, ProductRepository $productRepository)
+    public function searchProduct(ProductRepository $productRepository, Request $request, PaginatorInterface $paginator, ProductService $productService)
     {
-        $products = $productRepository->searchProducts($text);
-        $array = [];
-        foreach ($products as $key => $product) {
-            $array[$key]['name'] = $product->getName();
-            $array[$key]['slug'] = $product->getSlug();
-            $array[$key]['category'] = $product->getCategory()->getName();
+        $text = $request->query->get('search_text');
+        $entities = $productRepository->searchProducts($text);
+        $products = new ArrayCollection();
+        foreach ($entities as $entity) {
+            $products->add($productService->getProductPrice($entity));
         }
-        return new Response(json_encode($array));
+        $products = $paginator->paginate(
+            $products,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 20)
+        );
+
+
+
+        return $this->render('search.html.twig', ['products' => $products]);
+
     }
 
     public function getRecentlyViewed(Request $request, ProductService $productService, ProductRepository $productRepository)

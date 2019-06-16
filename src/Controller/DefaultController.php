@@ -91,6 +91,7 @@ class DefaultController extends AbstractController
                     $request->query->getInt('page', 1),
                     $request->query->getInt('limit', 20)
                 );
+
                 return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'category' => $last_category, 'form' => $form->createView(), 'sort' => $sort]);
             }
 
