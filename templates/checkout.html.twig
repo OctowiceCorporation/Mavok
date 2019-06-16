@@ -7,9 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="css/style.min.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
 
 
@@ -20,10 +18,10 @@
 
 
 <!--Main layout-->
-    <div class="container wow fadeIn col-6">
+    <div class="container wow fadeIn col-lg-6 col-sm-12">
 
         <!-- Heading -->
-        <h2 class="my-5 h2 text-center">Checkout form</h2>
+        <h2 class="my-sm-2 my-lg-5 h2 text-center">Оформление заказа</h2>
 
         {{ form_start(form, {'attr': {'id':'checkout_form'} } ) }}
         {{ form_row(form.name) }}

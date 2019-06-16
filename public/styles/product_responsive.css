@@ -213,7 +213,8 @@
 	{
 		visibility: hidden;
 		opacity: 0;
-		padding-left: 45px;
+		padding-left: 1rem;
+        width: fit-content;
 	}
 	.header_hassubs ul {
 		padding-left: 25px;
@@ -783,7 +784,9 @@
 
 @media only screen and (max-width: 479px)
 {
-	
+	#resp_basket {
+		padding-left: 4rem;
+	}
 }
 
 /************
@@ -792,5 +795,18 @@
 
 @media only screen and (max-width: 400px)
 {
-	
+	#resp_basket {
+		padding-left: 3rem;
+	}
+}
+
+/************
+15. 320px
+************/
+
+@media only screen and (max-width: 320px)
+{
+	#resp_basket {
+		padding-left: 2rem;
+	}
 }
