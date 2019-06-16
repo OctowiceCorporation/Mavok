@@ -63,6 +63,9 @@
 
 @media only screen and (max-width: 1199px)
 {
+	.logo a {
+		font-size: 40px;
+	}
 	.cat_menu_container
 	{
 		width: 211px;
@@ -135,6 +138,9 @@
 
 @media only screen and (max-width: 991px)
 {
+	.logo a {
+		font-size: 50px;
+	}
 	.top_bar
 	{
 		/*display: none;*/
@@ -310,6 +316,10 @@
 	{
 		margin-bottom: 40px;
 	}
+	.product_text img {
+		width: 100%;
+		height: auto;
+	}
 }
 
 /************
@@ -429,10 +439,6 @@
 	}
 	.product_text {
 		width: 100%;
-	}
-	.product_text img {
-		width: 100%;
-		height: auto;
 	}
 	.table {
 		width: 100%;

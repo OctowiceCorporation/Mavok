@@ -3562,6 +3562,11 @@ select option
 {
 	color: #000000;
 }
+.logo a
+{
+    font-size: 50px;
+    font-family: 'Orbitron', sans-serif;
+}
 .footer_title
 {
 	font-size: 14px;

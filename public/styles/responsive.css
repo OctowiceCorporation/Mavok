@@ -63,6 +63,9 @@
 
 @media only screen and (max-width: 1199px)
 {
+	.logo a {
+		font-size: 40px;
+	}
 	.cat_menu_container
 	{
 		width: 211px;
@@ -137,6 +140,12 @@
 
 @media only screen and (max-width: 991px)
 {
+	.arrivals_slider_item {
+		width: 28%;
+	}
+	.logo a {
+		font-size: 50px;
+	}
 	.top_bar
 	{
 		/*display: none;*/
@@ -249,7 +258,7 @@
 	}
 	.tabs.tabs-right ul
 	{
-		float: left;
+		float: right;
 	}
 	.arrivals_single
 	{
@@ -310,7 +319,9 @@
 
 @media only screen and (max-width: 768px)
 {
-	
+	.new_arrivals_title {
+		top: 10px;
+	}
 }
 
 /************
@@ -319,6 +330,9 @@
 
 @media only screen and (max-width: 767px)
 {
+	.arrivals_slider_item {
+		width: 30%;
+	}
 	.header_search
 	{
 		display: none;
@@ -327,10 +341,14 @@
 	{
 		display: block;
 	}
+	.new_arrivals_title {
+		top: -20px;
+	}
 	.main_nav
 	{
 		margin-top: 0px;
 	}
+
 	.banner_product_image
 	{
 		opacity: 0.5;
@@ -795,7 +813,7 @@
 	}
 	.tabs.tabs-right .tabs_line
 	{
-		margin-top: 52px;
+		margin-top: 30px;
 	}
 	.tabs_line span
 	{

@@ -96,9 +96,6 @@
 
                     {% if category is defined %}
                         <h3>{{ category.name }}</h3>
-{#                        {% if category.image is not null %}#}
-{#                            <img style="width: 100%; height: 300px; object-fit: contain" src="/images/{{ category.image }}">#}
-{#                        {% endif %}#}
                         {{ category.description|raw }}
                     {% endif %}
 
@@ -219,7 +216,7 @@
 {% endblock %}
 {% block filter %}
     {% if categories is null %}
-        <div class="row px-4" id="filter_container" style="display: none">
+        <div class="row px-4 py-2 justify-content-center" id="filter_container" style="display: none">
             <div id="filter_trigger">
                 <div class="menu_trigger_text text-primary" style="font-size: large; text-align: center">Filter</div>
                 <div class="cat_burger menu_burger_inner text-primary"><i style="font-size: 1.2rem" class="fas fa-filter"></i></div>

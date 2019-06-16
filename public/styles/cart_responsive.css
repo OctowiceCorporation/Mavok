@@ -84,6 +84,9 @@
 	{
 		width: 456px;
 	}
+	.logo a {
+		font-size: 40px;
+	}
 }
 
 /************
@@ -230,6 +233,9 @@
 	.footer_col:not(:last-child)
 	{
 		margin-bottom: 40px;
+	}
+	.logo a {
+		font-size: 50px;
 	}
 }
 

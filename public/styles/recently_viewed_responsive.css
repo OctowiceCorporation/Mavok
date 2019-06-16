@@ -90,7 +90,9 @@
 
 @media only screen and (max-width: 991px)
 {
-
+    .recently_viewed_item {
+        width: 40%;
+    }
 }
 
 /************
