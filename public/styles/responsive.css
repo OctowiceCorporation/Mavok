@@ -533,7 +533,6 @@
 	#filter_trigger {
 		display: none;
 	}
-	}
 	.top_bar_user
 	{
 		margin-left: 0px;
@@ -549,10 +548,10 @@
 		margin-right: 15px;
 		margin-top: 0;
 	}
-	/*.main_nav_content*/
-	/*{*/
-	/*	height: 35px;*/
-	/*}*/
+	.main_nav_content
+	{
+		height: 35px;
+	}
 	.cat_menu_container
 	{
 		padding-left: 15px;

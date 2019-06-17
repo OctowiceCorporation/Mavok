@@ -128,6 +128,19 @@
             <a style="align-content: center" href="{{ path('index') }}">На главную</a>
         </div>
     {% endif %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Вы уверены нахуй??????
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="dismiss" data-dismiss="modal">Нихуя</button>
+                    <button type="button" class="btn btn-primary" id="accept">Конечно</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -178,7 +191,6 @@
                             $('#total').html((Number($('#total').html()) + (amount*retail)).toFixed(1));
                         }
                         else{
-                            console.log(amount * wholesale, 'whole');
                             elem.closest('.cart_item_info').find('.product-sum').html((amount*wholesale).toFixed(1) + ' UAH');
                             elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
                             $('#total').html((Number($('#total').html()) + (amount*wholesale)));
@@ -207,20 +219,28 @@
                     url: '/minus_basket/'+slug,
                 })
                     .done(function() {
-                        $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
-
                         let amount = Number(input.val(Number(input.val()) - 1).val());
-                        if(amount === 0)
-                            elem.closest('.basket-product-card').remove();
+                        if(amount === 0) {
+                            $('#exampleModalCenter').modal('show');
+                            document.getElementById('accept').onclick = function () {
+                                elem.closest('.basket-product-card').remove();
+                                $('#exampleModalCenter').modal('hide');
+                                $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
+                            };
+                            document.getElementById('dismiss').onclick = function () {
+                                Number(input.val(Number(input.val()) + 1).val());
+                                $('#exampleModalCenter').modal('hide');
+
+                            };
+                        }
                         else{
-                            console.log(amount * retail);
+                            $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
                             if((minimum <= 0) || (minimum > 0 && amount < minimum)){
                                 elem.closest('.cart_item_info').find('.product-sum').html((amount*retail).toFixed(1) + ' UAH');
                                 elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
                                 $('#total').html((Number($('#total').html()) + (amount*retail)).toFixed(1));
                             }
                             else{
-                                console.log(amount * wholesale, 'whole');
                                 elem.closest('.cart_item_info').find('.product-sum').html((amount*wholesale).toFixed(1) + ' UAH');
                                 elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
                                 $('#total').html((Number($('#total').html()) + (amount*wholesale)));
