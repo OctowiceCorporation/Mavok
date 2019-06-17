@@ -1292,6 +1292,7 @@ select option
 .image_list li img
 {
 	max-width: 100%;
+	height: inherit;
 }
 .image_selected
 {
@@ -1318,6 +1319,7 @@ select option
 .image_selected img
 {
 	max-width: 100%;
+	height: inherit;
 }
 .product_description
 {

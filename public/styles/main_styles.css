@@ -226,6 +226,7 @@ section
 {
 	overflow: hidden;
 }
+
 .prlx
 {
 	height: 130% !important;
@@ -2242,8 +2243,24 @@ select option
 	overflow-y: hidden;
 	white-space: nowrap;
 }
+/* width */
 .scrolling-wrapper::-webkit-scrollbar {
-	display: none;
+	height: 4px;
+}
+
+/* Track */
+.scrolling-wrapper::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+.scrolling-wrapper::-webkit-scrollbar-thumb {
+	background: #0e8ce4;
+}
+
+/* Handle on hover */
+.scrolling-wrapper::-webkit-scrollbar-thumb:hover {
+	background: #0056b3;
 }
 .arrivals_slider .slick-active .arrivals_slider_item
 {
@@ -3544,6 +3561,11 @@ select option
 .footer .logo a
 {
 	color: #000000;
+}
+.logo a
+{
+    font-size: 50px;
+    font-family: 'Orbitron', sans-serif;
 }
 .footer_title
 {

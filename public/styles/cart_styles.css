@@ -1248,6 +1248,7 @@ select option
 .cart_item_image img
 {
 	max-width: 100%;
+	height: inherit;
 }
 .cart_item_info
 {

@@ -1438,7 +1438,8 @@ select option
 }
 #filter_container {
 	margin: auto;
-	width: 40%;
+	width: fit-content;
+	width: -moz-fit-content;
 }
 #resp_basket {
 	display: none;

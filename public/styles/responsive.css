@@ -63,6 +63,9 @@
 
 @media only screen and (max-width: 1199px)
 {
+	.logo a {
+		font-size: 40px;
+	}
 	.cat_menu_container
 	{
 		width: 211px;
@@ -137,6 +140,12 @@
 
 @media only screen and (max-width: 991px)
 {
+	.arrivals_slider_item {
+		width: 28%;
+	}
+	.logo a {
+		font-size: 50px;
+	}
 	.top_bar
 	{
 		/*display: none;*/
@@ -249,7 +258,7 @@
 	}
 	.tabs.tabs-right ul
 	{
-		float: left;
+		float: right;
 	}
 	.arrivals_single
 	{
@@ -310,7 +319,9 @@
 
 @media only screen and (max-width: 768px)
 {
-	
+	.new_arrivals_title {
+		top: 10px;
+	}
 }
 
 /************
@@ -319,6 +330,9 @@
 
 @media only screen and (max-width: 767px)
 {
+	.arrivals_slider_item {
+		width: 30%;
+	}
 	.header_search
 	{
 		display: none;
@@ -327,10 +341,14 @@
 	{
 		display: block;
 	}
+	.new_arrivals_title {
+		top: -20px;
+	}
 	.main_nav
 	{
 		margin-top: 0px;
 	}
+
 	.banner_product_image
 	{
 		opacity: 0.5;
@@ -413,13 +431,13 @@
 	}
 	#resp_basket {
 		display: inline-block!important;
+		padding-left: 7rem;
 	}
 	#resp_logo {
 		display: inline-block!important;
 	}
 	#view_all_resp {
 		display: inherit!important;
-		padding-left: 7rem;
 	}
 	#filter_trigger {
 		display: none;
@@ -510,8 +528,7 @@
 	}
 	.cart_count span
 	{
-		line-height: 21px;#view_all_resp {
-		display: inherit!important;
+		line-height: 21px;
 	}
 	#filter_trigger {
 		display: none;
@@ -530,12 +547,12 @@
 		width: calc(100% - 30px);
 		margin-left: 15px;
 		margin-right: 15px;
-		margin-top: 0px;
+		margin-top: 0;
 	}
-	.main_nav_content
-	{
-		height: 35px;
-	}
+	/*.main_nav_content*/
+	/*{*/
+	/*	height: 35px;*/
+	/*}*/
 	.cat_menu_container
 	{
 		padding-left: 15px;
@@ -796,7 +813,7 @@
 	}
 	.tabs.tabs-right .tabs_line
 	{
-		margin-top: 52px;
+		margin-top: 30px;
 	}
 	.tabs_line span
 	{
@@ -852,7 +869,9 @@
 
 @media only screen and (max-width: 479px)
 {
-	
+	#resp_basket {
+		padding-left: 5rem;
+	}
 }
 
 /************
@@ -861,7 +880,18 @@
 
 @media only screen and (max-width: 400px)
 {
-	#view_all_resp {
-		padding-left: 5rem;
+	#resp_basket {
+		padding-left: 3rem;
+	}
+}
+
+/************
+15. 320px
+************/
+
+@media only screen and (max-width: 320px)
+{
+	#resp_basket {
+		padding-left: 2rem;
 	}
 }
