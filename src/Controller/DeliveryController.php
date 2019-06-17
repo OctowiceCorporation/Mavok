@@ -89,13 +89,46 @@ class DeliveryController extends AbstractController
         return $this->render('checkout.html.twig', ['form' => $form->createView()]);
     }
 
-    public function minusProduct($id, SessionInterface $session)
+    public function minusBasket($slug, SessionInterface $session, ProductRepository $productRepository)
     {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+        if(empty($product))
+            return new Response('Product not found', 404);
+
+        $id = $product->getId();
+
         $basket = $session->get('basket');
-        if($basket[$id] == 1)
-            unset($basket[$id]);
+        if(isset($basket[$id])){
+            if($basket[$id] == 1)
+                unset($basket[$id]);
+            else
+                $basket[$id] -= 1;
+
+            $session->set('basket', $basket);
+        }
+
+        return new Response(null);
+    }
+
+    public function plusBasket($slug, ProductRepository $productRepository, SessionInterface $session)
+    {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+        if(empty($product))
+            return new Response(null, 404);
+
+        $id = $product->getId();
+        $basket = $session->get('basket');
+        if(empty($basket))
+            $basket = [];
+
+        if(isset($basket[$id]))
+            $basket[$id]++;
         else
-            $basket[$id] -= 1;
+            $basket[$id] = 1;
+
+        $session->set('basket', $basket);
+
+        return new Response(null);
     }
 
     public function clearBasket()

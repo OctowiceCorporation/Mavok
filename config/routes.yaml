@@ -18,6 +18,12 @@ search_product:
 add_to_basket:
     path: /add_to_basket
     controller: App\Controller\DeliveryController:addToBasket
+plus_basket:
+    path: /plus_basket/{slug}
+    controller: App\Controller\DeliveryController:plusBasket
+minus_basket:
+    path: /minus_basket/{slug}
+    controller: App\Controller\DeliveryController:minusBasket
 checkout:
     path: /checkout
     controller: App\Controller\DeliveryController:checkout

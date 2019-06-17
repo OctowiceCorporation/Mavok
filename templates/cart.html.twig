@@ -26,7 +26,7 @@
                         <div class="cart_items">
                             <ul class="cart_list">
                                 {% for product in products %}
-                                    <li class="cart_item clearfix">
+                                    <li class="cart_item clearfix basket-product-card">
                                         <div class="cart_item_image"><img src="/images/{{ product.image.get(0).imagePath }}" alt=""></div>
                                         <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                             <div class="cart_item_name cart_info_col">
@@ -36,16 +36,16 @@
                                             <div class="cart_item_quantity cart_info_col">
                                                 <div class="cart_item_title">Количество</div>
                                                 <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
-                                                    <input id="quantity_input" type="text" value="{{ product.amount }}">
-                                                    <div class="quantity_buttons">
-                                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
-                                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                                    <input class="quantity_input" type="text" readonly="readonly" value="{{ product.amount }}">
+                                                    <div class="quantity_buttons" data-product-name="{{ product.slug }}" data-minimum="{{ product.MinimumWholesale }}" data-wholesale="{{ product.WholesalePrice }}" data-retail="{{ product.retailPrice }}" data-value="{{ product.ProductValue }}">
+                                                        <div class="quantity_inc_button quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                                        <div class="quantity_dec_button quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="cart_item_price cart_info_col">
                                                 <div class="cart_item_title">Цена</div>
-                                                <div class="cart_item_text">
+                                                <div class="cart_item_text product-price">
                                                     {% if product.ProductValue is not null%}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
                                                             {{ (product.WholesalePrice * product.ProductValue) }} UAH
@@ -63,20 +63,20 @@
                                             </div>
                                             <div class="cart_item_total cart_info_col">
                                                 <div class="cart_item_title">Итого</div>
-                                                <div class="cart_item_text">
+                                                <div class="cart_item_text product-sum">
                                                     {% if product.ProductValue is not null%}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            {{ (product.WholesalePrice * product.ProductValue * product.amount) }} UAH
+                                                            {{ (product.WholesalePrice * product.ProductValue * product.amount) }}
                                                         {% else %}
-                                                            {{ (product.retailPrice * product.ProductValue * product.amount) }} UAH
+                                                            {{ (product.retailPrice * product.ProductValue * product.amount) }}
                                                         {% endif %}
                                                     {% else %}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            {{ (product.WholesalePrice * product.amount) }} UAH
+                                                            {{ (product.WholesalePrice * product.amount) }}
                                                         {% else %}
-                                                            {{ (product.retailPrice * product.amount) }} UAH
+                                                            {{ (product.retailPrice * product.amount) }}
                                                         {% endif %}
-                                                    {% endif %}
+                                                    {% endif %} UAH
                                                 </div>
                                             </div>
                                         </div>
@@ -149,6 +149,87 @@
                     $('#modal').modal('show');
                 }
             }, false);
+
+            $(document).on('click','.quantity_inc_button',function () {
+                let elem = $(this);
+                let input = elem.parent().parent().find('.quantity_input');
+                let quantity_buttons = elem.parent();
+                let slug = quantity_buttons.attr('data-product-name');
+                let minimum = Number(quantity_buttons.attr('data-minimum'));
+                let wholesale = Number(quantity_buttons.attr('data-wholesale').replace(/[^\d.-]/g, ''));
+                let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
+                let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
+                if(value !== 0) {
+                    wholesale = (wholesale * value).toFixed(1);
+                    retail = (retail * value).toFixed(1);
+                }
+
+                $.ajax({
+                    method: "GET",
+                    url: '/plus_basket/'+slug,
+                })
+                    .done(function() {
+                        $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
+
+                        let amount = Number(input.val(Number(input.val()) + 1).val());
+                        if((minimum <= 0) || (minimum > 0 && amount < minimum)){
+                            elem.closest('.cart_item_info').find('.product-sum').html((amount*retail).toFixed(1) + ' UAH');
+                            elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
+                            $('#total').html((Number($('#total').html()) + (amount*retail)).toFixed(1));
+                        }
+                        else{
+                            console.log(amount * wholesale, 'whole');
+                            elem.closest('.cart_item_info').find('.product-sum').html((amount*wholesale).toFixed(1) + ' UAH');
+                            elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
+                            $('#total').html((Number($('#total').html()) + (amount*wholesale)));
+                        }
+
+                    });
+            });
+
+            $(document).on('click','.quantity_dec_button',function () {
+                let elem = $(this);
+                let input = elem.parent().parent().find('.quantity_input');
+                let quantity_buttons = elem.parent();
+                let slug = quantity_buttons.attr('data-product-name');
+                let minimum = Number(quantity_buttons.attr('data-minimum'));
+                let wholesale = Number(quantity_buttons.attr('data-wholesale').replace(/[^\d.-]/g, ''));
+                let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
+                let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
+                if(value !== 0){
+                    wholesale = (wholesale*value).toFixed(1);
+                    retail = (retail*value).toFixed(1);
+                }
+
+
+                $.ajax({
+                    method: "GET",
+                    url: '/minus_basket/'+slug,
+                })
+                    .done(function() {
+                        $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
+
+                        let amount = Number(input.val(Number(input.val()) - 1).val());
+                        if(amount === 0)
+                            elem.closest('.basket-product-card').remove();
+                        else{
+                            console.log(amount * retail);
+                            if((minimum <= 0) || (minimum > 0 && amount < minimum)){
+                                elem.closest('.cart_item_info').find('.product-sum').html((amount*retail).toFixed(1) + ' UAH');
+                                elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
+                                $('#total').html((Number($('#total').html()) + (amount*retail)).toFixed(1));
+                            }
+                            else{
+                                console.log(amount * wholesale, 'whole');
+                                elem.closest('.cart_item_info').find('.product-sum').html((amount*wholesale).toFixed(1) + ' UAH');
+                                elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
+                                $('#total').html((Number($('#total').html()) + (amount*wholesale)));
+                            }
+                        }
+
+
+                    });
+            })
     </script>
 
 {% endblock %}
