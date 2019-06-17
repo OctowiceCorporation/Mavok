@@ -12,19 +12,19 @@ class SortService
     {
         switch ($type){
             case 'name':
-                usort($products, function(Product $a, Product $b)
+                usort($products, function($a, $b)
                 {
                     return strcmp($a->getName(), $b->getName());
                 });
                 break;
             case 'date':
-                usort($products, function(Product $a, Product $b)
+                usort($products, function($a, $b)
                 {
                     return $a->getCreatedAt() < $b->getCreatedAt();
                 });
                 break;
             case 'price_down':
-                usort($products, function(Product $a, Product $b)
+                usort($products, function($a, $b)
                 {
                     if(!empty($a->getProductValue()))
                         $first = $a->getProductValue()*$a->getRetailPrice();
@@ -40,7 +40,7 @@ class SortService
                 });
                 break;
             case 'price_up':
-                usort($products, function(Product $a, Product $b)
+                usort($products, function($a, $b)
                 {
                     if(!empty($a->getProductValue()))
                         $first = $a->getProductValue()*$a->getRetailPrice();

@@ -69,6 +69,7 @@ class DefaultController extends AbstractController
         $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
         if(!$last_category->getChildren()->isEmpty()) {
             list($categories, $products) = $categoryService->isLastCategory($array);
+            $pagination = $this->get('knp_paginator');
             $products = $pagination->paginate(
                 $products,
                 $request->query->getInt('page', 1),
@@ -81,16 +82,13 @@ class DefaultController extends AbstractController
             $form = $this->createForm(FilterForm::class, null, ['filter' => $filter]);
             $form->handleRequest($request);
             if($form->isSubmitted()){
-                $products = $filterService->isSubmited($form->getData(),$filter,$last_category, $request->get('page'));
-                if(!empty($sort)){
-                    $products = $products->toArray();
-                    $sortService->sort($sort, $products);
-                }
+                $products = $filterService->isSubmited($form->getData(),$filter,$last_category, $request->get('page'), $sort)->toArray();
                 $products = $pagination->paginate(
                     $products,
                     $request->query->getInt('page', 1),
                     $request->query->getInt('limit', 20)
                 );
+                $products->setTemplate('filter_pagination.html.twig');
 
                 return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products, 'category' => $last_category, 'form' => $form->createView(), 'sort' => $sort]);
             }

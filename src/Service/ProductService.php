@@ -42,38 +42,38 @@ class ProductService
         }
     }
 
-    public function getProductPrice($product, int $amount = null): \App\DTO\Product
+    public function getProductPrice(Product $product, $spec = null, int $amount = null): \App\DTO\Product
     {
         $currency = $product->getCurrencyName();
         if ($currency === "UAH")
-            return \App\Mappers\Product::entityToDto($product);
+            return \App\Mappers\Product::entityToDto($product, $spec);
         switch ($currency) {
             case 'USD':
                 if (!empty($value = $product->getBrand()->getUsdValue()))
-                    return \App\Mappers\Product::entityToDto($product, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
                 break;
             case 'EUR':
                 if (!empty($value = $product->getBrand()->getEurValue()))
-                    return \App\Mappers\Product::entityToDto($product, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
                 break;
 
         }
         switch ($currency) {
             case 'USD':
                 if (!empty($value = $product->getCategory()->getUsdValue()))
-                    return \App\Mappers\Product::entityToDto($product, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
                 break;
             case 'EUR':
                 if (!empty($value = $product->getCategory()->getEurValue()))
-                    return \App\Mappers\Product::entityToDto($product, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
                 break;
         }
         switch ($currency) {
             case 'USD':
-                    return \App\Mappers\Product::entityToDto($product, $this->usd);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $this->usd);
                 break;
             case 'EUR':
-                    return \App\Mappers\Product::entityToDto($product, $this->eur);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $this->eur);
                 break;
         }
 

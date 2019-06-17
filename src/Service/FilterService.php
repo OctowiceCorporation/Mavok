@@ -17,19 +17,23 @@ class FilterService
     private $product_repository;
     private $productService;
     private $brandRepository;
+    private $sortService;
 
     /**
      * FilterService constructor.
      * @param SpecificationRepository $specificationRepository
      * @param ProductRepository $productRepository
      * @param ProductService $productService
+     * @param BrandRepository $brandRepository
+     * @param SortService $sortService
      */
-    public function __construct(SpecificationRepository $specificationRepository, ProductRepository $productRepository, ProductService $productService, BrandRepository $brandRepository)
+    public function __construct(SpecificationRepository $specificationRepository, ProductRepository $productRepository, ProductService $productService, BrandRepository $brandRepository, SortService $sortService)
     {
         $this->specificationRepository = $specificationRepository;
         $this->product_repository = $productRepository;
         $this->productService = $productService;
         $this->brandRepository = $brandRepository;
+        $this->sortService = $sortService;
     }
 
 
@@ -40,9 +44,9 @@ class FilterService
         $country = ['name' => 'Страна производитель', 'is_countable' => null, 'values' => []];
         foreach($this->specificationRepository->getSpecificationFromCategory($category->getId()) as $item){
             if(!empty($item['manufacturer']))
-                $manuf['values'][$item['manufacturer']] = mb_strtolower($item['manufacturer']);
+                $manuf['values'][mb_strtolower($item['manufacturer'])] = mb_strtolower($item['manufacturer']);
             if(!empty($item['country']))
-                $country['values'][$item['country']] = mb_strtolower($item['country']);
+                $country['values'][mb_strtolower($item['country'])] = mb_strtolower($item['country']);
             if(!isset($specifications[$item['name']])){
                 $specifications[$item['name']] = [];
                 $specifications[$item['name']]['name'] = $item['name'];
@@ -86,7 +90,7 @@ class FilterService
             return array_values($filter);
     }
 
-    public function isSubmited(array $data, array $filter, Category $last_category, $pagination)
+    public function isSubmited(array $data, array $filter, Category $last_category, $pagination ,$sort)
     {
         if(empty($pagination))
             $pagination = 1;
@@ -99,10 +103,16 @@ class FilterService
                 unset($filter[$index]);
         }
 
-        $result = $last_category->getProducts();
+        $result = $last_category->getProducts()->toArray();
+        $arr = [];
+        foreach ($result as $item) {
+            $arr[] = $this->productService->getProductPrice($item, true);
+        }
+        if(!empty($sort))
+            $this->sortService->sort($sort, $arr);
         $products = new ArrayCollection();
 
-        foreach ($result as $product) {
+        foreach ($arr as $product) {
                 $found = true;
                 $spec = [];
             if(sizeof($products) <= $pagination*20){
@@ -112,8 +122,10 @@ class FilterService
                 $spec['Производитель'] = $product->getBrand()->getName();
                 $spec['Страна производитель'] = $product->getBrand()->getCountry();
 
+
                 foreach ($filter as $item) {
                     if(empty($item['is_countable'])) {
+
                         if (!isset($spec[$item['name']]) || !in_array(mb_strtolower($spec[$item['name']]), $item['values'])) {
                             $found = false;
                             break;
@@ -126,10 +138,10 @@ class FilterService
                         }
                     }
                 }
-            }
                 if($found) {
-                    $products->add($this->productService->getProductPrice($product));
+                    $products->add($product);
                 }
+            }
 
         }
 

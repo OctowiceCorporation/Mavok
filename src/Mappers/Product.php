@@ -7,13 +7,12 @@ namespace App\Mappers;
 use App\DTO\Product as ProductDto;
 use App\DTO\ProductFormDTO;
 use App\Entity\Product as ProductEntity;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class Product
 {
-    static function entityToDto(ProductEntity $entity, float $value = null): ProductDto
+    static function entityToDto(ProductEntity $entity, $spec = null, float $value = null): ProductDto
     {
-        return new ProductDto(
+        $product = new ProductDto(
             $entity->getCategory()->getId(),
             $entity->getName(),
             $entity->getRetailPrice(),
@@ -30,9 +29,17 @@ class Product
             $value,
             $entity->getProductUnit(),
             $entity->getCurrencyName(),
-            $entity->getBrand()->getId(),
+            $entity->getBrand(),
             $entity->getImages()
         );
+
+        if(!empty($spec)){
+            $product->setSpecifications($entity->getSpecifications());
+            $product->setCategory($entity->getCategory());
+        }
+
+
+        return $product;
     }
 
     static function FormDTOToEntity(ProductFormDTO $formDTO): ProductEntity

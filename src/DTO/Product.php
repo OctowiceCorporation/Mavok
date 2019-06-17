@@ -25,10 +25,12 @@ class Product
     private $slug;
     private $image;
     private $currency_name;
-    private $brand_id;
+    private $brand;
     private $amount;
+    private $specifications;
+    private $category;
 
-    public function __construct(int $category_id, string $name, float $retail_price, DateTimeInterface $created_at, DateTimeInterface $updated_at, bool $is_available, bool $is_visible, bool $special_offer, string $slug, string $description = null, float $wholesale_price = null, int $minimum_wholesale = null, float $sale = null, float $product_value = null, string $product_unit = null, string $currency_name = null, int $brand_id = null, $image = null)
+    public function __construct(int $category_id, string $name, float $retail_price, DateTimeInterface $created_at, DateTimeInterface $updated_at, bool $is_available, bool $is_visible, bool $special_offer, string $slug, string $description = null, float $wholesale_price = null, int $minimum_wholesale = null, float $sale = null, float $product_value = null, string $product_unit = null, string $currency_name = null, $brand = null, $image = null)
     {
         $this->category_id = $category_id;
         $this->name = $name;
@@ -46,7 +48,7 @@ class Product
         $this->product_unit = $product_unit;
         $this->slug = $slug;
         $this->currency_name = $currency_name;
-        $this->brand_id = $brand_id;
+        $this->brand = $brand;
         $this->image = $image;
     }
 
@@ -135,10 +137,41 @@ class Product
         return $this->currency_name;
     }
 
-    public function getBrandId(): ?int
+    /**
+     * @return null
+     */
+    public function getCategory()
     {
-        return $this->brand_id;
+        return $this->category;
     }
+
+    /**
+     * @param null $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
+    }
+
+
+
+    /**
+     * @return null
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * @param null $brand
+     */
+    public function setBrand($brand): void
+    {
+        $this->brand = $brand;
+    }
+
+
 
     public function getImage()
     {
@@ -160,6 +193,24 @@ class Product
         $this->amount = $amount;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecifications()
+    {
+        return $this->specifications;
+    }
+
+    /**
+     * @param mixed $specifications
+     */
+    public function setSpecifications($specifications): void
+    {
+        $this->specifications = $specifications;
+    }
+
+
 
 
 }
