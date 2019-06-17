@@ -69,7 +69,6 @@ class DefaultController extends AbstractController
         $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
         if(!$last_category->getChildren()->isEmpty()) {
             list($categories, $products) = $categoryService->isLastCategory($array);
-            $pagination = $this->get('knp_paginator');
             $products = $pagination->paginate(
                 $products,
                 $request->query->getInt('page', 1),
