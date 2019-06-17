@@ -160,8 +160,10 @@
 <script src="js/product_custom.js"></script>
 <script src="js/main.js"></script>
     <script>
+        $(document).ready(function () {
+            let sum = Number($('#total').html());
             document.getElementById('checkout_button').addEventListener('click', function(evt) {
-                if ({{ minOrder }} > {{ total }}) {
+                if ( {{ minOrder }} > sum) {
                     evt.preventDefault();
                     $('#modal').modal('show');
                 }
@@ -199,6 +201,7 @@
                             elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
                             $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                         }
+                        sum = Number($('#total').html());
 
                     });
             });
@@ -230,7 +233,7 @@
                             url: '/minus_basket/'+slug,
                         })
                             .done(function() {
-                                $('#total').html(parseFloat(Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, '')).toFixed(1)));
+                                $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1)));
                                 let amount = Number(input.val(Number(input.val()) - 1).val());
                                 if(amount === 0)
                                     elem.closest('.basket-product-card').remove();
@@ -246,6 +249,7 @@
                                         $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                                     }
                                 }
+                                sum = Number($('#total').html());
                             });
                     };
                 }
@@ -267,7 +271,7 @@
                         url: '/minus_basket/'+slug,
                     })
                         .done(function() {
-                            $('#total').html(parseFloat(Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, '')).toFixed(1)));
+                            $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1)));
                             let amount = Number(input.val(Number(input.val()) - 1).val());
                             if(amount === 0)
                                 elem.closest('.basket-product-card').remove();
@@ -283,9 +287,11 @@
                                     $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                                 }
                             }
+                            sum = Number($('#total').html());
                         });
                 }
             })
+        });
     </script>
 
 {% endblock %}
