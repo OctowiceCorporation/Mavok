@@ -87,6 +87,9 @@
 	.logo a {
 		font-size: 40px;
 	}
+    .product_item {
+        width: 25%;
+    }
 }
 
 /************
@@ -330,6 +333,10 @@
 {
 	h2{font-size: 24px;}
 	p{font-size: 13px;}
+	.footer
+	{
+		padding-bottom: unset;
+	}
 	.top_bar
 	{
 		display: none;
@@ -516,15 +523,6 @@
 	.rating_r i::before
 	{
 		font-size: 14px;
-	}
-	.shop_product_count, 
-	.shop_sorting
-	{
-		float: none;
-	}
-	.shop_sorting
-	{
-		margin-top: 7px;
 	}
 	.shop_page_nav
 	{

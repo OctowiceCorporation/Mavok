@@ -106,8 +106,8 @@ $(document).ready(function () {
                 'slug': $(this).val(),
             }
         })
-            .done(function() {
-                element.html('Уже в корзине <i class="fas fa-check"></i>').css('background-color','green');
+            .done(function(event) {
+                element.html('В корзине<i class="fas fa-check"></i>').css('background-color','green');
             });
     })
 

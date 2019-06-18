@@ -408,6 +408,10 @@
 {
 	h2{font-size: 24px;}
 	p{font-size: 13px;}
+	.cart_button_checkout
+	{
+		width: 100%;
+	}
 	.top_bar
 	{
 		display: none;
