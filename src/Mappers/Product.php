@@ -54,7 +54,8 @@ class Product
             $formDTO->getIsVisible(),
             $formDTO->getSpecialOffer(),
             $formDTO->getProductUnit(),
-            $formDTO->getBrand()
+            $formDTO->getBrand(),
+            $formDTO->getSale()
         );
     }
 
@@ -76,7 +77,8 @@ class Product
             $product->getProductUnit(),
             $product->getCurrencyName(),
             $product->getBrand(),
-            json_encode($specif)
+            json_encode($specif),
+            $product->getSale()
         );
     }
 }

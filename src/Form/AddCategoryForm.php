@@ -62,7 +62,7 @@ class AddCategoryForm extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('save', SubmitType::class, ['label' => 'Добавить категорию'])
+            ->add('save', SubmitType::class, ['label' => 'Добавить/Изменить категорию'])
             ->getForm();
     }
 

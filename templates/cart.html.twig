@@ -41,7 +41,7 @@
                                                 <div class="cart_item_title">Количество</div>
                                                 <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
                                                     <input class="quantity_input" type="text" readonly="readonly" value="{{ product.amount }}">
-                                                    <div class="quantity_buttons" data-product-name="{{ product.slug }}" data-minimum="{{ product.MinimumWholesale }}" data-wholesale="{{ product.WholesalePrice }}" data-retail="{{ product.retailPrice }}" data-value="{{ product.ProductValue }}">
+                                                    <div class="quantity_buttons" data-product-name="{{ product.slug }}" data-minimum="{{ product.MinimumWholesale }}" data-wholesale="{% if product.sale is not empty %}{{ product.WholesalePrice*product.sale }}{% else %}{{ product.WholesalePrice }}{% endif %}" data-retail="{% if product.sale is not empty %}{{ product.retailPrice - ( product.retailPrice* product.sale/100) }}{% else %}{{ product.retailPrice }}{% endif %}" data-value="{{ product.ProductValue }}">
                                                         <div class="quantity_inc_button quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
                                                         <div class="quantity_dec_button quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
                                                     </div>
@@ -52,15 +52,31 @@
                                                 <div class="cart_item_text product-price">
                                                     {% if product.ProductValue is not null%}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            {{ (product.WholesalePrice * product.ProductValue) }} UAH
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.WholesalePrice * product.ProductValue) }} UAH
+                                                            {% else %}
+                                                                {{ product.WholesalePrice * product.ProductValue - (product.WholesalePrice * product.ProductValue/100 * product.sale) }} UAH
+                                                            {% endif %}
                                                         {% else %}
-                                                            {{ (product.retailPrice * product.ProductValue) }} UAH
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.retailPrice * product.ProductValue) }} UAH
+                                                            {% else %}
+                                                                {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} UAH
+                                                            {% endif %}
                                                         {% endif %}
                                                     {% else %}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            {{ (product.WholesalePrice) }} UAH
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.WholesalePrice) }} UAH
+                                                            {% else %}
+                                                                {{ product.WholesalePrice - (product.WholesalePrice /100 * product.sale) }} UAH
+                                                            {% endif %}
                                                         {% else %}
-                                                            {{ (product.retailPrice) }} UAH
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.retailPrice) }} UAH
+                                                            {% else %}
+                                                                {{ product.retailPrice - (product.retailPrice /100 * product.sale) }} UAH
+                                                            {% endif %}
                                                         {% endif %}
                                                     {% endif %}
                                                 </div>
@@ -70,17 +86,33 @@
                                                 <div class="cart_item_text product-sum">
                                                     {% if product.ProductValue is not null%}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            {{ (product.WholesalePrice * product.ProductValue * product.amount) }}
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.WholesalePrice * product.ProductValue * product.amount) }} UAH
+                                                            {% else %}
+                                                                {{ (product.WholesalePrice * product.ProductValue - (product.WholesalePrice * product.ProductValue/100 * product.sale))* product.amount }} UAH
+                                                            {% endif %}
                                                         {% else %}
-                                                            {{ (product.retailPrice * product.ProductValue * product.amount) }}
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.retailPrice * product.ProductValue * product.amount) }} UAH
+                                                            {% else %}
+                                                                {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))* product.amount }} UAH
+                                                            {% endif %}
                                                         {% endif %}
                                                     {% else %}
                                                         {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
-                                                            {{ (product.WholesalePrice * product.amount) }}
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.WholesalePrice * product.amount) }} UAH
+                                                            {% else %}
+                                                                {{ (product.WholesalePrice - (product.WholesalePrice /100 * product.sale))* product.amount }} UAH
+                                                            {% endif %}
                                                         {% else %}
-                                                            {{ (product.retailPrice * product.amount) }}
+                                                            {% if product.sale is empty %}
+                                                                {{ (product.retailPrice * product.amount) }} UAH
+                                                            {% else %}
+                                                                {{ (product.retailPrice - (product.retailPrice /100 * product.sale))* product.amount }} UAH
+                                                            {% endif %}
                                                         {% endif %}
-                                                    {% endif %} UAH
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>

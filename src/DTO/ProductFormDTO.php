@@ -43,7 +43,7 @@ class ProductFormDTO
      * @param $brand
      * @param $specification
      */
-    public function __construct($category = null, $name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $minimum_wholesale = null, $product_unit = null, $currency_name = null, $brand = null, $specification = null)
+    public function __construct($category = null, $name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $minimum_wholesale = null, $product_unit = null, $currency_name = null, $brand = null, $specification = null, $sale = null)
     {
         $this->category = $category;
         $this->name = $name;
@@ -57,6 +57,7 @@ class ProductFormDTO
         $this->currency_name = $currency_name;
         $this->brand = $brand;
         $this->specification = $specification;
+        $this->sale = $sale;
     }
 
 

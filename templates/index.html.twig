@@ -121,11 +121,22 @@
                                 <div class="product_content">
                                     <div class="product_price">
                                         {% if specialProduct.ProductValue is not null %}
-                                            {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
+                                        {% if specialProduct.sale is not empty %}
+                                            <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH</s><br>
+                                            {{ specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale) }} UAH
                                         {% else %}
-                                            {{ specialProduct.retailPrice }} UAH
+                                            {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
                                         {% endif %}
                                     </div>
+                                    {% else %}
+                                    {% if specialProduct.sale is not empty %}
+                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) }} UAH</s><br>
+                                        {{ specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale) }} UAH
+                                    {% else %}
+                                        {{ (specialProduct.retailPrice) }} UAH
+                                    {% endif %}
+                                </div>
+                                {% endif %}
                                 </div>
                                 <div style="width : 150px; overflow:hidden;" class="product_name"><p>{{ specialProduct.name }}</p></div>
 
@@ -176,11 +187,22 @@
                             <div class="product_content">
                                 <div class="product_price">
                                     {% if specialProduct.ProductValue is not null %}
-                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
+                                    {% if specialProduct.sale is not empty %}
+                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH</s><br>
+                                        {{ specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale) }} UAH
                                     {% else %}
-                                    {{ specialProduct.retailPrice }} UAH
+                                        {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
                                     {% endif %}
                                 </div>
+                                {% else %}
+                                {% if specialProduct.sale is not empty %}
+                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) }} UAH</s><br>
+                                    {{ specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale) }} UAH
+                                {% else %}
+                                    {{ (specialProduct.retailPrice) }} UAH
+                                {% endif %}
+                            </div>
+                            {% endif %}
                             </div>
                             <div style="width : 150px; overflow:hidden;" class="product_name"><p>{{ specialProduct.name }}</p></div>
 

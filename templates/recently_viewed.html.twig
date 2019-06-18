@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/recently_viewed.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/recently_viewed_responsive.css') }}">
 <!-- Recently Viewed -->
+{% if products is not null %}
 <div class="viewed">
     <div class="container">
         <div class="row">
@@ -28,10 +29,22 @@
                                 <div class="recently_viewed_content" style="text-align: center">
                                     <div class="recently_viewed_price">
                                         {% if product.ProductValue is not null %}
-                                        {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}</div>
+                                        {% if product.sale is not empty %}
+                                            <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} UAH</s><br>
+                                            {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} UAH
+                                        {% else %}
+                                            {{ (product.retailPrice * product.ProductValue) }} UAH
+                                        {% endif %}
+                                    </div>
                                     {% else %}
-                                    {{ product.retailPrice }} UAH</div>
-                                {% endif %}
+                                    {% if product.sale is not empty %}
+                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} UAH</s><br>
+                                        {{ product.retailPrice - (product.retailPrice/100 * product.sale) }} UAH
+                                    {% else %}
+                                        {{ (product.retailPrice) }} UAH
+                                    {% endif %}
+                                </div>
+                            {% endif %}
                                 <div style="width : 150px; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;" class="recently_viewed_name">{{ product.name }}</div>
                         </div>
                         </a>
@@ -57,4 +70,5 @@
             </div>
          </div>
     </div>
+{% endif %}
 </div>
