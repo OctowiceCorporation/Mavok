@@ -27,7 +27,11 @@
                             <ul class="cart_list">
                                 {% for product in products %}
                                     <li class="cart_item clearfix basket-product-card">
-                                        <div class="cart_item_image"><img src="/images/{{ product.image.get(0).imagePath }}" alt=""></div>
+                                        <div class="cart_item_image"><img src={% if product.image.get(0).ImagePath is defined %}
+                                                                          "/images/{{ product.image.get(0).ImagePath }}"
+                                            {% else %}
+                                                "/no-image.png"
+                                            {% endif %} alt=""></div>
                                         <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                             <div class="cart_item_name cart_info_col">
                                                 <div class="cart_item_title">Название</div>
@@ -132,11 +136,11 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    Вы уверены нахуй??????
+                    Вы уверены что хотите удалить товар из корзины?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="dismiss" data-dismiss="modal">Нихуя</button>
-                    <button type="button" class="btn btn-primary" id="accept">Конечно</button>
+                    <button type="button" class="btn btn-danger" id="dismiss" data-dismiss="modal">Нет</button>
+                    <button type="button" class="btn btn-primary" id="accept">Да</button>
                 </div>
             </div>
         </div>
@@ -156,8 +160,10 @@
 <script src="js/product_custom.js"></script>
 <script src="js/main.js"></script>
     <script>
+        $(document).ready(function () {
+            let sum = Number($('#total').html());
             document.getElementById('checkout_button').addEventListener('click', function(evt) {
-                if ({{ minOrder }} > {{ total }}) {
+                if ( {{ minOrder }} > sum) {
                     evt.preventDefault();
                     $('#modal').modal('show');
                 }
@@ -186,15 +192,16 @@
 
                         let amount = Number(input.val(Number(input.val()) + 1).val());
                         if((minimum <= 0) || (minimum > 0 && amount < minimum)){
-                            elem.closest('.cart_item_info').find('.product-sum').html((amount*retail).toFixed(1) + ' UAH');
+                            elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toFixed(1)) + ' UAH');
                             elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
-                            $('#total').html((Number($('#total').html()) + (amount*retail)).toFixed(1));
+                            $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail)).toFixed(1)));
                         }
                         else{
-                            elem.closest('.cart_item_info').find('.product-sum').html((amount*wholesale).toFixed(1) + ' UAH');
+                            elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toFixed(1)) + ' UAH');
                             elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
-                            $('#total').html((Number($('#total').html()) + (amount*wholesale)));
+                            $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                         }
+                        sum = Number($('#total').html());
 
                     });
             });
@@ -202,54 +209,89 @@
             $(document).on('click','.quantity_dec_button',function () {
                 let elem = $(this);
                 let input = elem.parent().parent().find('.quantity_input');
-                let quantity_buttons = elem.parent();
-                let slug = quantity_buttons.attr('data-product-name');
-                let minimum = Number(quantity_buttons.attr('data-minimum'));
-                let wholesale = Number(quantity_buttons.attr('data-wholesale').replace(/[^\d.-]/g, ''));
-                let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
-                let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
-                if(value !== 0){
-                    wholesale = (wholesale*value).toFixed(1);
-                    retail = (retail*value).toFixed(1);
+                if(Number(input.val()) === 1){
+                    $('#exampleModalCenter').modal('show');
+                    document.getElementById('dismiss').onclick = function () {
+                        $('#exampleModalCenter').modal('hide');
+                    };
+                    document.getElementById('accept').onclick = function () {
+                        $('#exampleModalCenter').modal('hide');
+                        let quantity_buttons = elem.parent();
+                        let slug = quantity_buttons.attr('data-product-name');
+                        let minimum = Number(quantity_buttons.attr('data-minimum'));
+                        let wholesale = Number(quantity_buttons.attr('data-wholesale').replace(/[^\d.-]/g, ''));
+                        let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
+                        let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
+                        if(value !== 0){
+                            wholesale = (wholesale*value).toFixed(1);
+                            retail = (retail*value).toFixed(1);
+                        }
+
+
+                        $.ajax({
+                            method: "GET",
+                            url: '/minus_basket/'+slug,
+                        })
+                            .done(function() {
+                                $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1)));
+                                let amount = Number(input.val(Number(input.val()) - 1).val());
+                                if(amount === 0)
+                                    elem.closest('.basket-product-card').remove();
+                                else{
+                                    if((minimum <= 0) || (minimum > 0 && amount < minimum)){
+                                        elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toFixed(1)) + ' UAH');
+                                        elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
+                                        $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail))).toFixed(1));
+                                    }
+                                    else{
+                                        elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toFixed(1)) + ' UAH');
+                                        elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
+                                        $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
+                                    }
+                                }
+                                sum = Number($('#total').html());
+                            });
+                    };
                 }
+                else{
+                    let quantity_buttons = elem.parent();
+                    let slug = quantity_buttons.attr('data-product-name');
+                    let minimum = Number(quantity_buttons.attr('data-minimum'));
+                    let wholesale = Number(quantity_buttons.attr('data-wholesale').replace(/[^\d.-]/g, ''));
+                    let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
+                    let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
+                    if(value !== 0){
+                        wholesale = (wholesale*value).toFixed(1);
+                        retail = (retail*value).toFixed(1);
+                    }
 
 
-                $.ajax({
-                    method: "GET",
-                    url: '/minus_basket/'+slug,
-                })
-                    .done(function() {
-                        let amount = Number(input.val(Number(input.val()) - 1).val());
-                        if(amount === 0) {
-                            $('#exampleModalCenter').modal('show');
-                            document.getElementById('accept').onclick = function () {
+                    $.ajax({
+                        method: "GET",
+                        url: '/minus_basket/'+slug,
+                    })
+                        .done(function() {
+                            $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1)));
+                            let amount = Number(input.val(Number(input.val()) - 1).val());
+                            if(amount === 0)
                                 elem.closest('.basket-product-card').remove();
-                                $('#exampleModalCenter').modal('hide');
-                                $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
-                            };
-                            document.getElementById('dismiss').onclick = function () {
-                                Number(input.val(Number(input.val()) + 1).val());
-                                $('#exampleModalCenter').modal('hide');
-
-                            };
-                        }
-                        else{
-                            $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
-                            if((minimum <= 0) || (minimum > 0 && amount < minimum)){
-                                elem.closest('.cart_item_info').find('.product-sum').html((amount*retail).toFixed(1) + ' UAH');
-                                elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
-                                $('#total').html((Number($('#total').html()) + (amount*retail)).toFixed(1));
-                            }
                             else{
-                                elem.closest('.cart_item_info').find('.product-sum').html((amount*wholesale).toFixed(1) + ' UAH');
-                                elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
-                                $('#total').html((Number($('#total').html()) + (amount*wholesale)));
+                                if((minimum <= 0) || (minimum > 0 && amount < minimum)){
+                                    elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toFixed(1)) + ' UAH');
+                                    elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
+                                    $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail)).toFixed(1)));
+                                }
+                                else{
+                                    elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toFixed(1)) + ' UAH');
+                                    elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
+                                    $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
+                                }
                             }
-                        }
-
-
-                    });
+                            sum = Number($('#total').html());
+                        });
+                }
             })
+        });
     </script>
 
 {% endblock %}
