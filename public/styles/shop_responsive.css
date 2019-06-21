@@ -89,6 +89,7 @@
 	}
     .product_item {
         width: 25%;
+		min-width: 25%;
     }
 }
 
@@ -221,6 +222,7 @@
 	.product_item
 	{
 		width: 25%;
+		min-width: 25%;
 	}
 	.newsletter_title_container
 	{
@@ -322,6 +324,7 @@
 	.product_item
 	{
 		width: 33.33333333%;
+		min-width: 33.33333333%;
 	}
 }
 
@@ -657,6 +660,7 @@
 {
 	.product_item
 	{
+		min-width: 50%;
 		width: 50%;
 	}
 }

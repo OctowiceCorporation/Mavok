@@ -12,6 +12,7 @@ use App\Entity\NovaPoshtaPostOffice;
 use App\Entity\Product;
 use App\Entity\Specification;
 use App\Form\FilterForm;
+use App\Repository\BlogRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
@@ -182,6 +183,14 @@ class DefaultController extends AbstractController
         $mailer->send($mail);
         $session->remove('basket');
         return $this->redirectToRoute('index');
+    }
+
+    public function showBlog(BlogRepository $blogRepository)
+    {
+        $posts = $blogRepository->findAll();
+        return $this->render('blog.html.twig', [
+            'posts' => $posts
+        ]);
     }
 
     public function parceNP(EntityManagerInterface $em)

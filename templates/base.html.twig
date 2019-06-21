@@ -2,7 +2,7 @@
 <html>
 <head>
     {% block stylesheets %}
-    <title>Mavoc</title>
+    <title>Mavok</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="OneTech shop project">
@@ -44,7 +44,7 @@
                 <!-- Logo -->
                 <div class="col-lg-2 col-sm-3 col-3 order-1" id="logo_container">
                     <div class="logo_container">
-                        <div class="logo" id="logo"><a href="{{ path('index') }}">Mavoc</a></div>
+                        <div class="logo" id="logo"><a href="{{ path('index') }}">Mavok</a></div>
                     </div>
                 </div>
                 <!-- Search -->
@@ -53,7 +53,7 @@
                         <div class="header_search_content">
                             <div class="header_search_form_container">
                                 <form action="{{ path('product_search') }}" class="header_search_form clearfix" method="get">
-                                    <input name="search_text" type="search" required="required" class="header_search_input" placeholder="Search for products..." style="width: 100%">
+                                    <input name="search_text" type="search" required="required" class="header_search_input" placeholder="Найти товар..." style="width: 100%">
                                     <button type="submit" class="header_search_button trans_300" value="Submit"><i class="fas fa-2x text-light fa-search"></i></button>
                                 </form>
                             </div>
@@ -63,7 +63,7 @@
                 <div class="col-lg-4 col-sm-9 order-lg-3 order-2 text-right">
                     <div class="logo_container" style="display: inline-block">
                         <div class="logo" id="basket"><a href="{{ path('basket_view') }}"><i style="color: #0e8ce4" class="fas fa-shopping-cart fa-2x"></i></a></div>
-                        <a  id="resp_logo" style="display:none; font-size: 50px; font-family: 'Orbitron', sans-serif;" href="{{ path('index') }}">Mavoc</a>
+                        <a  id="resp_logo" style="display:none; font-size: 50px; font-family: 'Orbitron', sans-serif;" href="{{ path('index') }}">Mavok</a>
                         <a style="display: none" id="resp_basket" href="{{ path('basket_view') }}"><i style="color: #0e8ce4" class="fas fa-shopping-cart fa-2x"></i></a>
                     </div>
                 </div>
@@ -87,53 +87,9 @@
                         <!-- Main Nav Menu -->
                         <div class="main_nav_menu ml-auto">
                             <ul class="standard_dropdown main_nav_dropdown">
-                                <li><a href="#">Blog<i class="fas fa-chevron-down"></i></a></li>
-                                <li class="hassubs">
-                                    <a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
-                                            <ul>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li class="hassubs">
-                                    <a href="#">Featured Brands<i class="fas fa-chevron-down"></i></a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
-                                            <ul>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li class="hassubs">
-                                    <a href="#">Pages<i class="fas fa-chevron-down"></i></a>
-                                    <ul>
-                                        <li><a href="shop.html">Shop<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="product.html">Product<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="blog_single.html">Blog Post<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="regular.html">Regular Post<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="cart.html">Cart<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-                                <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="{{ path('showBlog') }}">Блог<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="#">О нас<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="#">Контакты<i class="fas fa-chevron-down"></i></a></li>
                             </ul>
                         </div>
                         <!-- Menu Trigger -->
@@ -164,76 +120,29 @@
                     <div class="page_menu_content">
                         <div class="page_menu_search">
                             <form action="#">
-                                <input type="search" required="required" class="page_menu_search_input" placeholder="Search for products...">
+                                <input type="search" required="required" class="page_menu_search_input" placeholder="Найти товар...">
                             </form>
                         </div>
                         <ul class="page_menu_nav">
-                            <li class="page_menu_item has-children">
-                                <a href="#">Language<i class="fa fa-angle-down"></i></a>
-                                <ul class="page_menu_selection">
-                                    <li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Italian<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
-                                </ul>
-                            </li>
-                            <li class="page_menu_item has-children">
-                                <a href="#">Currency<i class="fa fa-angle-down"></i></a>
-                                <ul class="page_menu_selection">
-                                    <li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">GBP British Pound<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
-                                </ul>
+                            <li class="page_menu_item">
+                                <a href="{{ path('index') }}">На главную<i class="fa fa-angle-down"></i></a>
                             </li>
                             <li class="page_menu_item">
-                                <a href="#">Home<i class="fa fa-angle-down"></i></a>
+                                <a href="{{ path('showBlog') }}">Блог<i class="fa fa-angle-down"></i></a>
                             </li>
-                            <li class="page_menu_item has-children">
-                                <a href="#">Super Deals<i class="fa fa-angle-down"></i></a>
-                                <ul class="page_menu_selection">
-                                    <li><a href="#">Super Deals<i class="fa fa-angle-down"></i></a></li>
-                                    <li class="page_menu_item has-children">
-                                        <a href="#">Menu Item<i class="fa fa-angle-down"></i></a>
-                                        <ul class="page_menu_selection">
-                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                </ul>
+                            <li class="page_menu_item">
+                                <a href="#">О нас<i class="fa fa-angle-down"></i></a>
                             </li>
-                            <li class="page_menu_item has-children">
-                                <a href="#">Featured Brands<i class="fa fa-angle-down"></i></a>
-                                <ul class="page_menu_selection">
-                                    <li><a href="#">Featured Brands<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                </ul>
+                            <li class="page_menu_item">
+                                <a href="#">Контакты<i class="fa fa-angle-down"></i></a>
                             </li>
-                            <li class="page_menu_item has-children">
-                                <a href="#">Trending Styles<i class="fa fa-angle-down"></i></a>
-                                <ul class="page_menu_selection">
-                                    <li><a href="#">Trending Styles<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
-                                </ul>
-                            </li>
-                            <li class="page_menu_item"><a href="blog.html">blog<i class="fa fa-angle-down"></i></a></li>
-                            <li class="page_menu_item"><a href="contact.html">contact<i class="fa fa-angle-down"></i></a></li>
                         </ul>
                         <div class="menu_contact">
                             <div class="menu_contact_item">
-                                <div class="menu_contact_icon"><img src="images/phone_white.png" alt=""></div>+38 068 005 3570
+                                <div class="menu_contact_icon"><i class="fas fa-phone"></i></div>+38 068 005 3570
                             </div>
                             <div class="menu_contact_item">
-                                <div class="menu_contact_icon"><img src="images/mail_white.png" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
+                                <div class="menu_contact_icon"><i class="fas fa-envelope"></i></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
                             </div>
                         </div>
                     </div>
@@ -258,7 +167,7 @@
             <div class="col-lg-3 footer_col">
                 <div class="footer_column footer_contact">
                     <div class="logo_container">
-                        <div class="logo"><a style="font-size: 50px; font-family: 'Orbitron', sans-serif;" href="#">Mavoc</a></div>
+                        <div class="logo"><a style="font-size: 50px; font-family: 'Orbitron', sans-serif;" href="#">Mavok</a></div>
                     </div>
                     <div class="footer_title">Got Question? Call Us 24/7</div>
                     <div class="footer_phone">+38 068 005 3570</div>
