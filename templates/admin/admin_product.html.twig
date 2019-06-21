@@ -57,7 +57,7 @@
                     $('#product-loader').show();
                     $.ajax({
                         method: "GET",
-                        url: "/adminPage/search_product/" + text,
+                        url: "/search_product/" + text,
                     })
                         .done(function (result) {
                             result = JSON.parse(result);
