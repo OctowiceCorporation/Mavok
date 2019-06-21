@@ -147,9 +147,21 @@
                                 <div class="product_content" style="height: 150px">
                                     <div class="product_price">
                                         {% if product.ProductValue is not null %}
-                                            {{ (product.retailPrice * product.ProductValue) | round}} UAH</div>
+                                            {% if product.sale is not empty %}
+                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} UAH</s><br>
+                                        {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} UAH
                                         {% else %}
-                                            {{ product.retailPrice | round}} UAH</div>
+                                        {{ (product.retailPrice * product.ProductValue) }} UAH
+                                        {% endif %}
+                                    </div>
+                                        {% else %}
+                                            {% if product.sale is not empty %}
+                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} UAH</s><br>
+                                                {{ product.retailPrice - (product.retailPrice/100 * product.sale) }} UAH
+                                            {% else %}
+                                                {{ (product.retailPrice) }} UAH
+                                            {% endif %}
+                                </div>
                                         {% endif %}
                                     <div style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;" class="product_name">
                                         <p>

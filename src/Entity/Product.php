@@ -134,7 +134,7 @@ class Product
      * @param $product_unit
      * @param $brand
      */
-    public function __construct($name = null, $description = null, $currency_name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $product_unit = null, $brand = null)
+    public function __construct($name = null, $description = null, $currency_name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $product_unit = null, $brand = null, $sale = null)
     {
         $this->name = $name;
         $this->description = $description;
@@ -153,6 +153,7 @@ class Product
         $this->recommend_product = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->specifications = new ArrayCollection();
+        $this->sale = $sale;
     }
 
     public function getId(): ?int

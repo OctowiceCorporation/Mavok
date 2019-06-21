@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="col-lg-5 order-lg-2 order-1">
-                    <div class="image_selected"><img src=
+                    <div class="image_selected"><img style="object-fit: contain" src=
                 {% if product.image.get(0).ImagePath is defined %}
                      "/images/{{ product.image.get(0).ImagePath }}"
                 {% else %}
@@ -70,11 +70,23 @@
                                 </div>
                                 <div class="product_price">
                                     {% if product.ProductValue is not null %}
-                                        {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}
+                                    {% if product.sale is not empty %}
+                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} UAH</s><br>
+                                        {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} UAH
                                     {% else %}
-                                        {{ product.retailPrice }} UAH
+                                        {{ (product.retailPrice * product.ProductValue) }} UAH
                                     {% endif %}
                                 </div>
+                                {% else %}
+                                {% if product.sale is not empty %}
+                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} UAH</s><br>
+                                    {{ product.retailPrice - (product.retailPrice/100 * product.sale) }} UAH
+                                {% else %}
+                                    {{ (product.retailPrice) }} UAH
+                                {% endif %}
+                        </div>
+                        {% endif %}
+{#                                </div>#}
                                 <div class="button_container">
                                     <button type="button" class="button cart_button add_to_basket " value="{{ product.slug }}">Добавить в корзину <i class="fas fa-cart-plus"></i></button>
                                 </div>

@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -119,12 +120,19 @@ class AddProductForm extends AbstractType
                 'label' => 'Единица измерения',
                 'required' => false,
             ])
+            ->add('sale', IntegerType::class,[
+                'label' => 'Скидка, значение в процентах',
+                'attr' => [
+                    'min' => 1,
+                    'max' => 99
+                ],
+            ])
             ->add('specification', HiddenType::class)
             ->add('brand', EntityType::class, [
                 'class' => Brand::class,
                 'choice_label' => 'name',
             ])
-            ->add('save', SubmitType::class, ['label' => 'Добавить товар'])
+            ->add('save', SubmitType::class, ['label' => 'Добавить/Изменить товар'])
             ->getForm();
     }
 

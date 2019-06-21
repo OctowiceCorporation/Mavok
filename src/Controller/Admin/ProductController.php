@@ -127,6 +127,8 @@ class ProductController extends AbstractController
                 ->setIsVisible($data->getIsVisible())
                 ->setSpecialOffer($data->getSpecialOffer())
                 ->setProductUnit($data->getProductUnit())
+                ->setSale($data->getSale())
+                ->setCurrencyName($data->getCurrencyName())
                 ->setBrand($data->getBrand());
             $entityManager->persist($product);
 
