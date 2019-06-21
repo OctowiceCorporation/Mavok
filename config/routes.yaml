@@ -39,6 +39,9 @@ header_categories:
 sendMail:
     path: /sendMail
     controller: App\Controller\DefaultController::sendMail
+showBlog:
+    path: /blog
+    controller: App\Controller\DefaultController::showBlog
 admin:
     path: /adminPage
     controller: App\Controller\Admin\MainController:index
@@ -78,4 +81,9 @@ add_brand:
 edit_brand:
     path: /adminPage/edit_brand/{id}
     controller: App\Controller\Admin\BrandController:editBrand
-
+blog:
+    path: /adminPage/show_blogposts
+    controller: App\Controller\Admin\BlogController:index
+add_blogpost:
+    path: /adminPage/add_blogpost
+    controller: App\Controller\Admin\BlogController:addBlogpost

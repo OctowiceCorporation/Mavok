@@ -28,10 +28,10 @@
                                 <div class="recently_viewed_content" style="text-align: center">
                                     <div class="recently_viewed_price">
                                         {% if product.ProductValue is not null %}
-                                        {{ (product.retailPrice * product.ProductValue) }} UAH / {{ product.retailPrice }} {{ product.currencyName }}</div>
-                                    {% else %}
-                                    {{ product.retailPrice }} UAH</div>
-                                {% endif %}
+                                            {{ (product.retailPrice * product.ProductValue) | round}} UAH</div>
+                                        {% else %}
+                                            {{ product.retailPrice | round}} UAH</div>
+                                        {% endif %}
                                 <div style="width : 150px; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;" class="recently_viewed_name">{{ product.name }}</div>
                         </div>
                         </a>

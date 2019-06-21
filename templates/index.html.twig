@@ -121,9 +121,9 @@
                                 <div class="product_content">
                                     <div class="product_price">
                                         {% if specialProduct.ProductValue is not null %}
-                                            {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
+                                            {{ (specialProduct.retailPrice * specialProduct.ProductValue) | round }} UAH
                                         {% else %}
-                                            {{ specialProduct.retailPrice }} UAH
+                                            {{ specialProduct.retailPrice | round }} UAH
                                         {% endif %}
                                     </div>
                                 </div>
@@ -176,9 +176,9 @@
                             <div class="product_content">
                                 <div class="product_price">
                                     {% if specialProduct.ProductValue is not null %}
-                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
+                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) | round }} UAH
                                     {% else %}
-                                    {{ specialProduct.retailPrice }} UAH
+                                    {{ specialProduct.retailPrice | round }} UAH
                                     {% endif %}
                                 </div>
                             </div>

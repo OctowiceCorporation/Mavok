@@ -147,9 +147,9 @@
                                 <div class="product_content" style="height: 150px">
                                     <div class="product_price">
                                         {% if product.ProductValue is not null %}
-                                            {{ (product.retailPrice * product.ProductValue) }} UAH</div>
+                                            {{ (product.retailPrice * product.ProductValue) | round}} UAH</div>
                                         {% else %}
-                                            {{ product.retailPrice }} UAH</div>
+                                            {{ product.retailPrice | round}} UAH</div>
                                         {% endif %}
                                     <div style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;" class="product_name">
                                         <p>
