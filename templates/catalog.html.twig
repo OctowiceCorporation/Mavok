@@ -36,6 +36,13 @@
             text-align: center;
             z-index: 4;
         }
+        .sale {
+            margin-top: 4px;
+        }
+        .price {
+            margin-top: 40px;
+        }
+
     </style>
     <title>Shop</title>
     <meta charset="utf-8">
@@ -119,7 +126,8 @@
                                     <li>
                                         <span>Сортировать по:</span>
                                         <span class="sorting_text">
-                                            <i class="fas fa-chevron-down"></span></i>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </span>
                                         <ul>
 
                                             <li class="shop_sorting_button" ><a onclick=getUrl('name');>По названию</a></li>
@@ -144,27 +152,37 @@
                                         "/no-image.png"
                                     {% endif %}
                                     alt=""></div>
-                                <div class="product_content" style="height: 150px">
-                                    <div class="product_price">
+                                <div class="product_content" style="height: auto">
                                         {% if product.ProductValue is not null %}
+                                    <div class="product_price">
                                             {% if product.sale is not empty %}
-                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} UAH</s><br>
-                                        {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} UAH
-                                        {% else %}
-                                        {{ (product.retailPrice * product.ProductValue) }} UAH
-                                        {% endif %}
+                                                <div class="sale">
+                                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} UAH</s><br>
+                                                    {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale)) | round(1,'common') }} UAH
+                                                </div>
+                                            {% else %}
+                                                <div class="price">
+                                                    {{ (product.retailPrice * product.ProductValue) | round(1,'common') }} UAH
+                                                </div>
+                                            {% endif %}
                                     </div>
                                         {% else %}
+                                            <div class="product_price">
                                             {% if product.sale is not empty %}
-                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} UAH</s><br>
-                                                {{ product.retailPrice - (product.retailPrice/100 * product.sale) }} UAH
+                                                <div class="sale">
+                                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) | round(1,'common') }} UAH</s><br>
+                                                    {{ (product.retailPrice - (product.retailPrice/100 * product.sale)) | round(1,'common') }} UAH
+                                                </div>
                                             {% else %}
-                                                {{ (product.retailPrice) }} UAH
+                                                <div class="price">
+                                                    {{ (product.retailPrice) | round(1,'common') }} UAH
+                                                </div>
                                             {% endif %}
-                                </div>
+                                            </div>
                                         {% endif %}
-                                    <div style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;" class="product_name">
-                                        <p>
+                                </div>
+                                    <div class="product_name">
+                                        <p style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;">
                                             {% if product.name | length > 52 %}
                                                 {{ product.name | slice(0,52) }}...
                                             {% else %}
@@ -172,9 +190,8 @@
                                             {% endif %}
                                         </p>
                                     </div>
-                                </div>
-                            </a>
-                            <div class="button_container">
+                                </a>
+                            <div class="button_container" style="margin-top: unset">
                                 <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Купить</button>
                             </div>
                                 <ul class="product_marks">
@@ -187,6 +204,7 @@
                                 </ul>
                             </div>
                             {% endfor %}
+
                         </div>
 
 

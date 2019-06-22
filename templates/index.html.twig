@@ -65,29 +65,6 @@
                 </div>
             </div>
         </div>
-    <!-- Categories -->
-{#        <div class="container">#}
-{#            <div class="col" style="padding-bottom: 1rem">#}
-{#                <div class="viewed_title_container">#}
-{#                    <h3 class="viewed_title font-weight-bold">Категории</h3>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="row no-gutters" style="padding-top: 1rem; padding-bottom: 1rem">#}
-{#                {% for category in mainCategories %}#}
-{#                    <a  href="{{ path('category', {'slug': category.slug}) }}">#}
-{#                        <div class="col-3 py-4">#}
-{#                            <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/images/{{ category.image }}" alt=""></div>#}
-{#                            <div style="text-align: center; margin-top: 0.7rem">#}
-{#                                <div><a class="text-dark font-weight-bold">{{ category.name }}</a></div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </a>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#            <div class="container-fluid">#}
-{#                <li></li>#}
-{#            </div>#}
-{#        </div>#}
     <!-- Best Sellers -->
         <div class="container">
             <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
@@ -115,31 +92,46 @@
                                     {% else %}
                                         "/no-image.png"
                                     {% endif %}
-
                                          alt="/image/no-image.png">
                                 </div>
                                 <div class="product_content">
+                                    {% if specialProduct.ProductValue is not null %}
                                     <div class="product_price">
-                                        {% if specialProduct.ProductValue is not null %}
-                                        {% if specialProduct.sale is not empty %}
-                                            <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH</s><br>
-                                            {{ specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale) }} UAH
+                                            {% if specialProduct.sale is not empty %}
+                                                <div class="sale">
+                                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} UAH</s><br>
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) | round(1,'common') }} UAH
+                                                </div>
+                                            {% else %}
+                                                <div class="price">
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} UAH
+                                                </div>
+                                            {% endif %}
+                                        </div>
                                         {% else %}
-                                            {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
+                                            <div class="product_price">
+                                                {% if specialProduct.sale is not empty %}
+                                                    <div class="sale">
+                                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} UAH</s><br>
+                                                        {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} UAH
+                                                    </div>
+                                                {% else %}
+                                                    <div class="price">
+                                                        {{ (specialProduct.retailPrice) | round(1,'common') }} UAH
+                                                    </div>
+                                                {% endif %}
+                                            </div>
                                         {% endif %}
-                                    </div>
-                                    {% else %}
-                                    {% if specialProduct.sale is not empty %}
-                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) }} UAH</s><br>
-                                        {{ specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale) }} UAH
-                                    {% else %}
-                                        {{ (specialProduct.retailPrice) }} UAH
-                                    {% endif %}
                                 </div>
-                                {% endif %}
+                                <div class="product_name">
+                                    <p  style="width : 150px; overflow:hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap">
+                                        {% if specialProduct.name | length > 52 %}
+                                            {{ specialProduct.name | slice(0,52) }}...
+                                        {% else %}
+                                            {{ specialProduct.name }}
+                                        {% endif %}
+                                    </p>
                                 </div>
-                                <div style="width : 150px; overflow:hidden;" class="product_name"><p>{{ specialProduct.name }}</p></div>
-
                                 <ul class="product_marks">
                                         {% if specialProduct.sale is not null %}
                                             <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
@@ -188,23 +180,31 @@
                                 <div class="product_price">
                                     {% if specialProduct.ProductValue is not null %}
                                     {% if specialProduct.sale is not empty %}
-                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH</s><br>
-                                        {{ specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale) }} UAH
+                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} UAH</s><br>
+                                        {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) |round(1,'common') }} UAH
                                     {% else %}
-                                        {{ (specialProduct.retailPrice * specialProduct.ProductValue) }} UAH
+                                        {{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} UAH
                                     {% endif %}
                                 </div>
                                 {% else %}
                                 {% if specialProduct.sale is not empty %}
-                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) }} UAH</s><br>
-                                    {{ specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale) }} UAH
+                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} UAH</s><br>
+                                    {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} UAH
                                 {% else %}
-                                    {{ (specialProduct.retailPrice) }} UAH
+                                    {{ (specialProduct.retailPrice) | round(1,'common') }} UAH
                                 {% endif %}
                             </div>
                             {% endif %}
                             </div>
-                            <div style="width : 150px; overflow:hidden;" class="product_name"><p>{{ specialProduct.name }}</p></div>
+                            <div class="product_name">
+                                <p style="width : 150px; overflow:hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap">
+                                    {% if specialProduct.name | length > 52 %}
+                                        {{ specialProduct.name | slice(0,52) }}...
+                                    {% else %}
+                                        {{ specialProduct.name }}
+                                    {% endif %}
+                                </p>
+                            </div>
 
                             <ul class="product_marks">
                                 {% if specialProduct.sale is not null %}
