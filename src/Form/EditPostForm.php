@@ -23,7 +23,10 @@ class EditPostForm extends AbstractType
                 'label' => 'Заголовок'
             ])
             ->add('description', TextareaType::class,[
-                'label' => 'Текст'
+                'label' => 'Текст',
+                'attr' => [
+                    'rows' => 10
+                ]
             ])
             ->add('image', FileType::class, [
                 'required' => false,

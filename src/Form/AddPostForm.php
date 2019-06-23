@@ -22,7 +22,10 @@ class AddPostForm extends AbstractType
                 'label' => 'Заголовок поста'
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Текст поста'
+                'label' => 'Текст поста',
+                'attr' => [
+                    'rows' => 10
+                ]
             ])
             ->add('image', FileType::class,[
                 'label' => 'Фото'

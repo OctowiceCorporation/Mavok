@@ -29,7 +29,7 @@
                                     <td><img src="/images/blog/{{ post.image }}"></td>
                                     <td>{{ post.createdAt |date('Y-m-d') }}</td>
                                     <td>{{ post.updatedAt |date('Y-m-d') }}</td>
-                                    <td><a href="{{ path('edit_brand', {'id': post.id}) }}">Редактировать производителя</a> </td>
+                                    <td><a href="{{ path('edit_blogpost', {'id': post.id}) }}">Редактировать статью</a> </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

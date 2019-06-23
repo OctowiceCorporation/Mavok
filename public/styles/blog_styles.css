@@ -541,7 +541,8 @@ section
 }
 .logo a
 {
-	font-size: 36px;
+	font-size: 50px;
+	font-family: 'Orbitron', sans-serif;
 	font-weight: 500;
 	color: #0e8ce4;
 }

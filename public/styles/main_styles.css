@@ -1268,7 +1268,7 @@ select option
 {
 	position: absolute;
 	top: -5px;
-	right: -52px;
+	right: -30px;
 	z-index: 0;
 }
 
@@ -1704,6 +1704,7 @@ select option
 }
 .product_name
 {
+	text-align: center;
 	margin-top: 4px;
 	overflow: hidden;
 }

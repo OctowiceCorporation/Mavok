@@ -195,7 +195,7 @@
                                         {% if product.IsAvailable %}
                                             <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Купить</button>
                                         {% else %}
-                                            Нет в наличии
+                                            <button type="button" disabled style="font-size: 14px; padding-right:16.5px;padding-left: 16.5px; background: lightgrey; border: solid thin #dadada" class="button cart_button add_to_basket text-dark" value="{{ product.slug }}">Нет в наличии</button>
                                         {% endif %}
                                     </div>
                                 <ul class="product_marks">

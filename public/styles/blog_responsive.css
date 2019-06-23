@@ -63,6 +63,9 @@
 
 @media only screen and (max-width: 1199px)
 {
+	.logo a {
+		font-size: 40px!important;
+	}
 	.cat_menu_container
 	{
 		width: 211px!important;
@@ -110,6 +113,9 @@
 
 @media only screen and (max-width: 991px)
 {
+	.logo a {
+		font-size: 50px!important;
+	}
 	.top_bar
 	{
 		/*display: none;*/
@@ -548,6 +554,10 @@
 	.logos
 	{
 		margin-top: 30px!important;
+	}
+	.logo a
+	{
+		font-size: 24px;
 	}
 }
 

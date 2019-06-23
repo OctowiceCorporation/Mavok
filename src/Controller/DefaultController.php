@@ -20,7 +20,6 @@ use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
 use App\Service\CommonInfoService;
 use App\Service\FilterService;
-use App\Service\MailerService;
 use App\Service\ProductService;
 use App\Service\SortService;
 use Doctrine\Common\Collections\ArrayCollection;
