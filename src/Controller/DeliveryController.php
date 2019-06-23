@@ -82,7 +82,7 @@ class DeliveryController extends AbstractController
         return $this->render('cart.html.twig',['products' => $products, 'total' => $total, 'minOrder' => $minimal_order_price]);
     }
 
-    public function checkout(SessionInterface $session, Request $request)
+    public function checkout(SessionInterface $session, Request $request, CommonInfoService $commonInfoService)
     {
         if(empty($session->get('basket')))
             return $this->redirectToRoute('basket_view');
@@ -105,7 +105,7 @@ class DeliveryController extends AbstractController
             }
         }
 
-        return $this->render('checkout.html.twig', ['form' => $form->createView()]);
+        return $this->render('checkout.html.twig', ['form' => $form->createView(), 'pickup' => $commonInfoService->getParameter('address')]);
     }
 
     public function minusBasket($slug, SessionInterface $session, ProductRepository $productRepository)

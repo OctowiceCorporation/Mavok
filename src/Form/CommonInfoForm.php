@@ -40,6 +40,9 @@ class CommonInfoForm extends AbstractType
             ->add('number', TextType::class,[
                 'label' => 'Контактный номер телефона'
             ])
+            ->add('address', TextType::class,[
+                'label' => 'Адрес самовывоза'
+            ])
             ->add('name', TextType::class,[
                 'label' => 'Имя фамилия'
             ])
