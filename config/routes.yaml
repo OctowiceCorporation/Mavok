@@ -42,6 +42,9 @@ sendMail:
 showBlog:
     path: /blog
     controller: App\Controller\DefaultController::showBlog
+showBlogPost:
+    path: /post/{id}
+    controller: App\Controller\DefaultController::showBlogPost
 admin:
     path: /adminPage
     controller: App\Controller\Admin\MainController:index
@@ -87,3 +90,6 @@ blog:
 add_blogpost:
     path: /adminPage/add_blogpost
     controller: App\Controller\Admin\BlogController:addBlogpost
+edit_blogpost:
+    path: /adminPage/edit_blogpost/{id}
+    controller: App\Controller\Admin\BlogController:editBlogpost

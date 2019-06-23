@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\Blog;
 use App\Repository\BlogRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -28,14 +29,14 @@ class BlogService
         $post->setTitle($form['title'])
             ->setDescription($form['description'])
             ->setIsVisible($form['is_visible'])
-            ->setCreatedAt(new \DateTime())
-            ->setUpdatedAt(new \DateTime())
+            ->setCreatedAt(new DateTime())
+            ->setUpdatedAt(new DateTime())
             ->setImage($this->uploadImage($form['image']));
         $this->manager->persist($post);
         $this->manager->flush();
     }
 
-    private function uploadImage(UploadedFile $image): string
+    public function uploadImage(UploadedFile $image): string
     {
         $fileName = md5(uniqid()).'.'.$image->guessExtension();
         $image->move(
@@ -43,6 +44,10 @@ class BlogService
             $fileName
         );
         return $fileName;
+    }
 
+    public function deleteImage(string $image)
+    {
+        unlink($this->imageDirectory.'/'.$image);
     }
 }

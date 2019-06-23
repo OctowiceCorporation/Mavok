@@ -12,6 +12,8 @@ use App\Entity\NovaPoshtaPostOffice;
 use App\Entity\Product;
 use App\Entity\Specification;
 use App\Form\FilterForm;
+use App\Mappers\Blog as BlogMapper;
+use App\Mappers\Blog;
 use App\Repository\BlogRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
@@ -24,6 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -35,7 +38,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class DefaultController extends AbstractController
 {
 
-    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService, EntityManagerInterface $manager)
+    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService)
     {
         $mainCategories = $categoryRepository->findBy(['parent' => null]);
         $specialProducts = $productRepository->getSpecialProducts();
@@ -114,7 +117,7 @@ class DefaultController extends AbstractController
             return $this->render('catalog.html.twig',['categories' => null, 'products' => null, 'sort' => $sort]);
     }
 
-    public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, \Swift_Mailer $mailer, MailerService $mailerService, SessionInterface $session)
+    public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, Swift_Mailer $mailer, SessionInterface $session)
     {
         $info['name'] = $request->get('name');
         $info['surname'] = $request->get('surname');
@@ -191,6 +194,24 @@ class DefaultController extends AbstractController
         return $this->render('blog.html.twig', [
             'posts' => $posts
         ]);
+    }
+
+    public function showBlogPost(int $id, BlogRepository $blogRepository)
+    {
+        $post = $blogRepository->findOneBy(['id' => $id]);
+        $postDto = BlogMapper::entityToDto($post);
+        $related = $blogRepository->findBy(['is_visible' => 1]);
+        if (($key = array_search($post, $related)) !== false) {
+            unset($related[$key]);
+        }
+
+        $related = array_reverse(array_slice($related,0, 3));
+
+        return $this->render('blog_post.html.twig',[
+            'post' => $postDto,
+            'related' => $related
+        ]);
+
     }
 
     public function parceNP(EntityManagerInterface $em)
