@@ -1942,7 +1942,7 @@ select option
 }
 .product_marks
 {
-	display: none;
+	display: block;
 	position: absolute;
 	top: 33px;
 	left: 30px;
@@ -1981,10 +1981,8 @@ select option
 }
 .product_discount
 {
-	display: none;
+	display: block;
 	background: #df3b3b;
-	visibility: hidden;
-	opacity: 0;
 }
 .product_item.is_new .product_new,
 .product_item.discount .product_discount

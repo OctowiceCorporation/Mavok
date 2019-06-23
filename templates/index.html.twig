@@ -241,9 +241,8 @@
                             </div>
 
                             <ul class="product_marks">
-                                {% if specialProduct.sale is not null %}
                                     <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
-                                {% endif %}
+
                                 {% if specialProduct.specialOffer == 1 %}
                                     <li class="product_mark product_new"><i class="fas fa-thumbs-up"></i></li>
                                 {% endif %}
