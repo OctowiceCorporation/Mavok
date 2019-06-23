@@ -19,7 +19,11 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function searchProducts(string $text)
+    /**
+     * @param string $text
+     * @return Product[]
+     */
+    public function searchProducts(string $text): iterable
     {
         return $this->createQueryBuilder('p')
             ->where('p.name LIKE :text')
@@ -36,6 +40,9 @@ class ProductRepository extends ServiceEntityRepository
         return $builder->getQuery();
     }
 
+    /**
+     * @return Product[]
+     */
     public function getSpecialProducts()
     {
         return $this->createQueryBuilder('p')
@@ -45,6 +52,9 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Product[]
+     */
     public function getSaleProducts()
     {
         return $this->createQueryBuilder('p')

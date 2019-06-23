@@ -66,6 +66,7 @@
             </div>
         </div>
     <!-- Best Sellers -->
+        {% if specialProducts.0 is defined %}
         <div class="container">
             <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
                 <div class="viewed_title_container">
@@ -146,7 +147,9 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     <!-- Sale -->
+        {% if saleProducts.0 is defined %}
         <div class="container py-3">
         <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
             <div class="viewed_title_container">
@@ -219,6 +222,7 @@
                 </a>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
     </div>
 {% endblock %}

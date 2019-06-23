@@ -191,9 +191,13 @@
                                         </p>
                                     </div>
                                 </a>
-                            <div class="button_container" style="margin-top: unset">
-                                <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Купить</button>
-                            </div>
+                                    <div class="button_container" style="margin-top: unset">
+                                        {% if product.IsAvailable %}
+                                            <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Купить</button>
+                                        {% else %}
+                                            Нет в наличии
+                                        {% endif %}
+                                    </div>
                                 <ul class="product_marks">
                                     {% if product.sale is not null %}
                                         <li class="product_mark product_discount">-{{ product.sale }}%</li>

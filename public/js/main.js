@@ -107,7 +107,7 @@ $(document).ready(function () {
             }
         })
             .done(function(event) {
-                element.html('В корзине<i class="fas fa-check"></i>').css('background-color','green');
+                element.html('В корзине <i class="fas fa-check"></i>').css('background-color','green');
             });
     })
 

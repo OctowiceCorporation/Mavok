@@ -26,6 +26,7 @@ class ProductFormDTO
     private $brand;
     private $amount;
     private $specification;
+    private $is_on_main;
 
     /**
      * ProductFormDTO constructor.
@@ -37,13 +38,15 @@ class ProductFormDTO
      * @param $is_visible
      * @param $special_offer
      * @param $minimum_wholesale
-     * @param $product_value
      * @param $product_unit
      * @param $currency_name
      * @param $brand
      * @param $specification
+     * @param null $sale
+     * @param null $description
+     * @param null $is_on_main
      */
-    public function __construct($category = null, $name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $minimum_wholesale = null, $product_unit = null, $currency_name = null, $brand = null, $specification = null, $sale = null)
+    public function __construct($category = null, $name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $minimum_wholesale = null, $product_unit = null, $currency_name = null, $brand = null, $specification = null, $sale = null, $description = null, $is_on_main = null)
     {
         $this->category = $category;
         $this->name = $name;
@@ -58,6 +61,8 @@ class ProductFormDTO
         $this->brand = $brand;
         $this->specification = $specification;
         $this->sale = $sale;
+        $this->description = $description;
+        $this->is_on_main = $is_on_main;
     }
 
 
@@ -380,5 +385,23 @@ class ProductFormDTO
     {
         $this->specification = $specification;
     }
+
+    /**
+     * @return null
+     */
+    public function getIsOnMain()
+    {
+        return $this->is_on_main;
+    }
+
+    /**
+     * @param null $is_on_main
+     */
+    public function setIsOnMain($is_on_main): void
+    {
+        $this->is_on_main = $is_on_main;
+    }
+
+
 
 }

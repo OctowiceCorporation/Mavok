@@ -136,7 +136,8 @@ class CategoryService
                 $categories->add(CategoryMapper::entityToDto($child, substr($this->generateUrlFromCategory($child), 1)));
             }
             foreach ($this->getChildProducts($last_category) as $childProduct) {
-                $products->add($this->productService->getProductPrice($childProduct));
+                if($childProduct->getIsVisible())
+                    $products->add($this->productService->getProductPrice($childProduct));
             }
 
         return [$categories,$products];

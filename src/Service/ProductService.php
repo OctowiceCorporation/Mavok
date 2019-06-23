@@ -86,7 +86,8 @@ class ProductService
     {
         $products = new ArrayCollection();
         foreach ($last_category->getProducts() as $product) {
-            $products->add($this->getProductPrice($product));
+            if($product->getIsVisible())
+                $products->add($this->getProductPrice($product));
         }
         return $products;
     }

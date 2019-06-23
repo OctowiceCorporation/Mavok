@@ -91,8 +91,12 @@ class ProductController extends AbstractController
         $array = [];
         foreach ($products as $key => $product) {
             $array[$key]['name'] = $product->getName();
+            $array[$key]['is_available'] = $product->getIsVisible();
             $array[$key]['slug'] = $product->getSlug();
+            $array[$key]['maker'] = $product->getBrand()->getName();
+            $array[$key]['price'] = $product->getRetailPrice().' '.$product->getCurrencyName();
             $array[$key]['category'] = $product->getCategory()->getName();
+            $array[$key]['updated_at'] = $product->getUpdatedAt();
         }
         return new Response(json_encode($array));
     }
@@ -100,7 +104,9 @@ class ProductController extends AbstractController
     public function deleteImage($id, ImageRepository $imageRepository, EntityManagerInterface $entityManager)
     {
         $image = $imageRepository->findOneBy(['id' => $id]);
-        unlink($this->getParameter('app.uploads_dir').$image->getImagePath());
+        if(file_exists($this->getParameter('app.uploads_dir').$image->getImagePath()))
+            unlink($this->getParameter('app.uploads_dir').$image->getImagePath());
+
         $entityManager->remove($image);
         $entityManager->flush();
         return new Response('', 200);
@@ -129,7 +135,8 @@ class ProductController extends AbstractController
                 ->setProductUnit($data->getProductUnit())
                 ->setSale($data->getSale())
                 ->setCurrencyName($data->getCurrencyName())
-                ->setBrand($data->getBrand());
+                ->setBrand($data->getBrand())
+                ->setIsOnMain($data->getIsOnMain());
             $entityManager->persist($product);
 
             foreach ($data->getImages() as $upload_image) {

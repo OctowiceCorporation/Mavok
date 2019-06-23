@@ -26,8 +26,14 @@
                                 {% for product in products %}
                                 <tr role="row" class="odd">
                                     <td class="sorting_1"><a target="_blank" href="{{ path('product', {'slug': product.slug}) }}">{{ product.name }}</a></td>
-                                    <td>{{ product.IsVisible }}</td>
-                                    <td>{{ product.RetailPrice }}</td>
+                                    <td>
+                                        {% if product.IsVisible == 1 %}
+                                            Да
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ product.RetailPrice }} {{ product.CurrencyName }}</td>
                                     <td>{{  product.brand.name }}</td>
                                     <td>{{ product.UpdatedAt|date('d F Y h:i:s') }}</td>
                                     <td><a href="{{ path('edit_product', {'id': product.id}) }}">Редактировать товар</a> </td>
