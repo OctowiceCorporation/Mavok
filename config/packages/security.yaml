@@ -11,11 +11,16 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern:    ^/
             anonymous: ~
-            http_basic: ~
+            logout:
+                path: app_logout
+                target: /
+                success_handler: logout_listener
+            http_basic: true
 
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/adminPage, roles: ROLE_ADMIN }
     encoders:
         Symfony\Component\Security\Core\User\User:
             algorithm: bcrypt

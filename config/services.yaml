@@ -5,13 +5,12 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'ru'
-    minimal_order_price: 1000
-    eur_value: 30
-    usd_value: 26
     app.uploads_dir: '%kernel.project_dir%/public/images/'
     blog_images_directory: '%kernel.project_dir%/public/images/blog/'
 
 services:
+    logout_listener:
+        class: App\Controller\Admin\LogoutListener
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -28,10 +27,6 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
-    App\Service\ProductService:
-        arguments:
-            - '%usd_value%'
-            - '%eur_value%'
     App\Service\UploadFileService:
         arguments:
             - '%app.uploads_dir%'

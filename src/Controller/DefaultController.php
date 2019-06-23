@@ -18,6 +18,7 @@ use App\Repository\BlogRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
+use App\Service\CommonInfoService;
 use App\Service\FilterService;
 use App\Service\MailerService;
 use App\Service\ProductService;
@@ -44,17 +45,27 @@ class DefaultController extends AbstractController
         $specialProducts = $productRepository->getSpecialProducts();
         $specialCollection = new ArrayCollection();
         foreach ($specialProducts as $specialProduct) {
-            $specialCollection->add($productService->getProductPrice($specialProduct));
+            if($specialProduct->getIsVisible())
+                $specialCollection->add($productService->getProductPrice($specialProduct));
         }
         $saleProducts = $productRepository->getSaleProducts();
         $saleCollection = new ArrayCollection();
         foreach ($saleProducts as $saleProduct) {
-            $saleCollection->add($productService->getProductPrice($saleProduct));
+            if($saleProduct->getIsVisible())
+                $saleCollection->add($productService->getProductPrice($saleProduct));
         }
         return $this->render('index.html.twig',
             ['mainCategories' => $mainCategories,
              'specialProducts' => $specialCollection,
              'saleProducts' => $saleCollection]);
+    }
+
+    public function headerContacts(CommonInfoService $commonInfoService)
+    {
+        $phone = $commonInfoService->getParameter('phone_number');
+        $address = $commonInfoService->getParameter('address');
+
+        return $this->render('header_contacts.html.twig', ['phone' => $phone, 'address' => $address]);
     }
 
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination, SortService $sortService)

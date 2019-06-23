@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Form\CheckoutForm;
 use App\Repository\ProductRepository;
+use App\Service\CommonInfoService;
 use App\Service\NovaPoshtaService;
 use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,9 +37,9 @@ class DeliveryController extends AbstractController
         return new Response(null);
     }
 
-    public function basketView(SessionInterface $session, ProductRepository $productRepository, ProductService $productService)
+    public function basketView(SessionInterface $session, ProductRepository $productRepository, ProductService $productService, CommonInfoService $commonInfoService)
     {
-        $minimal_order_price = $this->getParameter('minimal_order_price');
+        $minimal_order_price = $commonInfoService->getParameter('minimal_order_price');
         $basket = $session->get('basket');
         $products = new ArrayCollection();
         $total = 0;
@@ -81,7 +82,7 @@ class DeliveryController extends AbstractController
         return $this->render('cart.html.twig',['products' => $products, 'total' => $total, 'minOrder' => $minimal_order_price]);
     }
 
-    public function checkout(SessionInterface $session, Request $request)
+    public function checkout(SessionInterface $session, Request $request, CommonInfoService $commonInfoService)
     {
         if(empty($session->get('basket')))
             return $this->redirectToRoute('basket_view');
@@ -104,7 +105,7 @@ class DeliveryController extends AbstractController
             }
         }
 
-        return $this->render('checkout.html.twig', ['form' => $form->createView()]);
+        return $this->render('checkout.html.twig', ['form' => $form->createView(), 'pickup' => $commonInfoService->getParameter('address')]);
     }
 
     public function minusBasket($slug, SessionInterface $session, ProductRepository $productRepository)

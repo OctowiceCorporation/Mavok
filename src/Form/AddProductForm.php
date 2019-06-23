@@ -90,6 +90,15 @@ class AddProductForm extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
             ])
+            ->add('is_on_main', ChoiceType::class,[
+                'label' => 'Отображение на главной странице',
+                'choices'=>[
+                    'Да' => true,
+                    'Нет' => false,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
             ->add('currency_name', ChoiceType::class,[
                 'label' => 'Валюта',
                 'choices'=>[
@@ -126,6 +135,7 @@ class AddProductForm extends AbstractType
                     'min' => 1,
                     'max' => 99
                 ],
+                'required' => false,
             ])
             ->add('specification', HiddenType::class)
             ->add('brand', EntityType::class, [

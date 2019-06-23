@@ -122,6 +122,11 @@ class Product
     private $brand;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_on_main;
+
+    /**
      * Product constructor.
      * @param $name
      * @param $description
@@ -133,8 +138,11 @@ class Product
      * @param $special_offer
      * @param $product_unit
      * @param $brand
+     * @param null $sale
+     * @param null $is_on_main
+     * @throws \Exception
      */
-    public function __construct($name = null, $description = null, $currency_name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $product_unit = null, $brand = null, $sale = null)
+    public function __construct($name = null, $description = null, $currency_name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $product_unit = null, $brand = null, $sale = null, $is_on_main = null)
     {
         $this->name = $name;
         $this->description = $description;
@@ -154,6 +162,7 @@ class Product
         $this->products = new ArrayCollection();
         $this->specifications = new ArrayCollection();
         $this->sale = $sale;
+        $this->is_on_main = $is_on_main;
     }
 
     public function getId(): ?int
@@ -480,6 +489,18 @@ class Product
     public function setBrand(?Brand $brand): self
     {
         $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getIsOnMain(): ?bool
+    {
+        return $this->is_on_main;
+    }
+
+    public function setIsOnMain(bool $is_on_main): self
+    {
+        $this->is_on_main = $is_on_main;
 
         return $this;
     }

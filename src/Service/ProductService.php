@@ -8,16 +8,19 @@ use App\Entity\Category;
 use App\Entity\Product;
 use App\Mappers\Specification;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class ProductService
 {
     private $usd;
     private $eur;
 
-    public function __construct($usd, $eur)
+    public function __construct(ContainerInterface $container)
     {
-        $this->usd = $usd;
-        $this->eur = $eur;
+        $file = Yaml::parse(file_get_contents($container->getParameter('kernel.project_dir').'/config/common_info.yaml'));
+        $this->usd = $file['usd_value'];
+        $this->eur = $file['eur_value'];
     }
 
 
@@ -83,7 +86,8 @@ class ProductService
     {
         $products = new ArrayCollection();
         foreach ($last_category->getProducts() as $product) {
-            $products->add($this->getProductPrice($product));
+            if($product->getIsVisible())
+                $products->add($this->getProductPrice($product));
         }
         return $products;
     }

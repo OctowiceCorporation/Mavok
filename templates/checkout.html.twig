@@ -75,15 +75,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+            if(Number($('#checkout_form_type').val()) === 1)
+                $('#checkout_form_type').closest('.form-group').append('<span id="basket-pickup">{{ pickup }}</span>');
             $('#header_dropdown').hide();
             $(document).on('change','#checkout_form_type',function () {
+                $('#basket-pickup').remove();
                 if ($("#checkout_form_city" ).length)
                     $("#checkout_form_city").closest('.form-group').remove();
                 if ($("#checkout_form_post" ).length)
                     $('#checkout_form_post').closest('.form-group').remove();
                 let element = $(this);
                 if(Number($(this).val()) === 1){
-                    element.closest('.form-group').append('Тут будет адрес самовывоза');
+                    element.closest('.form-group').append('<br><span id="basket-pickup">{{ pickup }}</span>');
                 }
                 if(Number($(this).val()) === 2){
                     $.ajax({

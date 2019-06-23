@@ -21,8 +21,18 @@ class ProductController extends AbstractController
     public function index($slug, ProductRepository $productRepository, Request $request, ProductService $productService)
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
+        $admin = false;
         if(empty($product))
             return new Response('Product not found', 404);
+        if(!$product->getIsVisible()){
+            if(!empty($this->getUser()) && in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+                $admin = true;
+            }
+            else
+                return new Response('', 403);
+        }
+
+
         $specifications = $productService->getSpecifications($product);
         $brand = $product->getBrand();
         $product = $productService->getProductPrice($product);
@@ -36,7 +46,7 @@ class ProductController extends AbstractController
         }
             
         $cookie = new Cookie('viewed_products', json_encode($viewed));
-        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand]));
+        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin]));
         $response->headers->setCookie($cookie);
 
         return $response;
