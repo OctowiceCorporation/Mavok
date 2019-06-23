@@ -1,0 +1,9 @@
+.next, .previous
+{
+    font-size: x-large;
+    padding: 1rem;
+    border: solid thin #dadada;
+    border-radius: 10px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
