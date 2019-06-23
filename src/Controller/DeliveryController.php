@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Form\CheckoutForm;
 use App\Repository\ProductRepository;
+use App\Service\CommonInfoService;
 use App\Service\NovaPoshtaService;
 use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,9 +37,9 @@ class DeliveryController extends AbstractController
         return new Response(null);
     }
 
-    public function basketView(SessionInterface $session, ProductRepository $productRepository, ProductService $productService)
+    public function basketView(SessionInterface $session, ProductRepository $productRepository, ProductService $productService, CommonInfoService $commonInfoService)
     {
-        $minimal_order_price = $this->getParameter('minimal_order_price');
+        $minimal_order_price = $commonInfoService->getParameter('minimal_order_price');
         $basket = $session->get('basket');
         $products = new ArrayCollection();
         $total = 0;

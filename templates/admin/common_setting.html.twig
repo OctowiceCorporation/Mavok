@@ -1,0 +1,26 @@
+{% extends 'admin/admin_index.html.twig' %}
+
+{% block body %}
+    {% if form is not defined %}
+        <a href="{{ path('common_settings', {'type': 'edit'}) }}">Редактировать настройки</a><br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Значение</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for setting in settings %}
+                <tr>
+                    <td>{{ setting.0 }}</td>
+                    <td>{{ setting.1 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
