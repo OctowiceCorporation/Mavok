@@ -80,7 +80,7 @@ class ProductController extends AbstractController
         $products = new ArrayCollection();
         foreach ($viewed as $item) {
             $prod = $productRepository->findOneBy(['slug' => $item]);
-            if(!empty($prod))
+            if(!empty($prod) && $prod->getIsVisible())
                 $products->add($productService->getProductPrice($prod));
         }
         return $this->render('recently_viewed.html.twig',

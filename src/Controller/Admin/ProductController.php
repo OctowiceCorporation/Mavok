@@ -91,8 +91,12 @@ class ProductController extends AbstractController
         $array = [];
         foreach ($products as $key => $product) {
             $array[$key]['name'] = $product->getName();
-            $array[$key]['is_available'] = $product->getIsVisible();
+            if($product->getIsAvailable())
+                $array[$key]['is_available'] = 'Да';
+            else
+                $array[$key]['is_available'] = 'Нет';
             $array[$key]['slug'] = $product->getSlug();
+            $array[$key]['id'] = $product->getId();
             $array[$key]['maker'] = $product->getBrand()->getName();
             $array[$key]['price'] = $product->getRetailPrice().' '.$product->getCurrencyName();
             $array[$key]['category'] = $product->getCategory()->getName();

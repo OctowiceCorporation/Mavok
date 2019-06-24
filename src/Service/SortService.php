@@ -4,8 +4,6 @@
 namespace App\Service;
 
 
-use App\DTO\Product;
-
 class SortService
 {
     public function sort(string $type, &$products)
@@ -14,45 +12,67 @@ class SortService
             case 'name':
                 usort($products, function($a, $b)
                 {
-                    return strcmp($a->getName(), $b->getName());
+                    if($a->isIsAvailable() < $b->isIsAvailable())
+                        return true;
+                    elseif($a->isIsAvailable() > $b->isIsAvailable())
+                        return false;
+                    else
+                        return strnatcmp($a->getName(), $b->getName());
                 });
                 break;
             case 'date':
                 usort($products, function($a, $b)
                 {
-                    return $a->getCreatedAt() < $b->getCreatedAt();
+                    if($a->isIsAvailable() < $b->isIsAvailable())
+                        return true;
+                    elseif($a->isIsAvailable() > $b->isIsAvailable())
+                        return false;
+                    else
+                        return $a->getCreatedAt() < $b->getCreatedAt();
                 });
                 break;
             case 'price_down':
                 usort($products, function($a, $b)
                 {
-                    if(!empty($a->getProductValue()))
-                        $first = $a->getProductValue()*$a->getRetailPrice();
-                    else
-                        $first = $a->getRetailPrice();
+                    if($a->isIsAvailable() < $b->isIsAvailable())
+                        return true;
+                    elseif($a->isIsAvailable() > $b->isIsAvailable())
+                        return false;
+                    else{
+                        if(!empty($a->getProductValue()))
+                            $first = $a->getProductValue()*$a->getRetailPrice();
+                        else
+                            $first = $a->getRetailPrice();
 
-                    if(!empty($b->getProductValue()))
-                        $second = $b->getProductValue()*$b->getRetailPrice();
-                    else
-                        $second = $b->getRetailPrice();
-//
-                    return $first < $second;
+                        if(!empty($b->getProductValue()))
+                            $second = $b->getProductValue()*$b->getRetailPrice();
+                        else
+                            $second = $b->getRetailPrice();
+
+                        return $first < $second;
+                    }
                 });
                 break;
             case 'price_up':
                 usort($products, function($a, $b)
                 {
-                    if(!empty($a->getProductValue()))
-                        $first = $a->getProductValue()*$a->getRetailPrice();
-                    else
-                        $first = $a->getRetailPrice();
+                    if($a->isIsAvailable() < $b->isIsAvailable())
+                        return true;
+                    elseif($a->isIsAvailable() > $b->isIsAvailable())
+                        return false;
+                    else {
+                        if (!empty($a->getProductValue()))
+                            $first = $a->getProductValue() * $a->getRetailPrice();
+                        else
+                            $first = $a->getRetailPrice();
 
-                    if(!empty($b->getProductValue()))
-                        $second = $b->getProductValue()*$b->getRetailPrice();
-                    else
-                        $second = $b->getRetailPrice();
+                        if (!empty($b->getProductValue()))
+                            $second = $b->getProductValue() * $b->getRetailPrice();
+                        else
+                            $second = $b->getRetailPrice();
 //
-                    return $first > $second;
+                        return $first > $second;
+                    }
                 });
                 break;
                 break;

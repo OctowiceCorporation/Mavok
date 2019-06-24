@@ -8,9 +8,30 @@
 {% endblock %}
 {% block body %}
     <div id="admin-categories"></div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="/stop.png" style="width: 100%"><br>
+                    <b>Внимание. При удалении категории вы удалите все подкатегории и товары, входящие в неё. Вы уверены что хотите продолжить?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="dismiss" data-dismiss="modal">Нет</button>
+                    <button type="button" class="btn btn-primary" id="accept">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block javasprict %}
+
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/styles/bootstrap4/popper.js"></script>
+    <script src="/styles/bootstrap4/bootstrap.min.js"></script>
+
     <script>
         $(document).ready(function () {
         $.ajax({
@@ -29,15 +50,29 @@
                     if(category['sub'].length === undefined)
                         is_sub_exist = true;
 
-                    let li = $('<li style="border: solid thin #dadada"></li>').addClass('alert alert-light mb-2 pb-3').append($('<a style="display: inline;" href="/category'+category["link"]+'">'+category["name"]+'</a>'));
-                    li.append('<a href="/adminPage/edit_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-primary mx-2">Редактировать категорию</a><a href="/adminPage/get_products_by_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-success mx-2">Показать товары</a>');
-                    if(!category['has_products'] && !is_sub_exist )
-                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" role="button"  style="float: right; line-height: 1" class="btn btn-warning mx-2">Добавить подкатегорию</a>');
-                    else if(category['has_products'] && !is_sub_exist)
-                        li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить товар</a>');
-                    else
-                        li.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить подкатегорию</a>');
+                    let li = $('<li style="border: solid thin #dadada"></li>').addClass('alert alert-light mb-2 pb-3');
+                    let row = $('<div class="row"><div class="col-10"><a style="display: inline;" href="/category'+category["link"]+'">'+category["name"]+'</a></div>"');
+                    let col = $('<div class="col-2"></div>');
+                    let div = $('<div></div>').addClass('dropdown'); //TODO Тут пихай стили
+                    div.append(' <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
+                        '            Действия\n' +
+                        '        </button>');
+                    let links = $('<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">');
 
+                    links.append('<a href="/adminPage/edit_category/'+category['id']+'"  class="dropdown-item">Редактировать категорию</a><a href="/adminPage/get_products_by_category/'+category['id']+'" class="dropdown-item">Показать товары</a>');
+                    if(!category['has_products'] && !is_sub_exist )
+                        links.append('<a href="/adminPage/add_product/'+category['id']+'"  class="dropdown-item">Добавить товар</a> <a href="/adminPage/add_sub_category/'+category['id']+'" class="dropdown-item">Добавить подкатегорию</a>');
+                    else if(category['has_products'] && !is_sub_exist)
+                        links.append('<a href="/adminPage/add_product/'+category['id']+'"  class="dropdown-item">Добавить товар</a>');
+                    else
+                        links.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="dropdown-item">Добавить подкатегорию</a>');
+                    links.append('<a href="/adminPage/delete_catego/'+category['id']+'"  class="dropdown-item delete-category">Удалить категорию</a>');
+
+
+                    div.append(links);
+                    col.append(div);
+                    row.append(col);
+                    li.append(row);
 
                     if(is_sub_exist){
                         let ul = $('<ul></ul>').addClass('my-3');
@@ -50,6 +85,19 @@
 
                 }
             });
+
+            $(document).on('click', '.delete-category', function (e) {
+                e.preventDefault();
+                let link = $(this).attr('href');
+                $('#exampleModalCenter').modal('show');
+                document.getElementById('dismiss').onclick = function () {
+                    $('#exampleModalCenter').modal('hide');
+                };
+                document.getElementById('accept').onclick = function () {
+                    location.href = link;
+                    $('#exampleModalCenter').modal('hide');
+                };
+            })
         });
     </script>
 {% endblock %}
