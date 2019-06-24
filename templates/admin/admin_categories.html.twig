@@ -8,9 +8,27 @@
 {% endblock %}
 {% block body %}
     <div id="admin-categories"></div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="/stop.png" style="width: 100%"><br>
+                    <b>Внимание. При удалении категории вы удалите все подкатегории и товары, входящие в неё. Вы уверены что хотите продолжить?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="dismiss" data-dismiss="modal">Нет</button>
+                    <button type="button" class="btn btn-primary" id="accept">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javasprict %}
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/styles/bootstrap4/popper.js"></script>
+    <script src="/styles/bootstrap4/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
         $.ajax({
@@ -37,6 +55,7 @@
                         li.append('<a href="/adminPage/add_product/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить товар</a>');
                     else
                         li.append('<a href="/adminPage/add_sub_category/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2">Добавить подкатегорию</a>');
+                    li.append('<a href="/adminPage/delete_catego/'+category['id']+'" role="button" style="float: right; line-height: 1" class="btn btn-info mx-2 delete-category">Удалить категорию</a>');
 
 
                     if(is_sub_exist){
@@ -50,6 +69,19 @@
 
                 }
             });
+
+            $(document).on('click', '.delete-category', function (e) {
+                e.preventDefault();
+                let link = $(this).attr('href');
+                $('#exampleModalCenter').modal('show');
+                document.getElementById('dismiss').onclick = function () {
+                    $('#exampleModalCenter').modal('hide');
+                };
+                document.getElementById('accept').onclick = function () {
+                    location.href = link;
+                    $('#exampleModalCenter').modal('hide');
+                };
+            })
         });
     </script>
 {% endblock %}

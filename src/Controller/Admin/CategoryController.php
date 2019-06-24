@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Entity\Category;
 use App\Form\AddCategoryForm;
 use App\Repository\CategoryRepository;
+use App\Service\CategoryService;
 use App\Service\UploadFileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,16 @@ class CategoryController extends AbstractController
     public function categoriesView()
     {
         return $this->render('admin/admin_categories.html.twig');
+    }
+
+    public function delete_category($id, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager)
+    {
+        $category = $categoryRepository->findOneBy(['id' => $id]);
+        if(empty($category))
+            return new Response('Category not found', 404);
+        $entityManager->remove($category);
+        $entityManager->flush();
+        return $this->redirectToRoute('categories');
     }
 
     public function edit_category($id, CategoryRepository $categoryRepository, Request $request, UploadFileService $fileService, EntityManagerInterface $manager)

@@ -52,7 +52,7 @@ class Product
     private $retail_price;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="product", cascade={"remove"})
      */
     private $images;
 
@@ -87,7 +87,7 @@ class Product
     private $recommend_product;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="recommend_product")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="recommend_product", cascade={"remove"})
      */
     private $products;
 
@@ -107,7 +107,7 @@ class Product
     private $product_unit;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Specification", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\Specification", mappedBy="product", cascade={"remove"})
      */
     private $specifications;
 
