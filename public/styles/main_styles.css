@@ -1215,6 +1215,9 @@ select option
 .banner_content
 {
 	z-index: 1;
+	width: 60%;
+	padding-right: 10rem;
+	float: right;
 }
 .banner_text
 {
@@ -1956,11 +1959,11 @@ select option
 {
 	display: block;
 }
-.product_item:hover .product_marks
-{
-	top: 18px;
-	left: 18px;
-}
+/*.product_item:hover .product_marks*/
+/*{*/
+/*	top: 18px;*/
+/*	left: 18px;*/
+/*}*/
 .product_mark
 {
 	display: inline-block;
@@ -1974,10 +1977,8 @@ select option
 }
 .product_new
 {
-	display: none;
+	display: block;
 	background: #0e8ce4;
-	visibility: hidden;
-	opacity: 0;
 }
 .product_discount
 {

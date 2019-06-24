@@ -4,45 +4,66 @@
         <!-- Banner -->
         <div class="banner">
             <div class="banner_background" style="background-image:url(images/banner_background.jpg)"></div>
-            <div class="container fill_height">
+            <div class="container banner_content">
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="row fill_height">
-                                <div class="banner_product_image"><img src="/images/02ee95aa9b21504c6c7079146846d99f" alt=""></div>
-                                <div class="col-lg-5 offset-lg-5 fill_height">
-                                    <div class="banner_content">
-                                        <h1 class="banner_text">new era of fittings</h1>
-                                        <div class="banner_price"><span>$1000</span>$444</div>
-                                        <div class="banner_product_name">Zapornaya armatura</div>
-                                        <div class="button banner_button"><a href="#">Shop Now</a></div>
+                            <div style="display: inline-flex">
+                                <div class="col-7">
+                                    <div>
+                                        <h2>Акция -20%</h2>
                                     </div>
+                                    <div class="mt-4">
+                                        <h4>Твердотопливный котел Roda Вrenner Classic BС-03</h4>
+                                    </div>
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
+                                        <p style="font-size: xx-large; color: red; padding-right: 1rem">$400</p>
+                                        <s style="font-size: x-large; padding-top: 5px; color: grey">$1000</s>
+                                    </div>
+                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
+                                </div>
+                                <div class="col-5">
+                                    <img style="width: inherit; height: auto" src="/images/02ee95aa9b21504c6c7079146846d99f" alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <div class="row fill_height">
-                                <div class="banner_product_image"><img src="/images/02ee95aa9b21504c6c7079146846d99f" alt=""></div>
-                                <div class="col-lg-5 offset-lg-5 fill_height">
-                                    <div class="banner_content">
-                                        <h1 class="banner_text">new era of fittings</h1>
-                                        <div class="banner_price"><span>$1000</span>$444</div>
-                                        <div class="banner_product_name">Zapornaya armatura</div>
-                                        <div class="button banner_button"><a href="#">Shop Now</a></div>
+                            <div style="display: inline-flex">
+                                <div class="col-7">
+                                    <div>
+                                        <h2>Акция -20%</h2>
                                     </div>
+                                    <div class="mt-4">
+                                        <h4>Твердотопливный котел Roda Вrenner Classic BС-03</h4>
+                                    </div>
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
+                                        <p style="font-size: xx-large; color: red; padding-right: 1rem">$400</p>
+                                        <s style="font-size: x-large; padding-top: 5px; color: grey">$1000</s>
+                                    </div>
+                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
+                                </div>
+                                <div class="col-5">
+                                    <img style="width: inherit; height: auto" src="/images/02ee95aa9b21504c6c7079146846d99f" alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <div class="row fill_height">
-                                <div class="banner_product_image"><img src="/images/02ee95aa9b21504c6c7079146846d99f" alt=""></div>
-                                <div class="col-lg-5 offset-lg-5 fill_height">
-                                    <div class="banner_content">
-                                        <h1 class="banner_text">new era of fittings</h1>
-                                        <div class="banner_price"><span>$1000</span>$444</div>
-                                        <div class="banner_product_name">Zapornaya armatura</div>
-                                        <div class="button banner_button"><a href="#">Shop Now</a></div>
+                            <div style="display: inline-flex">
+                                <div class="col-7">
+                                    <div>
+                                        <h2>Акция -20%</h2>
                                     </div>
+                                    <div class="mt-4">
+                                        <h4>Твердотопливный котел Roda Вrenner Classic BС-03</h4>
+                                    </div>
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
+                                        <p style="font-size: xx-large; color: red; padding-right: 1rem">$400</p>
+                                        <s style="font-size: x-large; padding-top: 5px; color: grey">$1000</s>
+                                    </div>
+                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
+                                </div>
+                                <div class="col-5">
+                                    <img style="width: inherit; height: auto" src="/images/02ee95aa9b21504c6c7079146846d99f" alt="">
                                 </div>
                             </div>
                         </div>
@@ -242,8 +263,7 @@
 
                             <ul class="product_marks">
                                     <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
-
-                                {% if specialProduct.specialOffer == 1 %}
+                                {% if specialProduct.specialOffer == true %}
                                     <li class="product_mark product_new"><i class="fas fa-thumbs-up"></i></li>
                                 {% endif %}
                             </ul>

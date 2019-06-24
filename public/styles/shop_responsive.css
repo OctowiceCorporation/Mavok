@@ -249,7 +249,7 @@
 	}
 	#filter {
 		display: none;
-		transition: height 5s ease-in-out;
+		transition: all 50ms ease-in-out;
 	}
 }
 
@@ -367,13 +367,9 @@
 	#resp_logo {
 		display: inline-block!important;
 	}
-	#resp_basket {
-		font-size: large;
-	}
 	.product_grid {
 		width: 100vw;
 	}
-
 	.logo a
 	{
 		font-size: 24px;

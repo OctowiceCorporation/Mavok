@@ -53,6 +53,7 @@ class DefaultController extends AbstractController
             if($saleProduct->getIsVisible())
                 $saleCollection->add($productService->getProductPrice($saleProduct));
         }
+
         return $this->render('index.html.twig',
             ['mainCategories' => $mainCategories,
              'specialProducts' => $specialCollection,

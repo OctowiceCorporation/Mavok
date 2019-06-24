@@ -271,7 +271,7 @@
 	}
 	.main_nav
 	{
-		margin-top: 0px;
+		margin-top: 0;
 	}
 	.char_col:nth-child(3)
 	{
@@ -307,10 +307,29 @@
 	{
 		font-size: 24px;
 	}
+	.single_post {
+		padding-top: 10px;
+	}
 	.cat_menu_container
 	{
 		width: auto;
 		padding-right: 15px;
+	}
+	#footer_menu {
+		display: none;
+	}
+	#logo_container {
+		display: none;
+	}
+	#basket {
+		display: none;
+	}
+	#resp_basket {
+		display: inline-block!important;
+		padding-left: 7rem;
+	}
+	#resp_logo {
+		display: inline-block!important;
 	}
 	.cat_menu_text
 	{
@@ -384,7 +403,7 @@
 	}
 	.top_bar_user
 	{
-		margin-left: 0px;
+		margin-left: 0;
 	}
 	.header_search
 	{
@@ -392,10 +411,10 @@
 	}
 	.main_nav
 	{
-		width: calc(100% + 30px);
-		margin-left: -15px;
-		margin-right: -15px;
-		margin-top: 0px;
+		width: calc(100% - 30px) !important;
+		margin-left: 15px;
+		margin-right: 15px;
+		margin-top: 0!important;
 	}
 	.main_nav_content
 	{
@@ -458,8 +477,13 @@
 	}
 	.single_post_quote
 	{
-		padding-left: 40px;
-		padding-right: 40px;
+		padding-left: 15px;
+		padding-right: 15px;
+		margin-top: unset;
+		margin-bottom: 15px;
+	}
+	.blog {
+		padding-bottom: 0;
 	}
 	.newsletter_form
 	{
@@ -468,7 +492,7 @@
 	}
 	.newsletter_title_container
 	{
-		padding-left: 0px;
+		padding-left: 0;
 		text-align: center;
 	}
 	.newsletter_unsubscribe_link

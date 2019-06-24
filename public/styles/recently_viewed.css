@@ -202,17 +202,13 @@
 }
 .recently_viewed_new
 {
-    display: none;
+    display: block;
     background: #0e8ce4;
-    visibility: hidden;
-    opacity: 0;
 }
 .recently_viewed_discount
 {
-    display: none;
+    display: block;
     background: #df3b3b;
-    visibility: hidden;
-    opacity: 0;
 }
 .recently_viewed_item.is_new .recently_viewed_new,
 .recently_viewed_item.discount .recently_viewed_discount
