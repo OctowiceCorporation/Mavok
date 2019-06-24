@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/recently_viewed.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/recently_viewed_responsive.css') }}">
 <!-- Recently Viewed -->
-{% if products is not null %}
+{% if products.0 is defined %}
 <div class="viewed">
     <div class="container">
         <div class="row">

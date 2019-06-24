@@ -120,7 +120,9 @@
 
                     <div class="shop_content">
                         <div class="shop_bar clearfix">
-                            <div class="shop_product_count"><span>{{ products|length }}</span> products found</div>
+                            {% if length is defined %}
+                                <div class="shop_product_count"><span>{{ length }}</span> товаров найдено</div>
+                            {% endif %}
                             <div class="shop_sorting">
                                 <ul>
                                     <li>
@@ -133,6 +135,8 @@
                                             <li class="shop_sorting_button" ><a onclick=getUrl('name');>По названию</a></li>
                                             <li class="shop_sorting_button"><a onclick=getUrl('date');>По новизне</a></li>
                                             <li class="shop_sorting_button"><a onclick=getUrl('price_up');>По возрастанию цены</a></li>
+                                            <li class="shop_sorting_button"><a onclick=getUrl('price_down');>По убыванию цены</a></li>
+
                                         </ul>
                                     </li>
                                 </ul>
@@ -161,6 +165,7 @@
                                                     {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale)) | round(1,'common') }} UAH
                                                 </div>
                                             {% else %}
+
                                                 <div class="price">
                                                     {{ (product.retailPrice * product.ProductValue) | round(1,'common') }} UAH
                                                 </div>
@@ -192,10 +197,10 @@
                                     </div>
                                 </a>
                                     <div class="button_container" style="margin-top: unset">
-                                        {% if product.IsAvailable %}
-                                            <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Купить</button>
+                                        {% if product.IsAvailable == true %}
+                                            <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Купить {{ product.IsAvailable }}</button>
                                         {% else %}
-                                            <button type="button" disabled style="font-size: 14px; padding-right:16.5px;padding-left: 16.5px; background: lightgrey; border: solid thin #dadada" class="button cart_button add_to_basket text-dark" value="{{ product.slug }}">Нет в наличии</button>
+                                            <button type="button" disabled style="font-size: 14px; padding-right:16.5px;padding-left: 16.5px; background: lightgrey; border: solid thin #dadada" class="button cart_button add_to_basket text-dark" value="{{ product.slug }}">Нет в наличии {{ product.IsAvailable }}</button>
                                         {% endif %}
                                     </div>
                                 <ul class="product_marks">

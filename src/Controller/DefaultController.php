@@ -83,12 +83,22 @@ class DefaultController extends AbstractController
         $last_category = $categoryRepository->findOneBy(['slug' => $array[count($array)-1]]);
         if(!$last_category->getChildren()->isEmpty()) {
             list($categories, $products) = $categoryService->isLastCategory($array);
+            $products = $products->toArray();
+            $length = sizeof($products);
+            if(!empty($sort))
+                    $sortService->sort($sort, $products);
+            else{
+                usort($products, function($a, $b)
+                {
+                    return $a->isIsAvailable() < $b->isIsAvailable();
+                });
+            }
             $products = $pagination->paginate(
                 $products,
                 $request->query->getInt('page', 1),
                 $request->query->getInt('limit', 20)
             );
-            return $this->render('catalog.html.twig', ['categories' => $categories, 'category' => $last_category, 'products' => $products, 'sort' => $sort]);
+            return $this->render('catalog.html.twig', ['categories' => $categories, 'category' => $last_category, 'products' => $products, 'sort' => $sort, 'length' => $length]);
         }
         elseif (!$last_category->getProducts()->isEmpty()){
             $filter = $filterService->buildFilter($last_category);
@@ -108,20 +118,25 @@ class DefaultController extends AbstractController
 
 
             $products = $productService->getProducts($last_category);
-
+            $length = sizeof($products);
+            $products = $products->toArray();
             if(!empty($sort)){
-                if(!empty($sort)){
-                    $products = $products->toArray();
                     $sortService->sort($sort, $products);
-                }
             }
+            else{
+                usort($products, function($a, $b)
+                {
+                    return $a->isIsAvailable() < $b->isIsAvailable();
+                });
+            }
+
 
             $products = $pagination->paginate(
                 $products,
                 $request->query->getInt('page', 1),
                 $request->query->getInt('limit', 20)
             );
-            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products,  'category' => $last_category,'form' => $form->createView(), 'sort' => $sort]);
+            return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products,  'category' => $last_category,'form' => $form->createView(), 'sort' => $sort, 'length' => $length]);
         }
         else
             return $this->render('catalog.html.twig',['categories' => null, 'products' => null, 'sort' => $sort]);

@@ -57,6 +57,11 @@
 {% block javasprict %}
     <script>
         $(document).ready(function () {
+            document.onkeyup = function(e) {
+              if (e.keyCode === 13) {
+                $('#admin-product-search-button').click();
+              }
+            };
             $(document).on('click', '#admin-product-search-button',function () {
                 let text = $('#admin-product-search').val();
                 if(/\S/.test(text)){
@@ -72,12 +77,12 @@
                             let tr;
                             Object.keys(result).forEach(function (key) {
                                 tr = $('<tr role="row" class="odd"></tr>');
-                                tr.append('<td>'+result[key]['name']+'</td>');
-                                tr.append('<td>'+result[key]['name']+'</td>');
-                                tr.append('<td>'+result[key]['name']+'</td>');
-                                tr.append('<td>'+result[key]['name']+'</td>');
-                                tr.append('<td>'+result[key]['name']+'</td>');
-                                tr.append('<td>'+result[key]['name']+'</td>');
+                                tr.append('<td><a href=/adminPage/edit_product/'+result[key]['id']+'>'+result[key]["name"]+'</a></td>');
+                                tr.append('<td>'+result[key]['is_available']+'</td>');
+                                tr.append('<td>'+result[key]['price']+'</td>');
+                                tr.append('<td>'+result[key]['maker']+'</td>');
+                                tr.append('<td>'+result[key]['updated_at']['date']+'</td>');
+                                tr.append('<td><a href="/adminPage/edit_product/'+result[key]['id']+'">Редактировать товар</a></td>');
 
                                 $('#product-tbody').append(tr);
                             });
