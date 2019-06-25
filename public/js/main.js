@@ -151,10 +151,14 @@ $(document).ready(function () {
             .done(function(json) {
                 let array = JSON.parse(json);
                 $('#mobile-search-result').html('');
+                if(array.length === 0)
+                    alert('qq');
                 array.forEach(function (product) {
                     let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/'+product['slug']).html(product['name']);
                     $('#mobile-search-result').append(href);
-                })
+                });
+                let submit = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product_search?search_text='+value).css('background-color','#0e8ce4').html('Посмотреть все варианты');
+                $('#desktop-result').append(submit);
             });
 
     });
@@ -169,10 +173,22 @@ $(document).ready(function () {
             .done(function(json) {
                 let array = JSON.parse(json);
                 $('#desktop-result').html('');
-                array.forEach(function (product) {
-                    let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/'+product['slug']).html(product['name']);
-                    $('#desktop-result').append(href);
-                })
+                if(array.length === 0){
+                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').css('background-color','#0e8ce4').css('background-color','#0e8ce4').css('color', 'white').html('Ничего не найдено');
+                    $('#desktop-result').append(submit);
+                }
+                else{
+                    array.forEach(function (product) {
+                        let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/'+product['slug']).html(product['name']);
+                        $('#desktop-result').append(href);
+                    });
+                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product_search?search_text='+value).css('background-color','#0e8ce4').css('color', 'white').html('Посмотреть все варианты');
+                    $('#desktop-result').append(submit);
+                }
+
+
+
+
             });
 
     });
