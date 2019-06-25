@@ -38,8 +38,7 @@ $.ajax({
     method: "GET",
     url: '/get_product_amount',
 })
-    .done(function(amount) {
-        $('#basket-product-amount').parent().append(' товров');
+    .done(function(amount) {;
         $('#basket-product-amount').html(amount);
     });
 
@@ -140,7 +139,43 @@ $(document).ready(function () {
                 element.html('В корзине <i class="fas fa-check"></i>').css('background-color','green');
                 $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
             });
-    })
+    });
+
+    $(document).on('keyup','#mobile-search', function () {
+        let value = $(this).val();
+
+        $.ajax({
+            method: "GET",
+            url: '/ajax_search/'+value,
+        })
+            .done(function(json) {
+                let array = JSON.parse(json);
+                $('#mobile-search-result').html('');
+                array.forEach(function (product) {
+                    let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/'+product['slug']).html(product['name']);
+                    $('#mobile-search-result').append(href);
+                })
+            });
+
+    });
+
+    $(document).on('keyup','#desktop-search', function () {
+        let value = $(this).val();
+
+        $.ajax({
+            method: "GET",
+            url: '/ajax_search/'+value,
+        })
+            .done(function(json) {
+                let array = JSON.parse(json);
+                $('#desktop-result').html('');
+                array.forEach(function (product) {
+                    let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/'+product['slug']).html(product['name']);
+                    $('#desktop-result').append(href);
+                })
+            });
+
+    });
 
 
 

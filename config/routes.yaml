@@ -10,8 +10,11 @@ product:
     path: /product/{slug}
     controller: App\Controller\ProductController::index
 product_search:
-    path: /product_search/
+    path: /product_search
     controller: App\Controller\ProductController::searchProduct
+ajax_search:
+    path: /ajax_search/{text}
+    controller: App\Controller\ProductController::ajaxSearch
 search_product:
     path: /search_product/{text}
     controller: App\Controller\Admin\ProductController::searchProduct

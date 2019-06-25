@@ -92,4 +92,20 @@ class ProductController extends AbstractController
         return $this->render('recently_viewed.html.twig',
             ['products' => $products]);
     }
+
+    public function ajaxSearch($text, ProductRepository $productRepository)
+    {
+        if(empty($text))
+            return new Response(json_encode([]));
+
+        $products = $productRepository->searchProductsWithLimit($text, 5);
+
+        $array = [];
+        foreach ($products as $key => $product) {
+            $array[$key]['name'] = $product->getName();
+            $array[$key]['slug'] = $product->getSlug();
+        }
+
+        return new Response(json_encode($array));
+    }
 }
