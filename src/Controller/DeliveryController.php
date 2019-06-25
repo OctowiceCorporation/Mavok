@@ -183,6 +183,9 @@ class DeliveryController extends AbstractController
     public function getProductAmount(SessionInterface $session)
     {
         $basket = $session->get('basket');
+        if(empty($basket))
+            return new Response(0);
+
         $amount = 0;
         foreach ($basket as $item) {
             $amount += $item;
