@@ -142,6 +142,10 @@
 
 @media only screen and (max-width: 991px)
 {
+	.list-group
+	{
+		top: unset;
+	}
 	.banner_content {
 		width: 100%;
 		float: unset;
@@ -336,6 +340,14 @@
 
 @media only screen and (max-width: 767px)
 {
+	.header_search_results
+	{
+		display: none;
+	}
+	.mobile_search_results
+	{
+		display: inherit;
+	}
 	.arrivals_slider_item {
 		width: 30%;
 	}

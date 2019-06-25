@@ -1444,6 +1444,18 @@ select option
 #resp_basket {
 	display: none;
 }
+.basket_count
+{
+	position: absolute;
+	font-size: large;
+	right: -10px;
+	top: 35px;
+}
+.header_search_results
+{
+	position: relative;
+	top: 62px;
+}
 .product_item
 {
 	display: -webkit-box;

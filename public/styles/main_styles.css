@@ -867,7 +867,7 @@ select option
 	cursor: pointer;
 	z-index: 0;
 }
-.list-group
+.header_search_results
 {
 	position: relative;
 	top: 62px;
@@ -996,6 +996,13 @@ select option
 	top: 0;
 	visibility: visible;
 	opacity: 1;
+}
+.basket_count
+{
+	position: absolute;
+	font-size: large;
+	right: -10px;
+	top: 35px;
 }
 .main_nav_dropdown li
 {

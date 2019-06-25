@@ -53,12 +53,12 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="list-group">
+                        <div class="list-group header_search_results text-left">
                             <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
                             <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
                             <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
                             <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                            <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+                            <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,8 @@
                         <div class="logo" id="basket"><a href="{{ path('basket_view') }}"><i style="color: #0e8ce4" class="fas fa-shopping-cart fa-2x"></i></a></div>
                         <a  id="resp_logo" style="display:none; font-size: 50px; font-family: 'Orbitron', sans-serif;" href="{{ path('index') }}">Mavok</a>
                         <a style="display: none" id="resp_basket" href="{{ path('basket_view') }}"><i style="color: #0e8ce4" class="fas fa-shopping-cart fa-2x"></i></a>
-                        <br><span id="basket-product-amount"></span>
+                        <span class="basket_count badge badge-pill badge-danger notify" id="basket-product-amount"></span>
+{#                        <br><span id="basket-product-amount"></span>#}
                     </div>
                 </div>
             </div>
@@ -125,6 +126,13 @@
                             <form action="#">
                                 <input type="search" required="required" class="page_menu_search_input" placeholder="Найти товар...">
                             </form>
+                            <div class="list-group mobile_search_results text-left">
+                                <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
+                                <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+                                <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+                                <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                                <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+                            </div>
                         </div>
                         <ul class="page_menu_nav">
                             <li class="page_menu_item">

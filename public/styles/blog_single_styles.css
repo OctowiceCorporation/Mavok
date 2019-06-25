@@ -546,6 +546,18 @@ section
 	font-weight: 500;
 	color: #0e8ce4;
 }
+.basket_count
+{
+	position: absolute;
+	font-size: large;
+	right: -10px;
+	top: 35px;
+}
+.header_search_results
+{
+	position: relative;
+	top: 62px;
+}
 .header_search
 {
 	height: 175px;

@@ -548,6 +548,18 @@ section
 	color: #0e8ce4;
 	font-family: 'Orbitron', sans-serif;
 }
+.basket_count
+{
+	position: absolute;
+	font-size: large;
+	right: -10px;
+	top: 35px;
+}
+.header_search_results
+{
+	position: relative;
+	top: 62px;
+}
 .header_search
 {
 	height: 175px;
@@ -884,7 +896,7 @@ select option
 	background: #0e8ce4;
 	padding-left: 35px;
 	cursor: pointer;
-	z-index: 1;
+	z-index: 0;
 }
 .cat_menu_title
 {
@@ -1503,6 +1515,13 @@ select option
 	height: 20px;
 	background: #999999;
 	border-radius: 50%;
+}
+.basket_count
+{
+	position: absolute;
+	font-size: large;
+	right: -10px;
+	top: 35px;
 }
 .product_color > li
 {
