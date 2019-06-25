@@ -52,6 +52,27 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getRandomProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('RAND()')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function getMainPageProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.is_on_main = 1')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @return Product[]
      */

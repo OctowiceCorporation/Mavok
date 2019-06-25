@@ -38,7 +38,9 @@
                                                 <div class="cart_item_text"><a href="{{ path('product', {'slug': product.slug}) }}" target="_blank">{{ product.name }}</a></div>
                                             </div>
                                             <div class="cart_item_quantity cart_info_col">
-                                                <div class="cart_item_title">Количество</div>
+                                                <div class="cart_item_title">Количество{% if product.ProductUnit is not null %}
+                                                    / {{ product.ProductUnit }}
+                                                    {% endif %}</div>
                                                 <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
                                                     <input class="quantity_input" type="text" readonly="readonly" value="{{ product.amount }}">
                                                     <div class="quantity_buttons" data-product-name="{{ product.slug }}" data-minimum="{{ product.MinimumWholesale }}" data-wholesale="{% if product.sale is not empty %}{{ product.WholesalePrice*product.sale }}{% else %}{{ product.WholesalePrice }}{% endif %}" data-retail="{% if product.sale is not empty %}{{ product.retailPrice - ( product.retailPrice* product.sale/100) }}{% else %}{{ product.retailPrice }}{% endif %}" data-value="{{ product.ProductValue }}">
@@ -115,6 +117,9 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
+                                            <div class="cart_item_total cart_info_col">
+                                                <div class="cart_item_title">Удалить</div>
+                                                <div class="cart_item_text"><span class="delete-product-from-basket" style="cursor: pointer">X</span></div>
                                         </div>
                                     </li>
                                 {% endfor %}
@@ -201,6 +206,19 @@
                 }
             }, false);
 
+            $(document).on('click', '.delete-product-from-basket', function () {
+                let elem = $(this);
+                $.ajax({
+                    method: "GET",
+                    url: '/delete_from_basket/'+elem.closest('.cart_item_info').find('.quantity_buttons').attr('data-product-name'),
+                })
+                    .done(function() {
+                        $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - Number(elem.closest('.basket-product-card').find('.quantity_input').val()));
+                        elem.closest('.basket-product-card').remove();
+                        $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
+                    });
+            });
+
             $(document).on('click','.quantity_inc_button',function () {
                 let elem = $(this);
                 let input = elem.parent().parent().find('.quantity_input');
@@ -234,6 +252,7 @@
                             $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                         }
                         sum = Number($('#total').html());
+                        $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
 
                     });
             });
@@ -282,6 +301,7 @@
                                     }
                                 }
                                 sum = Number($('#total').html());
+                                $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
                             });
                     };
                 }
@@ -320,6 +340,7 @@
                                 }
                             }
                             sum = Number($('#total').html());
+                            $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
                         });
                 }
             })

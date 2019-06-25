@@ -4,8 +4,10 @@
 namespace App\Controller;
 
 
+use App\Mappers\Category;
 use App\Mappers\Specification;
 use App\Repository\ProductRepository;
+use App\Service\CategoryService;
 use App\Service\ProductService;
 use Doctrine\Common\Collections\ArrayCollection;
 use function GuzzleHttp\Promise\queue;
@@ -18,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductController extends AbstractController
 {
 
-    public function index($slug, ProductRepository $productRepository, Request $request, ProductService $productService)
+    public function index($slug, ProductRepository $productRepository, Request $request, ProductService $productService, CategoryService $categoryService)
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
         $admin = false;
@@ -35,6 +37,10 @@ class ProductController extends AbstractController
 
         $specifications = $productService->getSpecifications($product);
         $brand = $product->getBrand();
+        $crumbs = $productService->getParentCategories($product);
+        foreach ($crumbs as $index => $crumb) {
+            $crumbs[$index] = Category::entityToDTO($crumb, substr($categoryService->generateUrlFromCategory($crumb), 1));
+        }
         $product = $productService->getProductPrice($product);
         $viewed = json_decode($request->cookies->get('viewed_products'));
         if(empty($viewed))
@@ -46,7 +52,7 @@ class ProductController extends AbstractController
         }
             
         $cookie = new Cookie('viewed_products', json_encode($viewed));
-        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin]));
+        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin, 'crumbs' => $crumbs]));
         $response->headers->setCookie($cookie);
 
         return $response;

@@ -101,4 +101,20 @@ class ProductService
         return $specifications;
     }
 
+    /**
+     * @param Product $product
+     * @return Category[]
+     */
+    public function getParentCategories(Product $product): array
+    {
+        $category = $product->getCategory();
+        $categories = [];
+        while(!empty($category)){
+            array_unshift($categories, $category);
+            $category = $category->getParent();
+        }
+
+        return $categories;
+    }
+
 }

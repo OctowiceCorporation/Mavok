@@ -54,10 +54,30 @@ class DefaultController extends AbstractController
                 $saleCollection->add($productService->getProductPrice($saleProduct));
         }
 
+        $mainPageProducts = $productRepository->getMainPageProducts();
+        if(empty($mainPageProducts))
+            $mainPageProducts = $productRepository->getRandomProducts();
+
+
+        $mainPageCollection = new ArrayCollection();
+        foreach ($mainPageProducts as $product) {
+            if($product->getIsVisible())
+                $mainPageCollection->add($productService->getProductPrice($product));
+        }
+        /**
+         * @var $first \App\DTO\Product
+         * @var $mainPageCollection \App\DTO\Product[]
+         */
+        $first = $mainPageCollection->get(0);
+        $mainPageCollection->remove(0);
+
         return $this->render('index.html.twig',
             ['mainCategories' => $mainCategories,
              'specialProducts' => $specialCollection,
-             'saleProducts' => $saleCollection]);
+             'saleProducts' => $saleCollection,
+             'mainPageProducts' => $mainPageCollection,
+             'first' => $first,
+            ]);
     }
 
     public function headerContacts(CommonInfoService $commonInfoService)

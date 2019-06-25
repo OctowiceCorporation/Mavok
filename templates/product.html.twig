@@ -19,6 +19,14 @@
 
     <div class="single_product">
         <div class="container">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" style="background-color: white">
+                    {% for crumb in crumbs %}
+                        <li class="breadcrumb-item"><a href="{{ path('category',{'slug': crumb.slug}) }}">{{ crumb.name }}</a></li>
+                    {% endfor %}
+                </ol>
+            </nav>
             {% if admin == true %}
             <div class="row">
                 <div class="col-5"></div>
@@ -90,7 +98,6 @@
                                 {% endif %}
                         </div>
                         {% endif %}
-{#                                </div>#}
                                 <div class="button_container">
                                     {% if product.IsAvailable %}
                                         <button type="button" class="button cart_button add_to_basket " value="{{ product.slug }}">Купить <i class="fas fa-cart-plus"></i></button>

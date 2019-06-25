@@ -10,63 +10,96 @@
                         <div class="carousel-item active">
                             <div style="display: inline-flex">
                                 <div class="col-7">
+                                    {% if first.sale is not null %}
                                     <div>
-                                        <h2>Акция -20%</h2>
+                                            <h2>Акция -{{ first.sale }}%</h2>
                                     </div>
+                                    {% endif %}
                                     <div class="mt-4">
-                                        <h4>Твердотопливный котел Roda Вrenner Classic BС-03</h4>
+                                        <h4>{{ first.name }}</h4>
                                     </div>
                                     <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
-                                        <p style="font-size: xx-large; color: red; padding-right: 1rem">$400</p>
-                                        <s style="font-size: x-large; padding-top: 5px; color: grey">$1000</s>
+                                        {% if first.sale is not null %}
+                                            {% if first.productValue is not null %}
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} UAH</p>
+                                            {% else %}
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} UAH</p>
+                                            {% endif %}
+
+                                            {% if first.productValue is not null %}
+                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.productValue * first.retailPrice }} UAH</s>
+                                            {% else %}
+                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.retailPrice }} UAH</s>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if first.productValue is not null %}
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} UAH</p>
+                                            {% else %}
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} UAH</p>
+                                            {% endif %}
+                                        {% endif %}
+
                                     </div>
                                     <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
                                 </div>
                                 <div class="col-5">
-                                    <img style="width: inherit; height: auto" src="/images/02ee95aa9b21504c6c7079146846d99f" alt="">
+                                    <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto" src={% if first.image.get(0).ImagePath is defined %}
+                     "/images/{{ first.image.get(0).ImagePath }}"
+                                    {% else %}
+                                        "/no-image.png"
+                                    {% endif %}
+                                    alt="/image/no-image.png">
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            <div style="display: inline-flex">
-                                <div class="col-7">
-                                    <div>
-                                        <h2>Акция -20%</h2>
+
+                        {% for mainPage in mainPageProducts %}
+                            <div class="carousel-item">
+                                <div style="display: inline-flex">
+                                    <div class="col-7">
+                                        {% if mainPage.sale is not null %}
+                                            <div>
+                                                <h2>Акция -{{ mainPage.sale }}%</h2>
+                                            </div>
+                                        {% endif %}
+                                        <div class="mt-4">
+                                            <h4>{{ mainPage.name }}</h4>
+                                        </div>
+                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
+                                            {% if mainPage.sale is not null %}
+                                                {% if mainPage.productValue is not null %}
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} UAH</p>
+                                                {% else %}
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} UAH</p>
+                                                {% endif %}
+
+                                                {% if mainPage.productValue is not null %}
+                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.productValue * mainPage.retailPrice }} UAH</s>
+                                                {% else %}
+                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.retailPrice }} UAH</s>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if mainPage.productValue is not null %}
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} UAH</p>
+                                                {% else %}
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} UAH</p>
+                                                {% endif %}
+                                            {% endif %}
+
+                                        </div>
+                                        <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
                                     </div>
-                                    <div class="mt-4">
-                                        <h4>Твердотопливный котел Roda Вrenner Classic BС-03</h4>
+                                    <div class="col-5">
+                                        <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto" src={% if mainPage.image.get(0).ImagePath is defined %}
+                     "/images/{{ mainPage.image.get(0).ImagePath }}"
+                                        {% else %}
+                                            "/no-image.png"
+                                        {% endif %}
+                                        alt="/image/no-image.png">
                                     </div>
-                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
-                                        <p style="font-size: xx-large; color: red; padding-right: 1rem">$400</p>
-                                        <s style="font-size: x-large; padding-top: 5px; color: grey">$1000</s>
-                                    </div>
-                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
-                                </div>
-                                <div class="col-5">
-                                    <img style="width: inherit; height: auto" src="/images/02ee95aa9b21504c6c7079146846d99f" alt="">
                                 </div>
                             </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div style="display: inline-flex">
-                                <div class="col-7">
-                                    <div>
-                                        <h2>Акция -20%</h2>
-                                    </div>
-                                    <div class="mt-4">
-                                        <h4>Твердотопливный котел Roda Вrenner Classic BС-03</h4>
-                                    </div>
-                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
-                                        <p style="font-size: xx-large; color: red; padding-right: 1rem">$400</p>
-                                        <s style="font-size: x-large; padding-top: 5px; color: grey">$1000</s>
-                                    </div>
-                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
-                                </div>
-                                <div class="col-5">
-                                    <img style="width: inherit; height: auto" src="/images/02ee95aa9b21504c6c7079146846d99f" alt="">
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
