@@ -180,4 +180,15 @@ class DeliveryController extends AbstractController
         return new Response(json_encode($novaPoshtaService->getJson()));
     }
 
+    public function getProductAmount(SessionInterface $session)
+    {
+        $basket = $session->get('basket');
+        $amount = 0;
+        foreach ($basket as $item) {
+            $amount += $item;
+        }
+
+        return new Response($amount);
+    }
+
 }

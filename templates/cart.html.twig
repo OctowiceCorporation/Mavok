@@ -213,6 +213,7 @@
                     url: '/delete_from_basket/'+elem.closest('.cart_item_info').find('.quantity_buttons').attr('data-product-name'),
                 })
                     .done(function() {
+                        $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - Number(elem.closest('.basket-product-card').find('.quantity_input').val()));
                         elem.closest('.basket-product-card').remove();
                         $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
                     });
@@ -251,6 +252,7 @@
                             $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                         }
                         sum = Number($('#total').html());
+                        $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
 
                     });
             });
@@ -299,6 +301,7 @@
                                     }
                                 }
                                 sum = Number($('#total').html());
+                                $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
                             });
                     };
                 }
@@ -337,6 +340,7 @@
                                 }
                             }
                             sum = Number($('#total').html());
+                            $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
                         });
                 }
             })

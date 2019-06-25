@@ -1,36 +1,47 @@
-$(document).ready(function () {
 
-    $.ajax({
-        method: "POST",
-        url: '/header_categories',
-    })
-        .done(function(msg) {
-            let array = JSON.parse(msg);
-            console.log(array);
-            let parent = $('#header_dropdown');
-            Object.keys(array).forEach(function (key) {
-                if(array[key]['is_visible'] === true)
-                    callback_category(parent, array[key]);
-            });
-            function callback_category(element, category) {
-                let is_sub_exist = false;
-                if(category['sub'].length === undefined)
-                    is_sub_exist = true;
-                let li = $('<li></li>').append($('<a style="display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a> '));
-                if(is_sub_exist){
-                    li.addClass('header_hassubs');
-                    li.append('<i style="position: absolute; right: 0; display: inline-block; padding: 1em" class="fas fa-chevron-right open-ul"></i>');
-                    let ul = $('<ul style="display: none;"></ul>');
-                    li.append(ul);
-                    Object.keys(category['sub']).forEach(function (key) {
-                        if(category['sub'][key]['is_visible'] === true)
-                            callback_category(ul, category['sub'][key]);
-                    });
-                }
-                element.append(li);
 
-            }
+$.ajax({
+    method: "POST",
+    url: '/header_categories',
+})
+    .done(function(msg) {
+        let array = JSON.parse(msg);
+        console.log(array);
+        let parent = $('#header_dropdown');
+        Object.keys(array).forEach(function (key) {
+            if(array[key]['is_visible'] === true)
+                callback_category(parent, array[key]);
         });
+        function callback_category(element, category) {
+            let is_sub_exist = false;
+            if(category['sub'].length === undefined)
+                is_sub_exist = true;
+            let li = $('<li></li>').append($('<a style="display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a> '));
+            if(is_sub_exist){
+                li.addClass('header_hassubs');
+                li.append('<i style="position: absolute; right: 0; display: inline-block; padding: 1em" class="fas fa-chevron-right open-ul"></i>');
+                let ul = $('<ul style="display: none;"></ul>');
+                li.append(ul);
+                Object.keys(category['sub']).forEach(function (key) {
+                    if(category['sub'][key]['is_visible'] === true)
+                        callback_category(ul, category['sub'][key]);
+                });
+            }
+            element.append(li);
+
+        }
+    });
+
+$.ajax({
+    method: "GET",
+    url: '/get_product_amount',
+})
+    .done(function(amount) {
+        $('#basket-product-amount').parent().append(' товров');
+        $('#basket-product-amount').html(amount);
+    });
+
+$(document).ready(function () {
 
     if(window.screen.width < 800){
         $('#header_dropdown').css('width', '95vw');
@@ -107,10 +118,13 @@ $(document).ready(function () {
                 'slug': $(this).val(),
             }
         })
-            .done(function(event) {
+            .done(function() {
                 element.html('В корзине <i class="fas fa-check"></i>').css('background-color','green');
+                $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
             });
     })
+
+
 
 
 });
