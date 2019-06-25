@@ -39,7 +39,6 @@ $.ajax({
     url: '/get_product_amount',
 })
     .done(function(amount) {
-        $('#basket-product-amount').parent().append(' товров');
         $('#basket-product-amount').html(amount);
     });
 
@@ -137,7 +136,7 @@ $(document).ready(function () {
             }
         })
             .done(function() {
-                element.html('В корзине <i class="fas fa-check"></i>').css('background-color','green');
+                element.html('В корзине <i class="fas fa-check"></i>').css('background-color','green').css('width','90%');
                 $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
             });
     })

@@ -117,6 +117,14 @@
 
 @media only screen and (max-width: 991px)
 {
+	.fa-shopping-cart
+	{
+		font-size: 1em;
+	}
+	.header_search_results
+	{
+		top: unset!important;
+	}
 	.logo a {
 		font-size: 50px;
 	}
@@ -296,7 +304,7 @@
 	}
 	.main_nav
 	{
-		margin-top: 0px;
+		margin-top: 0;
 	}
 	.banner_product_image
 	{
@@ -340,6 +348,10 @@
 	{
 		padding-bottom: unset;
 	}
+	.fa-shopping-cart
+	{
+		font-size: 2em;
+	}
 	.top_bar
 	{
 		display: none;
@@ -366,6 +378,11 @@
 	}
 	#resp_logo {
 		display: inline-block!important;
+	}
+	.basket_count {
+		font-size: small!important;
+		right: -14px!important;
+		top: 18px!important;
 	}
 	.product_grid {
 		width: 100vw;
@@ -454,7 +471,7 @@
 	}
 	.top_bar_user
 	{
-		margin-left: 0px;
+		margin-left: 0;
 	}
 	.header_search
 	{
@@ -543,7 +560,7 @@
 	}
 	.newsletter_title_container
 	{
-		padding-left: 0px;
+		padding-left: 0;
 		text-align: center;
 	}
 	.newsletter_unsubscribe_link

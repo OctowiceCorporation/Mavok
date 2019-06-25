@@ -114,6 +114,14 @@
 
 @media only screen and (max-width: 991px)
 {
+	.fa-shopping-cart
+	{
+		font-size: 1em;
+	}
+	.header_search_results
+	{
+		top: unset!important;
+	}
 	.top_bar
 	{
 		/*display: none;*/
@@ -299,6 +307,10 @@
 	{
 		display: none;
 	}
+	.fa-shopping-cart
+	{
+		font-size: 2em;
+	}
 	.logo_container, .wishlist_cart
 	{
 		height: 72px;
@@ -314,6 +326,11 @@
 	{
 		width: auto;
 		padding-right: 15px;
+	}
+	.basket_count {
+		font-size: small!important;
+		right: -14px!important;
+		top: 18px!important;
 	}
 	#footer_menu {
 		display: none;

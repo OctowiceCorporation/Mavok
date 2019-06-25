@@ -188,9 +188,10 @@
                                                  / {{ product.ProductUnit }}
                                                 {% endif %}
                                             </div>
+
                                 </div>
                                     <div class="product_name">
-                                        <p style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;">
+                                        <p style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible; margin: unset">
                                             {% if product.name | length > 52 %}
                                                 {{ product.name | slice(0,52) }}...
                                             {% else %}
