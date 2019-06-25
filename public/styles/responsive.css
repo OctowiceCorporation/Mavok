@@ -142,6 +142,10 @@
 
 @media only screen and (max-width: 991px)
 {
+	.fa-shopping-cart
+	{
+		font-size: 1em;
+	}
 	.list-group
 	{
 		top: unset;
@@ -432,6 +436,10 @@
 	{
 		display: none;
 	}
+	.fa-shopping-cart
+	{
+		font-size: 2em;
+	}
 	.arrivals_slider_item {
 		width: 65%;
 	}
@@ -465,6 +473,11 @@
 		width:100%;
 		padding: unset;
 		margin: unset;
+	}
+	.basket_count {
+		font-size: small;
+		right: -14px;
+		top: 18px;
 	}
 	.logo_container, .wishlist_cart
 	{

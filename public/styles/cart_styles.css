@@ -154,6 +154,15 @@ section
 	position: relative;
 	top: 62px;
 }
+.delete-product-from-basket
+{
+	cursor: pointer;
+	position: relative;
+	bottom: 30px;
+	left: 30px;
+	font-size: 1.5em;
+	color: #007bff;
+}
 .clear
 {
 	clear: both;
@@ -1305,6 +1314,10 @@ select option
 .cart_item_total
 {
 	text-align: right;
+}
+.cart_item_quantity
+{
+	margin-left: 55px;
 }
 .order_total
 {
