@@ -1,7 +1,8 @@
+$('#header_dropdown').hide();
 
 
 $.ajax({
-    method: "POST",
+    method: "GET",
     url: '/header_categories',
 })
     .done(function(msg) {
@@ -28,6 +29,7 @@ $.ajax({
                 });
             }
             element.append(li);
+            $('#header_dropdown').show();
 
         }
     });
@@ -41,7 +43,9 @@ $.ajax({
         $('#basket-product-amount').html(amount);
     });
 
+
 $(document).ready(function () {
+
 
     if(window.screen.width < 800){
         $('#header_dropdown').css('width', '95vw');
