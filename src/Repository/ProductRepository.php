@@ -31,6 +31,21 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    /**
+     * @param string $text
+     * @param int $limit
+     * @return Product[]
+     */
+    public function searchProductsWithLimit(string $text, int $limit): iterable
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.name LIKE :text')
+            ->setMaxResults($limit)
+            ->setParameters([ 'text' => '%'.$text.'%'])
+            ->orderBy('p.special_offer')
+            ->getQuery()->getResult();
+    }
+
     public function getProductsFromCategory(int $id)
     {
         $builder = $this->createQueryBuilder('p');
