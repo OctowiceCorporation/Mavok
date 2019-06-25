@@ -481,6 +481,10 @@
 	{
 		top: 5px;
 	}
+	.cat_menu_title
+	{
+		padding: unset;
+	}
 	.cat_burger span:nth-child(3)
 	{
 		top: 10px;
