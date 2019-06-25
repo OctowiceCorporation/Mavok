@@ -24,6 +24,9 @@ plus_basket:
 minus_basket:
     path: /minus_basket/{slug}
     controller: App\Controller\DeliveryController:minusBasket
+delete_from_basket:
+    path: /delete_from_basket/{slug}
+    controller: App\Controller\DeliveryController:deleteFromBasket
 checkout:
     path: /checkout
     controller: App\Controller\DeliveryController:checkout

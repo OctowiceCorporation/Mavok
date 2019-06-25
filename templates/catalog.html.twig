@@ -170,7 +170,6 @@
                                                     {{ (product.retailPrice * product.ProductValue) | round(1,'common') }} UAH
                                                 </div>
                                             {% endif %}
-                                    </div>
                                         {% else %}
                                             <div class="product_price">
                                             {% if product.sale is not empty %}
@@ -183,8 +182,12 @@
                                                     {{ (product.retailPrice) | round(1,'common') }} UAH
                                                 </div>
                                             {% endif %}
-                                            </div>
+
                                         {% endif %}
+                                                {% if product.ProductUnit is not null %}
+                                                 / {{ product.ProductUnit }}
+                                                {% endif %}
+                                            </div>
                                 </div>
                                     <div class="product_name">
                                         <p style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible;">

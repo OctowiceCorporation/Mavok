@@ -156,6 +156,25 @@ class DeliveryController extends AbstractController
         return new Response(null);
     }
 
+    public function deleteFromBasket($slug, ProductRepository $productRepository, SessionInterface $session)
+    {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+        if(empty($product))
+            return new Response(null, 404);
+
+        $id = $product->getId();
+        $basket = $session->get('basket');
+        if(empty($basket))
+            $basket = [];
+
+        if(isset($basket[$id]))
+            unset($basket[$id]);
+
+        $session->set('basket', $basket);
+
+        return new Response(null);
+    }
+
     public function getPostOffices(NovaPoshtaService $novaPoshtaService)
     {
         return new Response(json_encode($novaPoshtaService->getJson()));
