@@ -60,9 +60,9 @@
                         {% if product.wholesalePrice is not null and product.minimumWholesale is not null %}
                             <div>
                                 Оптовая цена: {% if product.ProductValue is not null %}
-                                {{ (product.wholesalePrice * product.ProductValue) }} UAH / {{ product.wholesalePrice }} {{ product.currencyName }}
+                                {{ (product.wholesalePrice * product.ProductValue) }} грн / {{ product.wholesalePrice }} {{ product.currencyName }}
                             {% else %}
-                                {{ product.wholesalePrice }} UAH
+                                {{ product.wholesalePrice }} грн
                                 {% endif %} - при заказе от {{ product.minimumWholesale }} штук
                             </div>
                         {% endif %}
@@ -83,20 +83,24 @@
                                 <div class="product_price">
                                     {% if product.ProductValue is not null %}
                                     {% if product.sale is not empty %}
-                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} UAH</s><br>
-                                        {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} UAH
+                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} грн</s><br>
+                                        {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} грн
                                     {% else %}
-                                        {{ (product.retailPrice * product.ProductValue) }} UAH
+                                        {{ (product.retailPrice * product.ProductValue) }} грн
                                     {% endif %}
                                 </div>
                                 {% else %}
                                 {% if product.sale is not empty %}
-                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} UAH</s><br>
-                                    {{ product.retailPrice - (product.retailPrice/100 * product.sale) }} UAH
+                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} грн</s><br>
+                                    {{ product.retailPrice - (product.retailPrice/100 * product.sale) }} грн
                                 {% else %}
-                                    {{ (product.retailPrice) }} UAH
+                                    {{ (product.retailPrice) }} грн
                                 {% endif %}
+
                         </div>
+                        {% endif %}
+                        {% if product.ProductUnit is not null %}
+                        / {{ product.ProductUnit }}
                         {% endif %}
                                 <div class="button_container">
                                     {% if product.IsAvailable %}

@@ -21,21 +21,21 @@
                                     <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
-                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} UAH</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} грн</p>
                                             {% else %}
-                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} UAH</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} грн</p>
                                             {% endif %}
 
                                             {% if first.productValue is not null %}
-                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.productValue * first.retailPrice }} UAH</s>
+                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.productValue * first.retailPrice }} грн</s>
                                             {% else %}
-                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.retailPrice }} UAH</s>
+                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.retailPrice }} грн</s>
                                             {% endif %}
                                         {% else %}
                                             {% if first.productValue is not null %}
-                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} UAH</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} грн</p>
                                             {% else %}
-                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} UAH</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} грн</p>
                                             {% endif %}
                                         {% endif %}
 
@@ -68,21 +68,21 @@
                                         <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
                                             {% if mainPage.sale is not null %}
                                                 {% if mainPage.productValue is not null %}
-                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} UAH</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
                                                 {% else %}
-                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} UAH</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
                                                 {% endif %}
 
                                                 {% if mainPage.productValue is not null %}
-                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.productValue * mainPage.retailPrice }} UAH</s>
+                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.productValue * mainPage.retailPrice }} грн</s>
                                                 {% else %}
-                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.retailPrice }} UAH</s>
+                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.retailPrice }} грн</s>
                                                 {% endif %}
                                             {% else %}
                                                 {% if mainPage.productValue is not null %}
-                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} UAH</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
                                                 {% else %}
-                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} UAH</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
                                                 {% endif %}
                                             {% endif %}
 
@@ -186,12 +186,12 @@
                                     <div class="product_price">
                                             {% if specialProduct.sale is not empty %}
                                                 <div class="sale">
-                                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} UAH</s><br>
-                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) | round(1,'common') }} UAH
+                                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} грн</s><br>
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) | round(1,'common') }} грн
                                                 </div>
                                             {% else %}
                                                 <div class="price">
-                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} UAH
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} грн
                                                 </div>
                                             {% endif %}
                                         </div>
@@ -199,12 +199,12 @@
                                             <div class="product_price">
                                                 {% if specialProduct.sale is not empty %}
                                                     <div class="sale">
-                                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} UAH</s><br>
-                                                        {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} UAH
+                                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} грн</s><br>
+                                                        {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} грн
                                                     </div>
                                                 {% else %}
                                                     <div class="price">
-                                                        {{ (specialProduct.retailPrice) | round(1,'common') }} UAH
+                                                        {{ (specialProduct.retailPrice) | round(1,'common') }} грн
                                                     </div>
                                                 {% endif %}
                                             </div>
@@ -267,18 +267,18 @@
                                     <div class="product_price">
                                         {% if specialProduct.ProductValue is not null %}
                                             {% if specialProduct.sale is not empty %}
-                                                <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} UAH</s><br>
-                                                {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) |round(1,'common') }} UAH
+                                                <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} грн</s><br>
+                                                {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) |round(1,'common') }} грн
                                             {% else %}
-                                                {{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} UAH
+                                                {{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} грн
                                             {% endif %}
                                     </div>
                                         {% else %}
                                             {% if specialProduct.sale is not empty %}
-                                                <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} UAH</s><br>
-                                                {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} UAH
+                                                <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} грн</s><br>
+                                                {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} грн
                                             {% else %}
-                                                {{ (specialProduct.retailPrice) | round(1,'common') }} UAH
+                                                {{ (specialProduct.retailPrice) | round(1,'common') }} грн
                                             {% endif %}
                                     </div>
                                         {% endif %}

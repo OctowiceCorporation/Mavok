@@ -1369,9 +1369,13 @@ select option
 {
 	margin-bottom: 0px;
 }
+.product_text table {
+	width: 100% !important;
+	height: auto!important;
+}
 .order_info
 {
-	margin-top: 53px;
+	margin-top: 30px;
 }
 .product_quantity
 {
@@ -1572,6 +1576,7 @@ select option
 	font-size: 24px;
 	font-weight: 500;
 	clear: left;
+	margin-top: 30px;
 }
 .button_container
 {

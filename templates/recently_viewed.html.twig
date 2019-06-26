@@ -28,12 +28,12 @@
                                     <div class="recently_viewed_price">
                                         {% if product.sale is not empty %}
                                             <div class="recent_sale">
-                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} UAH</s><br>
-                                                {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale)) | round(1,'common') }} UAH
+                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн</s><br>
+                                                {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale)) | round(1,'common') }} грн
                                             </div>
                                         {% else %}
                                             <div class="recent_price">
-                                                {{ (product.retailPrice * product.ProductValue) | round(1,'common') }} UAH
+                                                {{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн
                                             </div>
                                         {% endif %}
                                     </div>
@@ -41,12 +41,12 @@
                                     <div class="recently_viewed_price">
                                         {% if product.sale is not empty %}
                                             <div class="recent_sale">
-                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) | round(1,'common') }} UAH</s><br>
-                                                {{ (product.retailPrice - (product.retailPrice/100 * product.sale)) | round(1,'common') }} UAH
+                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) | round(1,'common') }} грн</s><br>
+                                                {{ (product.retailPrice - (product.retailPrice/100 * product.sale)) | round(1,'common') }} грн
                                             </div>
                                         {% else %}
                                             <div class="recent_price">
-                                                {{ (product.retailPrice) | round(1,'common') }} UAH
+                                                {{ (product.retailPrice) | round(1,'common') }} грн
                                             </div>
                                         {% endif %}
                                     </div>
