@@ -125,6 +125,13 @@ class AddProductForm extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('minimumWholesale', IntegerType::class,[
+                'label' => 'Минимальное количество для опта',
+                'attr' => [
+                    'min' => 1,
+                    ],
+                'required' => false
+            ])
             ->add('product_unit', TextType::class, [
                 'label' => 'Единица измерения',
                 'required' => false,

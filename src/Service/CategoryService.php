@@ -8,16 +8,19 @@ use App\Entity\Category;
 use App\Mappers\Category as CategoryMapper;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CategoryService
 {
     private $categoryRepository;
     private $productService;
+    private $session;
 
-    public function __construct(CategoryRepository $categoryRepository, ProductService $productService)
+    public function __construct(CategoryRepository $categoryRepository, ProductService $productService, SessionInterface $session)
     {
         $this->categoryRepository = $categoryRepository;
         $this->productService = $productService;
+        $this->session = $session;
     }
 
     private function callbackGetProducts(Category $category, array &$array)
@@ -135,9 +138,14 @@ class CategoryService
             foreach ($last_category->getChildren() as $child) {
                 $categories->add(CategoryMapper::entityToDto($child, substr($this->generateUrlFromCategory($child), 1)));
             }
+            $basket = $this->session->get('basket');
             foreach ($this->getChildProducts($last_category) as $childProduct) {
-                if($childProduct->getIsVisible())
-                    $products->add($this->productService->getProductPrice($childProduct));
+                if($childProduct->getIsVisible()){
+                    $amount = 0;
+                    if(isset($basket[$childProduct->getId()]))
+                        $amount = $basket[$childProduct->getId()];
+                    $products->add($this->productService->getProductPrice($childProduct, null, $amount));
+                }
             }
 
         return [$categories,$products];

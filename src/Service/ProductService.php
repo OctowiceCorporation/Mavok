@@ -9,18 +9,21 @@ use App\Entity\Product;
 use App\Mappers\Specification;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class ProductService
 {
     private $usd;
     private $eur;
+    private $session;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, SessionInterface $session)
     {
         $file = Yaml::parse(file_get_contents($container->getParameter('kernel.project_dir').'/config/common_info.yaml'));
         $this->usd = $file['usd_value'];
         $this->eur = $file['eur_value'];
+        $this->session = $session;
     }
 
 
@@ -85,9 +88,14 @@ class ProductService
     public function getProducts(Category $last_category)
     {
         $products = new ArrayCollection();
+        $basket = $this->session->get('basket');
         foreach ($last_category->getProducts() as $product) {
-            if($product->getIsVisible())
-                $products->add($this->getProductPrice($product));
+            if($product->getIsVisible()){
+                $amount = 0;
+                    if(isset($basket[$product->getId()]))
+                        $amount = $basket[$product->getId()];
+                $products->add($this->getProductPrice($product, null, $amount));
+            }
         }
         return $products;
     }

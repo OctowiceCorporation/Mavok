@@ -9,6 +9,7 @@ use App\Repository\BrandRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SpecificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class FilterService
 {
@@ -18,6 +19,7 @@ class FilterService
     private $productService;
     private $brandRepository;
     private $sortService;
+    private $session;
 
     /**
      * FilterService constructor.
@@ -26,14 +28,16 @@ class FilterService
      * @param ProductService $productService
      * @param BrandRepository $brandRepository
      * @param SortService $sortService
+     * @param SessionInterface $session
      */
-    public function __construct(SpecificationRepository $specificationRepository, ProductRepository $productRepository, ProductService $productService, BrandRepository $brandRepository, SortService $sortService)
+    public function __construct(SpecificationRepository $specificationRepository, ProductRepository $productRepository, ProductService $productService, BrandRepository $brandRepository, SortService $sortService, SessionInterface $session)
     {
         $this->specificationRepository = $specificationRepository;
         $this->product_repository = $productRepository;
         $this->productService = $productService;
         $this->brandRepository = $brandRepository;
         $this->sortService = $sortService;
+        $this->session = $session;
     }
 
 
@@ -105,8 +109,14 @@ class FilterService
 
         $result = $last_category->getProducts()->toArray();
         $arr = [];
+        $basket = $this->session->get('basket');
         foreach ($result as $item) {
-            $arr[] = $this->productService->getProductPrice($item, true);
+            if($item->getIsVisible()){
+                $amount = 0;
+                if(isset($basket[$item->getId()]))
+                    $amount = $basket[$item->getId()];
+                $arr[] = $this->productService->getProductPrice($item, true, $amount);
+            }
         }
         if(!empty($sort))
             $this->sortService->sort($sort, $arr);

@@ -35,7 +35,7 @@ class AddBrandForm extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('EurValue', IntegerType::class,[
+            ->add('EurValue', TextType::class,[
                 'label' => 'Стоимость евро, формат: "26.34"',
                 'attr' => [
                     'step' => '0.001',

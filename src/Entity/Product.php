@@ -142,7 +142,7 @@ class Product
      * @param null $is_on_main
      * @throws \Exception
      */
-    public function __construct($name = null, $description = null, $currency_name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $product_unit = null, $brand = null, $sale = null, $is_on_main = null)
+    public function __construct($name = null, $description = null, $currency_name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $product_unit = null, $brand = null, $sale = null, $is_on_main = null, $minimum_wholesale = null)
     {
         $this->name = $name;
         $this->description = $description;
@@ -163,6 +163,7 @@ class Product
         $this->specifications = new ArrayCollection();
         $this->sale = $sale;
         $this->is_on_main = $is_on_main;
+        $this->minimum_wholesale = $minimum_wholesale;
     }
 
     public function getId(): ?int

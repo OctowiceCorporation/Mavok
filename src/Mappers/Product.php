@@ -58,7 +58,8 @@ class Product
             $formDTO->getProductUnit(),
             $formDTO->getBrand(),
             $formDTO->getSale(),
-            $formDTO->getIsOnMain()
+            $formDTO->getIsOnMain(),
+            $formDTO->getMinimumWholesale()
         );
     }
 

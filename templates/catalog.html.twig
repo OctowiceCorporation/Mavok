@@ -199,7 +199,7 @@
                                 </a>
                                     <div class="button_container" style="margin-top: unset">
                                         {% if product.IsAvailable == true %}
-                                            <button type="button" class="button cart_button add_to_basket" value="{{ product.slug }}">Купить</button>
+                                            <button type="button" class="button cart_button add_to_basket" style="{% if product.amount != 0 %}background-color: green;{% endif %} width: 90%" value="{{ product.slug }}">{% if product.amount != 0 %}В корзине <i class="fas fa-check"></i>{% else %}Купить <i class="fas fa-cart-plus"></i>{% endif %}</button>
                                         {% else %}
                                             <button type="button" disabled style="font-size: 14px; padding-right:16.5px;padding-left: 16.5px; background: lightgrey; border: solid thin #dadada" class="button cart_button add_to_basket text-dark" value="{{ product.slug }}">Нет в наличии {{ product.IsAvailable }}</button>
                                         {% endif %}

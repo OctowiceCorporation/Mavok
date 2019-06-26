@@ -63,7 +63,7 @@
                                 </div>
                         </a>
                             <div class="button_container" style="text-align: center">
-                                <button style="font-size: large; font-weight: bold;width: 80%; border: unset" type="button" class="button cart_button add_to_basket text-light" value="{{ product.slug }}">Купить</button>
+                                <button style="font-size: large; font-weight: bold;width: 80%; border: unset; {% if product.amount != 0 %}background-color: green{% endif %}" type="button" class="button cart_button add_to_basket text-light" value="{{ product.slug }}">{% if product.amount != 0 %}В корзине <i class="fas fa-check"></i>{% else %}Купить <i class="fas fa-cart-plus"></i>{% endif %}</button>
                             </div>
                             <ul class="recently_viewed_marks">
                             {% if product.sale is not null %}

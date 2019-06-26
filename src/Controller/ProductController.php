@@ -83,17 +83,21 @@ class ProductController extends AbstractController
 
     }
 
-    public function getRecentlyViewed(Request $request, ProductService $productService, ProductRepository $productRepository)
+    public function getRecentlyViewed(Request $request, ProductService $productService, ProductRepository $productRepository, SessionInterface $session)
     {
         $viewed = json_decode($request->cookies->get('viewed_products'));
         if(empty($viewed))
             return new Response(null, 200);
         $products = new ArrayCollection();
+        $basket = $session->get('basket');
         foreach ($viewed as $item) {
             $prod = $productRepository->findOneBy(['slug' => $item]);
-            if(!empty($prod) && $prod->getIsVisible())
-                $products->add($productService->getProductPrice($prod));
-        }
+            if(!empty($prod) && $prod->getIsVisible()){
+                $amount = 0;
+                if(isset($basket[$prod->getId()]))
+                    $amount = $basket[$prod->getId()];
+                $products->add($productService->getProductPrice($prod, null, $amount));
+            }}
         return $this->render('recently_viewed.html.twig',
             ['products' => $products]);
     }

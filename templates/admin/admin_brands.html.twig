@@ -17,7 +17,13 @@
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row">
                     <div class="col-sm-12 col-md-6"><div id="dataTable_filter" class="dataTables_filter"></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                             <thead>
-                            <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 86.0024px;">Наименование</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 131.002px;">В наличии</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 61.0024px;">Цена(розница)</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31.0024px;">Производитель</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 69.0024px;">Последнее обновление</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;">Действия</th></tr>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 86.0024px;">Название</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 86.0024px;">Страна производитель</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 86.0024px;">Стоимость доллара</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 86.0024px;">Стоимость евро</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 86.0024px;">Редактировать производителя</th>
+                            </tr>
                             </thead>
                             <tfoot>
                             <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Age</th><th rowspan="1" colspan="1">Start date</th><th rowspan="1" colspan="1"></th></tr>
@@ -25,11 +31,10 @@
                             <tbody id="product-tbody">
                             {% for brand in brands %}
                                 <tr role="row" class="odd">
-                                    <td class="sorting_1"><a target="_blank"></a></td>
                                     <td>{{ brand.name }}</td>
                                     <td>{{ brand.country }}</td>
-                                    <td>{{ brand.eurValue }}</td>
                                     <td>{{ brand.usdValue }}</td>
+                                    <td>{{ brand.eurValue }}</td>
                                     <td><a href="{{ path('edit_brand', {'id': brand.id}) }}">Редактировать производителя</a> </td>
                                 </tr>
                             {% endfor %}

@@ -116,12 +116,25 @@ class ProductController extends AbstractController
         return new Response('', 200);
     }
 
+    public function deleteProduct($id, ProductRepository $productRepository, EntityManagerInterface $entityManager)
+    {
+        $product = $productRepository->findOneBy(['id' => $id]);
+        if(empty($product))
+            return new Response('Product not found', 404);
+
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('products');
+
+    }
+
     public function editProduct($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService)
     {
         $product = $productRepository->findOneBy(['id' => $id]);
-        $images =$product->getImages();
         if(empty($product))
             return new Response('Product not found', 404);
+        $images =$product->getImages();
         $form = $this->createForm(AddProductForm::class, Product::EntityToFormDTO($product));
         $form->handleRequest($request);
 
@@ -140,6 +153,7 @@ class ProductController extends AbstractController
                 ->setSale($data->getSale())
                 ->setCurrencyName($data->getCurrencyName())
                 ->setBrand($data->getBrand())
+                ->setMinimumWholesale($data->getMinimumWholesale())
                 ->setIsOnMain($data->getIsOnMain());
             $entityManager->persist($product);
 

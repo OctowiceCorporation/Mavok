@@ -16,7 +16,7 @@
                                     </div>
                                     {% endif %}
                                     <div class="mt-4">
-                                        <h4>{{ first.name }}</h4>
+                                        <h4><a href="{{ path('product', {'slug': first.slug}) }}">{{ first.name }}</a></h4>
                                     </div>
                                     <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
                                         {% if first.sale is not null %}
@@ -40,7 +40,7 @@
                                         {% endif %}
 
                                     </div>
-                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
+                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block add_to_basket_main" value="{{ first.slug }}">Купить</button>
                                 </div>
                                 <div class="col-5">
                                     <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto; mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
@@ -87,7 +87,7 @@
                                             {% endif %}
 
                                         </div>
-                                        <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
+                                        <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block add_to_basket_main" value="{{ mainPage.slug }}">Купить</button>
                                     </div>
                                     <div class="col-5">
                                         <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto" src={% if mainPage.image.get(0).ImagePath is defined %}
@@ -307,4 +307,24 @@
         {% endif %}
     </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).on('click', '.add_to_basket_main', function () {
+            let element = $(this);
+            $.ajax({
+                method: "POST",
+                url: '/add_to_basket',
+                data: {
+                    'slug': $(this).val(),
+                }
+            })
+                .done(function() {
+                    element.html('В корзине <i class="fas fa-check"></i>').css('background-color','green');
+                    $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
+                });
+        });
+    </script>
 {% endblock %}
