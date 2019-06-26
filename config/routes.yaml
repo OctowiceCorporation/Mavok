@@ -1,6 +1,9 @@
 index:
     path: /
     controller: App\Controller\DefaultController::index
+about_us:
+    path: /about_us
+    controller: App\Controller\DefaultController::showAboutUs
 category:
     path: /category/{slug}
     controller: App\Controller\DefaultController::categoryAction
