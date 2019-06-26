@@ -3,44 +3,39 @@
     <div class="super_container">
         <!-- Banner -->
         <div class="banner">
-            <div class="banner_background" style="background: linear-gradient(45deg, #cde3f0, white 70%);"></div>
+            <div class="banner_background" style="background-image:url(images/banner_background.jpg)"></div>
             <div class="container banner_content">
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="d-inline-flex">
+                            <div style="display: inline-flex">
                                 <div class="col-7">
                                     {% if first.sale is not null %}
                                     <div>
                                             <h2>Акция -{{ first.sale }}%</h2>
                                     </div>
                                     {% endif %}
-<<<<<<< HEAD
-                                    <div class="mt-4">
+                                    <div class="mt-4 mt-sm-0 text-dark">
                                         <h4><a href="{{ path('product', {'slug': first.slug}) }}">{{ first.name }}</a></h4>
-=======
-                                    <div class="mt-lg-4 mt-sm-0 text-dark">
-                                        <h4>{{ first.name }}</h4>
->>>>>>> 638a6abe7d576fe41c8aaf424dcc799ff4576e10
                                     </div>
                                     <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
-                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale)) |round }} грн</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} грн</p>
                                             {% else %}
-                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale)) | round }} грн</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} грн</p>
                                             {% endif %}
 
                                             {% if first.productValue is not null %}
-                                                <s class="carousel_price">{{ (first.productValue * first.retailPrice) | round }} грн</s>
+                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.productValue * first.retailPrice }} грн</s>
                                             {% else %}
-                                                <s class="carousel_price">{{ first.retailPrice | round }} грн</s>
+                                                <s style="font-size: x-large; padding-top: 5px; color: grey">{{ first.retailPrice }} грн</s>
                                             {% endif %}
                                         {% else %}
                                             {% if first.productValue is not null %}
-                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale)) | round }} грн</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} грн</p>
                                             {% else %}
-                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale)) | round }} грн</p>
+                                                <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} грн</p>
                                             {% endif %}
                                         {% endif %}
 
@@ -67,27 +62,27 @@
                                                 <h2>Акция -{{ mainPage.sale }}%</h2>
                                             </div>
                                         {% endif %}
-                                        <div class="mt-lg-4 mt-sm-0 text-dark">
-                                            <h4>{{ mainPage.name }}</h4>
+                                        <div class="mt-4 mt-sm-0 text-dark">
+                                            <h4><a href="{{ path('product', {'slug': first.slug}) }}">{{ first.name }}</a></h4>
                                         </div>
                                         <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
                                             {% if mainPage.sale is not null %}
                                                 {% if mainPage.productValue is not null %}
-                                                    <p class="carousel_sale">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
                                                 {% else %}
-                                                    <p class="carousel_sale">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
                                                 {% endif %}
 
                                                 {% if mainPage.productValue is not null %}
-                                                    <s class="carousel_price">{{ mainPage.productValue * mainPage.retailPrice }} грн</s>
+                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.productValue * mainPage.retailPrice }} грн</s>
                                                 {% else %}
-                                                    <s class="carousel_price">{{ mainPage.retailPrice }} грн</s>
+                                                    <s style="font-size: x-large; padding-top: 5px; color: grey">{{ mainPage.retailPrice }} грн</s>
                                                 {% endif %}
                                             {% else %}
                                                 {% if mainPage.productValue is not null %}
-                                                    <p class="carousel_sale">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
                                                 {% else %}
-                                                    <p class="carousel_sale">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
+                                                    <p style="font-size: xx-large; color: red; padding-right: 1rem">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
                                                 {% endif %}
                                             {% endif %}
 
