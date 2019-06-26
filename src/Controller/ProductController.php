@@ -16,11 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProductController extends AbstractController
 {
 
-    public function index($slug, ProductRepository $productRepository, Request $request, ProductService $productService, CategoryService $categoryService)
+    public function index($slug, ProductRepository $productRepository, Request $request, ProductService $productService, CategoryService $categoryService, SessionInterface $session)
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
         $admin = false;
@@ -41,7 +42,11 @@ class ProductController extends AbstractController
         foreach ($crumbs as $index => $crumb) {
             $crumbs[$index] = Category::entityToDTO($crumb, substr($categoryService->generateUrlFromCategory($crumb), 1));
         }
-        $product = $productService->getProductPrice($product);
+        $basket = $session->get('basket');
+        $amount = 0;
+        if(isset($basket[$product->getId()]))
+            $amount = $basket[$product->getId()];
+        $product = $productService->getProductPrice($product, null, $amount);
         $viewed = json_decode($request->cookies->get('viewed_products'));
         if(empty($viewed))
             $viewed = [];

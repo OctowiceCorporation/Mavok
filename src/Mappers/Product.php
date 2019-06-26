@@ -10,7 +10,7 @@ use App\Entity\Product as ProductEntity;
 
 class Product
 {
-    static function entityToDto(ProductEntity $entity, $spec = null, float $value = null): ProductDto
+    static function entityToDto(ProductEntity $entity, $spec = null, float $value = null, $amount = null): ProductDto
     {
         $product = new ProductDto(
             $entity->getCategory()->getId(),
@@ -37,6 +37,8 @@ class Product
             $product->setSpecifications($entity->getSpecifications());
             $product->setCategory($entity->getCategory());
         }
+
+        $product->setAmount($amount);
 
 
         return $product;
