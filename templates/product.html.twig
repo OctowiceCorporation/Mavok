@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    <title>Single Product</title>
+    <title>{{ product.name }}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="OneTech shop project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="http:/icon-logo.png">
     <link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
     <link href="/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -14,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/styles/product_responsive.css">
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
 {% endblock %}
+
 {% block body %}
     <!-- Single Product -->
 
@@ -83,17 +85,18 @@
                         <div></div>
                         <div class="order_info d-flex flex-row">
                             <form action="#">
-                                <div class="clearfix" style="z-index: 1000;">
-                                    <!-- Product Quantity -->
-                                    <div class="product_quantity clearfix">
-                                        <span class="text-dark" style="font-weight: 500;">Кол-во: </span>
-                                        <input id="quantity_input" class="text-dark font-weight-bold offset-2" type="text" pattern="[0-9]*" value="{{ product.amount }}">
-                                        <div class="quantity_buttons">
-                                            <div data-slug="{{ product.slug }}" id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
-                                            <div data-slug="{{ product.slug }}" id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                {% if product.IsAvailable %}
+                                    <div class="clearfix">
+                                        <div class="product_quantity clearfix">
+                                            <span class="text-dark" style="font-weight: 500;">Кол-во: </span>
+                                            <input id="quantity_input" class="text-dark font-weight-bold offset-2" type="text" pattern="[0-9]*" value="{{ product.amount }}">
+                                            <div class="quantity_buttons">
+                                                <div data-slug="{{ product.slug }}" id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                                <div data-slug="{{ product.slug }}" id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endif %}
                                 <div class="product_price">
                                     {% if product.ProductValue is not null %}
                                     {% if product.sale is not empty %}

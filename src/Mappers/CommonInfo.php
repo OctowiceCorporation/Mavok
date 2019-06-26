@@ -16,7 +16,8 @@ class CommonInfo
             $service['usd_value'],
             $service['phone_number'],
             $service['address'],
-            $service['name_surname']
+            $service['name_surname'],
+            $service['about_us']
         );
     }
 

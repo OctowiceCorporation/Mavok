@@ -9,6 +9,7 @@ use App\Mappers\Specification;
 use App\Repository\ProductRepository;
 use App\Service\CategoryService;
 use App\Service\ProductService;
+use App\Service\SortService;
 use Doctrine\Common\Collections\ArrayCollection;
 use function GuzzleHttp\Promise\queue;
 use Knp\Component\Pager\PaginatorInterface;
@@ -63,23 +64,32 @@ class ProductController extends AbstractController
         return $response;
     }
 
-    public function searchProduct(ProductRepository $productRepository, Request $request, PaginatorInterface $paginator, ProductService $productService)
+    public function searchProduct(ProductRepository $productRepository, Request $request, PaginatorInterface $paginator, ProductService $productService, SortService $sortService)
     {
+        $sort = $request->get('sort_by');
         $text = $request->query->get('search_text');
         $entities = $productRepository->searchProducts($text);
         $products = new ArrayCollection();
         foreach ($entities as $entity) {
             $products->add($productService->getProductPrice($entity));
         }
+        $products = $products->toArray();
+        if(!empty($sort))
+            $sortService->sort($sort, $products);
+        else{
+            usort($products, function($a, $b)
+            {
+                return $a->isIsAvailable() < $b->isIsAvailable();
+            });
+        }
+        $length = sizeof($products);
         $products = $paginator->paginate(
             $products,
             $request->query->getInt('page', 1),
             $request->query->getInt('limit', 20)
         );
 
-
-
-        return $this->render('search.html.twig', ['products' => $products]);
+        return $this->render('search.html.twig', ['products' => $products, 'length' => $length, 'search_text' => $text]);
 
     }
 

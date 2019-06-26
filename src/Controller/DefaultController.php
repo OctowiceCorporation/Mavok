@@ -273,7 +273,8 @@ class DefaultController extends AbstractController
     {
         $phone = $commonInfoService->getParameter('phone_number');
         $address = $commonInfoService->getParameter('address');
-        return $this->render('about_us.html.twig', ['phone' => $phone, 'address' => $address]);
+        $about = $commonInfoService->getParameter('about_us');
+        return $this->render('about_us.html.twig', ['phone' => $phone, 'address' => $address, 'about' => $about]);
     }
 
     public function showBlog(BlogRepository $blogRepository)

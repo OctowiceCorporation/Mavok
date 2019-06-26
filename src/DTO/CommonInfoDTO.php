@@ -22,6 +22,7 @@ class CommonInfoDTO
     private $number;
     private $address;
     private $name;
+    private $about;
 
     /**
      * CommonInfoDTO constructor.
@@ -31,8 +32,9 @@ class CommonInfoDTO
      * @param $number
      * @param $address
      * @param $name
+     * @param $about
      */
-    public function __construct($minimum, $eur, $usd, $number, $address, $name)
+    public function __construct($minimum, $eur, $usd, $number, $address, $name, $about)
     {
         $this->minimum = $minimum;
         $this->eur = $eur;
@@ -40,6 +42,7 @@ class CommonInfoDTO
         $this->number = $number;
         $this->address = $address;
         $this->name = $name;
+        $this->about = $about;
     }
 
 
@@ -139,6 +142,21 @@ class CommonInfoDTO
         $this->name = $name;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAbout()
+    {
+        return $this->about;
+    }
+
+    /**
+     * @param mixed $about
+     */
+    public function setAbout($about): void
+    {
+        $this->about = $about;
+    }
 
 
 }

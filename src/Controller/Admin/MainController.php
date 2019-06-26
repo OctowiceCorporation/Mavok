@@ -50,6 +50,7 @@ class MainController extends AbstractController
         $settings[] = ['Номер телефона', $commonInfoService->getParameter('phone_number')];
         $settings[] = ['Адрес магазина', $commonInfoService->getParameter('address')];
         $settings[] = ['Контактное лицо', $commonInfoService->getParameter('name_surname')];
+        $settings[] = ['Текст на странице "О нас"', $commonInfoService->getParameter('about_us')];
         if($type == 'view')
             return $this->render('admin/common_setting.html.twig', ['settings' => $settings]);
         elseif ($type == 'edit'){
@@ -64,6 +65,7 @@ class MainController extends AbstractController
                     ->setParameter('phone_number', $dto->getNumber())
                     ->setParameter('address', $dto->getAddress())
                     ->setParameter('name_surname', $dto->getName())
+                    ->setParameter('about_us', $dto->getAbout())
                     ->flush();
                 return $this->redirectToRoute('common_settings', ['type' => 'view']);
             }
