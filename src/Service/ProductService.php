@@ -49,34 +49,34 @@ class ProductService
     {
         $currency = $product->getCurrencyName();
         if ($currency === "UAH")
-            return \App\Mappers\Product::entityToDto($product, $spec);
+            return \App\Mappers\Product::entityToDto($product, $spec, null, $amount);
         switch ($currency) {
             case 'USD':
                 if (!empty($value = $product->getBrand()->getUsdValue()))
-                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value, $amount);
                 break;
             case 'EUR':
                 if (!empty($value = $product->getBrand()->getEurValue()))
-                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value, $amount);
                 break;
 
         }
         switch ($currency) {
             case 'USD':
                 if (!empty($value = $product->getCategory()->getUsdValue()))
-                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value, $amount);
                 break;
             case 'EUR':
                 if (!empty($value = $product->getCategory()->getEurValue()))
-                    return \App\Mappers\Product::entityToDto($product, $spec, $value);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $value, $amount);
                 break;
         }
         switch ($currency) {
             case 'USD':
-                    return \App\Mappers\Product::entityToDto($product, $spec, $this->usd);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $this->usd, $amount);
                 break;
             case 'EUR':
-                    return \App\Mappers\Product::entityToDto($product, $spec, $this->eur);
+                    return \App\Mappers\Product::entityToDto($product, $spec, $this->eur, $amount);
                 break;
         }
 

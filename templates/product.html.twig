@@ -17,6 +17,20 @@
 {% block body %}
     <!-- Single Product -->
 
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Вы уверены что хотите удалить товар из корзины?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="dismiss" data-dismiss="modal">Нет</button>
+                    <button type="button" class="btn btn-primary" id="accept">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="single_product">
         <div class="container">
 
@@ -73,10 +87,10 @@
                                     <!-- Product Quantity -->
                                     <div class="product_quantity clearfix">
                                         <span class="text-dark" style="font-weight: 500;">Кол-во: </span>
-                                        <input id="quantity_input" class="text-dark font-weight-bold offset-2" type="text" pattern="[0-9]*" value="1">
+                                        <input id="quantity_input" class="text-dark font-weight-bold offset-2" type="text" pattern="[0-9]*" value="{{ product.amount }}">
                                         <div class="quantity_buttons">
-                                            <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
-                                            <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                            <div data-slug="{{ product.slug }}" id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                            <div data-slug="{{ product.slug }}" id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +118,7 @@
                         {% endif %}
                                 <div class="button_container">
                                     {% if product.IsAvailable %}
-                                        <button type="button" class="button cart_button add_to_basket " value="{{ product.slug }}">Купить <i class="fas fa-cart-plus"></i></button>
+                                        <button type="button" class="button cart_button add_to_basket" style="{% if product.amount != 0 %}background-color: green;{% endif %} width: 90%" value="{{ product.slug }}">{% if product.amount != 0 %}В корзине <i class="fas fa-check"></i>{% else %}Купить <i class="fas fa-cart-plus"></i>{% endif %}</button>
                                     {% else %}
                                         Нет в наличии
                                     {% endif %}
@@ -115,7 +129,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 100vw" class="product_text">{{ product.description|raw }}</div>
+            <div style="width: 80vw" class="product_text">{{ product.description|raw }}</div>
             <table class="table">
                 <thead>
                 <tr>
@@ -160,5 +174,63 @@
     <script src="/plugins/easing/easing.js"></script>
     <script src="/js/product_custom.js"></script>
     <script src="/js/main.js"></script>
+
+    <script>
+        $(document).on('click', '#quantity_inc_button', function () {
+            $.ajax({
+                method: "POST",
+                url: '/add_to_basket',
+                data: {
+                    'slug': $(this).attr('data-slug'),
+                }
+            })
+                .done(function() {
+                    if(Number($('#quantity_input').val()) === 0) {
+                        $('.add_to_basket').css('background-color','green').html('В корзине <i class="fas fa-check"></i>');
+                    }
+                        $('#quantity_input').val(Number($('#quantity_input').val()) + 1);
+                    $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
+                });
+        });
+
+        $(document).on('click', '#quantity_dec_button', function () {
+            if(Number($('#quantity_input').val()) === 0){
+                return;
+            }
+            if(Number($('#quantity_input').val()) === 1){
+                let slug = $(this).attr('data-slug');
+                $('#exampleModalCenter').modal('show');
+                document.getElementById('dismiss').onclick = function () {
+                    $('#exampleModalCenter').modal('hide');
+                };
+                document.getElementById('accept').onclick = function () {
+                    $.ajax({
+                        method: "POST",
+                        url: '/minus_basket/'+slug,
+                    })
+                        .done(function() {
+                            $('.add_to_basket').css('background-color','#0e8ce4').html('Купить <i class="fas fa-cart-plus"></i>');
+                            $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
+                            $('#quantity_input').val(Number($('#quantity_input').val()) - 1);
+                            $('#exampleModalCenter').modal('hide');
+                        });
+                }
+            }
+            else{
+                $.ajax({
+                    method: "POST",
+                    url: '/minus_basket/'+$(this).attr('data-slug'),
+                })
+                    .done(function() {
+                        $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
+                        $('#quantity_input').val(Number($('#quantity_input').val()) - 1);
+                    });
+            }
+        });
+
+        $(document).on('click', '.add_to_basket', function () {
+            $('#quantity_input').val(Number($('#quantity_input').val()) + 1);
+        })
+    </script>
 
 {% endblock %}
