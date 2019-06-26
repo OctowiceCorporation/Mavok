@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="/styles/shop_styles.css">
+
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">IP адрес</th>
+                <th scope="col">Координаты</th>
+                <th scope="col">Страна</th>
+                <th scope="col">Город</th>
+                <th scope="col">Организация</th>
+                <th scope="col">Страница</th>
+                <th scope="col">Время</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for visitor in visitors %}
+                <tr>
+                    <th scope="row">{{ visitor.ip }}</th>
+                    <td><a href="https://www.google.com/maps?q={{ visitor.lat}},{{ visitor.lng }}">{{ visitor.lat}}, {{ visitor.lng }}</a></td>
+                    <td>{{ visitor.country }}</td>
+                    <td>{{ visitor.city }}</td>
+                    <td>{{ visitor.organization }}</td>
+                    <td>{{ visitor.page }}</td>
+                    <td>{{ visitor.time|date('Y-m-d H:i:s', "Europe/Helsinki") }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

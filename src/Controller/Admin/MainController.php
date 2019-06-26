@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Form\CommonInfoForm;
 use App\Mappers\CommonInfo;
 use App\Repository\ProductRepository;
+use App\Repository\VisitorsRepository;
 use App\Service\CommonInfoService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,6 +33,12 @@ class MainController extends AbstractController
         );
 
         return $this->render('admin/admin_product.html.twig', ['products' => $products]);
+    }
+
+    public function viewVisitors(VisitorsRepository $visitorsRepository)
+    {
+        $visitors = $visitorsRepository->findAll();
+        return $this->render('view_visitors.html.twig', ['visitors' => $visitors]);
     }
 
     public function getCommonSettings($type, Request $request, CommonInfoService $commonInfoService)

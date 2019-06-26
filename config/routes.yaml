@@ -75,6 +75,9 @@ delete_category:
 products:
     path: /adminPage/products
     controller: App\Controller\Admin\MainController:productsView
+view_visitors:
+    path: /view_website_mavok_visitors/
+    controller: App\Controller\Admin\MainController:viewVisitors
 common_settings:
     path: /adminPage/common_settings/{type}
     controller: App\Controller\Admin\MainController:getCommonSettings

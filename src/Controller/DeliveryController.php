@@ -46,37 +46,44 @@ class DeliveryController extends AbstractController
         if(empty($basket))
             return $this->render('cart.html.twig', ['total' => null, 'minOrder' => $minimal_order_price] );
         foreach ($basket as $index => $item) {
-            $product = $productService->getProductPrice($productRepository->findOneBy(['id' => $index]))->setAmount($item);
-            $products->add($product);
-            if(!empty($product->getProductValue())){
-                if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
-                    if(!empty($product->getSale()))
-                        $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount() - ($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
-                    else
-                        $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount();
+            $product = $productRepository->findOneBy(['id' => $index]);
+            if(!empty($product)){
+                $product = $productService->getProductPrice($productRepository->findOneBy(['id' => $index]))->setAmount($item);
+                $products->add($product);
+                if(!empty($product->getProductValue())){
+                    if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
+                        if(!empty($product->getSale()))
+                            $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount() - ($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
+                        else
+                            $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount();
 
+                    }
+                    else{
+                        if(!empty($product->getSale()))
+                            $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount() - ($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
+                        else
+                            $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount();
+                    }
                 }
                 else{
-                    if(!empty($product->getSale()))
-                        $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount() - ($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
-                    else
-                        $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount();
+                    if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
+                        if(!empty($product->getSale()))
+                            $total += $product->getWholesalePrice()*$product->getAmount() - ($product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
+                        else
+                            $total += $product->getWholesalePrice()*$product->getAmount();
+
+                    }
+                    else{
+                        if(!empty($product->getSale()))
+                            $total += $product->getRetailPrice()*$product->getAmount() - ($product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
+                        else
+                            $total += $product->getRetailPrice()*$product->getAmount();
+                    }
                 }
             }
             else{
-                if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
-                    if(!empty($product->getSale()))
-                        $total += $product->getWholesalePrice()*$product->getAmount() - ($product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
-                    else
-                        $total += $product->getWholesalePrice()*$product->getAmount();
-
-                }
-                else{
-                    if(!empty($product->getSale()))
-                        $total += $product->getRetailPrice()*$product->getAmount() - ($product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
-                    else
-                        $total += $product->getRetailPrice()*$product->getAmount();
-                }
+                unset($basket[$index]);
+                $session->set('basket', $basket);
             }
         }
         return $this->render('cart.html.twig',['products' => $products, 'total' => $total, 'minOrder' => $minimal_order_price]);

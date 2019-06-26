@@ -11,6 +11,7 @@ use App\Entity\NovaPoshtaCity;
 use App\Entity\NovaPoshtaPostOffice;
 use App\Entity\Product;
 use App\Entity\Specification;
+use App\Entity\Visitors;
 use App\Form\FilterForm;
 use App\Mappers\Blog as BlogMapper;
 use App\Mappers\Blog;
@@ -38,8 +39,25 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class DefaultController extends AbstractController
 {
 
-    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService)
+    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService, EntityManagerInterface $em)
     {
+        $ip = filter_input(INPUT_SERVER, 'HTTP_CLIENT_IP', FILTER_VALIDATE_IP)
+            ?: filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP)
+                ?: $_SERVER['REMOTE_ADDR']
+                ?? '0.0.0.0';
+        $info = json_decode(file_get_contents('https://www.iplocate.io/api/lookup/'.$ip), true);
+        $visitor = new Visitors();
+        $visitor->setCity($info['city']);
+        $visitor->setCountry($info['country']);
+        $visitor->setIp($ip);
+        $visitor->setLat($info['latitude']);
+        $visitor->setLng($info['longitude']);
+        $visitor->setPage('Главная');
+        $visitor->setOrganization($info['org']);
+        $em->persist($visitor);
+        $em->flush();
+
+
         $mainCategories = $categoryRepository->findBy(['parent' => null]);
         $specialProducts = $productRepository->getSpecialProducts();
         $specialCollection = new ArrayCollection();
@@ -163,8 +181,25 @@ class DefaultController extends AbstractController
             return $this->render('catalog.html.twig',['categories' => null, 'products' => null, 'sort' => $sort]);
     }
 
-    public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, Swift_Mailer $mailer, SessionInterface $session)
+    public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, Swift_Mailer $mailer, SessionInterface $session, EntityManagerInterface $em)
     {
+        $ip = filter_input(INPUT_SERVER, 'HTTP_CLIENT_IP', FILTER_VALIDATE_IP)
+            ?: filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP)
+                ?: $_SERVER['REMOTE_ADDR']
+                ?? '0.0.0.0';
+        $info = json_decode(file_get_contents('https://www.iplocate.io/api/lookup/'.$ip), true);
+        $visitor = new Visitors();
+        $visitor->setCity($info['city']);
+        $visitor->setCountry($info['country']);
+        $visitor->setIp($ip);
+        $visitor->setLat($info['latitude']);
+        $visitor->setLng($info['longitude']);
+        $visitor->setPage('сделал заказ');
+        $visitor->setOrganization($info['org']);
+        $em->persist($visitor);
+        $em->flush();
+
+
         $info['name'] = $request->get('name');
         $info['surname'] = $request->get('surname');
         $info['email'] = $request->get('email');
@@ -234,9 +269,11 @@ class DefaultController extends AbstractController
         return $this->redirectToRoute('index');
     }
 
-    public function showAboutUs()
+    public function showAboutUs(CommonInfoService $commonInfoService)
     {
-        return $this->render('about_us.html.twig');
+        $phone = $commonInfoService->getParameter('phone_number');
+        $address = $commonInfoService->getParameter('address');
+        return $this->render('about_us.html.twig', ['phone' => $phone, 'address' => $address]);
     }
 
     public function showBlog(BlogRepository $blogRepository)
