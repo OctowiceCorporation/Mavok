@@ -78,7 +78,7 @@
                         <div class="cat_menu_container mobile-header-closed">
                             <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
                                 <div class="cat_burger"><span></span><span></span><span></span></div>
-                                <div class="cat_menu_text">categories</div>
+                                <div class="cat_menu_text">категории</div>
                             </div>
                             <ul class="cat_menu" id="header_dropdown"></ul>
                         </div>
@@ -86,7 +86,7 @@
                         <div class="main_nav_menu ml-auto">
                             <ul class="standard_dropdown main_nav_dropdown">
                                 <li><a href="{{ path('showBlog') }}">Блог<i class="fas fa-chevron-down"></i></a></li>
-                                <li><a href="#">О нас<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="{{ path('about_us') }}">О нас<i class="fas fa-chevron-down"></i></a></li>
                                 <li><a href="#">Контакты<i class="fas fa-chevron-down"></i></a></li>
                             </ul>
                         </div>
@@ -95,7 +95,7 @@
                             <div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
                                 <div class="menu_burger">
                                     <div id="menu_trigger">
-                                        <div class="menu_trigger_text">Menu</div>
+                                        <div class="menu_trigger_text">Меню</div>
                                         <div class="cat_burger menu_burger_inner text-light"><i class="fas fa-bars"></i></div>
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@
                                 <a href="{{ path('showBlog') }}">Блог<i class="fa fa-angle-down"></i></a>
                             </li>
                             <li class="page_menu_item">
-                                <a href="#">О нас<i class="fa fa-angle-down"></i></a>
+                                <a href="{{ path('about_us') }}">О нас<i class="fa fa-angle-down"></i></a>
                             </li>
                             <li class="page_menu_item">
                                 <a href="#">Контакты<i class="fa fa-angle-down"></i></a>

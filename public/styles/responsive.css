@@ -474,6 +474,14 @@
 		padding: unset;
 		margin: unset;
 	}
+	.carousel_price
+	{
+		font-size: large;
+	}
+	.carousel_sale
+	{
+		font-size: x-large;
+	}
 	.basket_count {
 		font-size: small;
 		right: -14px;

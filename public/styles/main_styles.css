@@ -114,14 +114,6 @@ p a:hover::after
 {
 	opacity: 0.2;
 }
-::selection
-{
-	
-}
-p::selection
-{
-	
-}
 h1{font-size: 48px;}
 h2{font-size: 36px;}
 h3{font-size: 24px;}
@@ -134,15 +126,6 @@ h1, h2, h3, h4, h5, h6
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
-}
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
-h6::selection
-{
-	
 }
 .form-control
 {
@@ -286,6 +269,18 @@ section
 .header.scrolled .top_bar
 {
 	display: none;
+}
+.carousel_sale
+{
+	font-size: xx-large;
+	color: red;
+	padding-right: 1rem
+}
+.carousel_price
+{
+	font-size: x-large;
+	padding-top: 5px;
+	color: grey
 }
 .top_bar_contact
 {

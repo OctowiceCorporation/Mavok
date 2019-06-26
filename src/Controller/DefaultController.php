@@ -234,6 +234,11 @@ class DefaultController extends AbstractController
         return $this->redirectToRoute('index');
     }
 
+    public function showAboutUs()
+    {
+        return $this->render('about_us.html.twig');
+    }
+
     public function showBlog(BlogRepository $blogRepository)
     {
         $posts = $blogRepository->findAll();
