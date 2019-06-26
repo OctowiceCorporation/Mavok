@@ -117,8 +117,8 @@
                 <div class="col">
                     <div class="page_menu_content">
                         <div class="page_menu_search">
-                            <form action="#">
-                                <input id="mobile-search" type="search" required="required" class="page_menu_search_input" placeholder="Найти товар...">
+                            <form action="{{ path('product_search') }}">
+                                <input autocomplete="off" name="search_text" id="mobile-search" type="search" required="required" class="page_menu_search_input" placeholder="Найти товар...">
                             </form>
                             <div id="mobile-search-result" class="list-group mobile_search_results text-left">
 

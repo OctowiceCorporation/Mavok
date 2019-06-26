@@ -141,8 +141,11 @@ $(document).ready(function () {
             });
     });
 
-    $(document).on('keyup','#mobile-search', function () {
+    $(document).on('keydown','#mobile-search', function () {
         let value = $(this).val();
+
+        if(value.length === 0)
+            return;
 
         $.ajax({
             method: "GET",
@@ -151,20 +154,28 @@ $(document).ready(function () {
             .done(function(json) {
                 let array = JSON.parse(json);
                 $('#mobile-search-result').html('');
-                if(array.length === 0)
-                    alert('qq');
-                array.forEach(function (product) {
-                    let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/'+product['slug']).html(product['name']);
-                    $('#mobile-search-result').append(href);
-                });
-                let submit = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product_search?search_text='+value).css('background-color','#0e8ce4').html('Посмотреть все варианты');
-                $('#desktop-result').append(submit);
+                if(array.length === 0){
+                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').html('Ничего не найдено');
+                    $('#mobile-search-result').append(submit);
+                }
+                else {
+                    array.forEach(function (product) {
+                        let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/' + product['slug']).html(product['name']);
+                        $('#mobile-search-result').append(href);
+                    });
+                }
             });
-
     });
 
-    $(document).on('keyup','#desktop-search', function () {
+    $(document).on('blur', '#mobile-search', function () {
+        window.setTimeout(function() { $('#mobile-search-result').html(''); }, 100);
+    });
+
+    $(document).on('keydown','#desktop-search', function () {
         let value = $(this).val();
+
+        if(value.length === 0)
+            return;
 
         $.ajax({
             method: "GET",
@@ -177,20 +188,19 @@ $(document).ready(function () {
                     let submit = $('<a></a>').addClass('list-group-item list-group-item-action').css('background-color','#0e8ce4').css('background-color','#0e8ce4').css('color', 'white').html('Ничего не найдено');
                     $('#desktop-result').append(submit);
                 }
-                else{
+                else {
                     array.forEach(function (product) {
-                        let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/'+product['slug']).html(product['name']);
+                        let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/' + product['slug']).html(product['name']);
                         $('#desktop-result').append(href);
                     });
-                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product_search?search_text='+value).css('background-color','#0e8ce4').css('color', 'white').html('Посмотреть все варианты');
+                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product_search?search_text=' + value).css('background-color', '#0e8ce4').css('color', 'white').html('Посмотреть все варианты');
                     $('#desktop-result').append(submit);
                 }
-
-
-
-
             });
+    });
 
+    $(document).on('focusout', '#desktop-search', function () {
+        window.setTimeout(function() { $('#desktop-result').html(''); }, 200);
     });
 
 

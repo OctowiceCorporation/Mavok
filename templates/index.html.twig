@@ -43,7 +43,7 @@
                                     <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block">Купить</button>
                                 </div>
                                 <div class="col-5">
-                                    <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto" src={% if first.image.get(0).ImagePath is defined %}
+                                    <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto; mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
                      "/images/{{ first.image.get(0).ImagePath }}"
                                     {% else %}
                                         "/no-image.png"
