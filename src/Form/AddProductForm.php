@@ -10,6 +10,7 @@ use App\Entity\Brand;
 use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -63,41 +64,23 @@ class AddProductForm extends AbstractType
                 'required' => false,
                 'multiple' => true,
             ])
-            ->add('is_visible', ChoiceType::class,[
+            ->add('is_visible', CheckboxType::class,[
                 'label' => 'Отображение',
-                'choices'=>[
-                    'Да' => true,
-                    'Нет' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+                'required' => false
             ])
-            ->add('is_available', ChoiceType::class,[
+            ->add('is_available', CheckboxType::class,[
                 'label' => 'Наличие',
-                'choices'=>[
-                    'Да' => true,
-                    'Нет' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+                'required' => false
+
             ])
-            ->add('special_offer', ChoiceType::class,[
+            ->add('special_offer', CheckboxType::class,[
                 'label' => 'Хит продаж',
-                'choices'=>[
-                    'Да' => true,
-                    'Нет' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+                'required' => false
+
             ])
-            ->add('is_on_main', ChoiceType::class,[
+            ->add('is_on_main', CheckboxType::class,[
                 'label' => 'Отображение на главной странице',
-                'choices'=>[
-                    'Да' => true,
-                    'Нет' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+                'required' => false
             ])
             ->add('currency_name', ChoiceType::class,[
                 'label' => 'Валюта',
@@ -144,6 +127,7 @@ class AddProductForm extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('weRecommend', HiddenType::class)
             ->add('specification', HiddenType::class)
             ->add('brand', EntityType::class, [
                 'class' => Brand::class,

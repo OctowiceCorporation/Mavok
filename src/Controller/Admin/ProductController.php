@@ -45,21 +45,36 @@ class ProductController extends AbstractController
             'category' => $category]);
     }
 
-    public function addProduct($id, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService)
+    public function addProduct($id, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService, ProductRepository $productRepository)
     {
         $category = $categoryRepository->findOneBy(['id' => $id]);
         if(empty($category))
             return new Response('Category not found', 404);
 
         $product = new ProductFormDTO();
+        $product->setWeRecommend(json_encode($productRepository->getNameAndId()));
         $product->setCategory($category);
         $form = $this->createForm(AddProductForm::class, $product);
         $form->handleRequest($request);
 
         if($form->isSubmitted()) {
+            /**
+             * @var $data ProductFormDTO
+             */
             $data = $form->getData();
             $product = Product::FormDTOToEntity($data);
             $product->setCategory($category);
+
+            if(!empty($data->getWeRecommend())){
+                $arr = json_decode($data->getWeRecommend());
+                foreach ($arr as $id) {
+                    $recomProduct = $productRepository->findOneBy(['id' => $id]);
+                    if(!empty($recomProduct)){
+                        $product->addRecommendProduct($recomProduct);
+                    }
+                }
+            }
+
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -137,6 +152,7 @@ class ProductController extends AbstractController
         $images =$product->getImages();
         $form = $this->createForm(AddProductForm::class, Product::EntityToFormDTO($product));
         $form->handleRequest($request);
+
 
         if($form->isSubmitted()){
             $data = $form->getData();

@@ -31,6 +31,13 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    public function getNameAndId()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.name', 'p.id')
+            ->getQuery()->getResult();
+    }
+
     /**
      * @param string $text
      * @param int $limit

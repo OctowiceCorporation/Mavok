@@ -27,6 +27,7 @@ class ProductFormDTO
     private $amount;
     private $specification;
     private $is_on_main;
+    private $we_recommend;
 
     /**
      * ProductFormDTO constructor.
@@ -34,9 +35,9 @@ class ProductFormDTO
      * @param $name
      * @param $wholesale_price
      * @param $retail_price
-     * @param $is_available
-     * @param $is_visible
-     * @param $special_offer
+     * @param bool $is_available
+     * @param bool $is_visible
+     * @param bool $special_offer
      * @param $minimum_wholesale
      * @param $product_unit
      * @param $currency_name
@@ -44,9 +45,10 @@ class ProductFormDTO
      * @param $specification
      * @param null $sale
      * @param null $description
-     * @param null $is_on_main
+     * @param bool $is_on_main
+     * @param null $we_recommend
      */
-    public function __construct($category = null, $name = null, $wholesale_price = null, $retail_price = null, $is_available = null, $is_visible = null, $special_offer = null, $minimum_wholesale = null, $product_unit = null, $currency_name = null, $brand = null, $specification = null, $sale = null, $description = null, $is_on_main = null)
+    public function __construct($category = null, $name = null, $wholesale_price = null, $retail_price = null, $is_available = true, $is_visible = true, $special_offer = false, $minimum_wholesale = null, $product_unit = null, $currency_name = null, $brand = null, $specification = null, $sale = null, $description = null, $is_on_main = false, $we_recommend = null)
     {
         $this->category = $category;
         $this->name = $name;
@@ -63,6 +65,7 @@ class ProductFormDTO
         $this->sale = $sale;
         $this->description = $description;
         $this->is_on_main = $is_on_main;
+        $this->we_recommend = $we_recommend;
     }
 
 
@@ -401,6 +404,24 @@ class ProductFormDTO
     {
         $this->is_on_main = $is_on_main;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getWeRecommend()
+    {
+        return $this->we_recommend;
+    }
+
+    /**
+     * @param mixed $we_recommend
+     */
+    public function setWeRecommend($we_recommend): void
+    {
+        $this->we_recommend = $we_recommend;
+    }
+
+
 
 
 
