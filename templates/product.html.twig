@@ -168,7 +168,7 @@
             <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
                 <div class="viewed_title_container">
                     <div class="tabs clearfix tabs-right">
-                        <div class="new_arrivals_title"><h3 class="font-weight-bold">Также рекомендуем</h3><a id="view_all_resp" style="float: right; display: none" href="#"><h3 class="font-weight-bold">Показать все</h3></a></div>
+                        <div class="new_arrivals_title"><h3 class="font-weight-bold">С этим товаром часто покупают</h3><a id="view_all_resp" style="float: right; display: none" href="#"><h3 class="font-weight-bold">Показать все</h3></a></div>
                         <ul class="clearfix" id="view_all">
                             <li class="active">
                                 <a class="font-weight-bold" style="font-size: large; float: right" href="#">Посмотреть все</a>
@@ -234,7 +234,92 @@
                                     {% if specialProduct.sale is not null %}
                                         <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
                                     {% endif %}
-                                    <li class="product_mark product_new"><i class="fas fa-thumbs-up"></i></li>
+                                    {% if specialProduct.specialOffer %}
+                                        <li class="product_mark product_new"><i class="fas fa-thumbs-up"></i></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if similar_products.0 is defined %}
+        <div class="container">
+            <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
+                <div class="viewed_title_container">
+                    <div class="tabs clearfix tabs-right">
+                        <div class="new_arrivals_title"><h3 class="font-weight-bold">Похожие товары</h3><a id="view_all_resp" style="float: right; display: none" href="#"><h3 class="font-weight-bold">Показать все</h3></a></div>
+                        <ul class="clearfix" id="view_all">
+                            <li class="active">
+                                <a class="font-weight-bold" style="font-size: large; float: right" href="#">Посмотреть все</a>
+                            </li>
+                        </ul>
+                        <div class="tabs_line"><span></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="scrolling-wrapper">
+                {% for specialProduct in similar_products %}
+                    <a href="{{ path('product', {'slug': specialProduct.slug }) }}">
+                        <div class="arrivals_slider_item card">
+                            <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                    <img src=
+                                         {% if specialProduct.image.get(0).ImagePath is defined %}
+                                         "/images/{{ specialProduct.image.get(0).ImagePath }}"
+                                    {% else %}
+                                        "/no-image.png"
+                                    {% endif %}
+                                    alt="/image/no-image.png">
+                                </div>
+                                <div class="product_content">
+                                    {% if specialProduct.ProductValue is not null %}
+                                        <div class="product_price">
+                                            {% if specialProduct.sale is not empty %}
+                                                <div class="sale">
+                                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} грн</s><br>
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) | round(1,'common') }} грн
+                                                </div>
+                                            {% else %}
+                                                <div class="price">
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} грн
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% else %}
+                                        <div class="product_price">
+                                            {% if specialProduct.sale is not empty %}
+                                                <div class="sale">
+                                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} грн</s><br>
+                                                    {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} грн
+                                                </div>
+                                            {% else %}
+                                                <div class="price">
+                                                    {{ (specialProduct.retailPrice) | round(1,'common') }} грн
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="product_name">
+                                    <p  style="width : 150px; overflow:hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap">
+                                        {% if specialProduct.name | length > 52 %}
+                                            {{ specialProduct.name | slice(0,52) }}...
+                                        {% else %}
+                                            {{ specialProduct.name }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <ul class="product_marks">
+                                    {% if specialProduct.sale is not null %}
+                                        <li class="product_mark product_discount">-{{ specialProduct.sale }}%</li>
+                                    {% endif %}
+                                    {% if specialProduct.specialOffer %}
+                                        <li class="product_mark product_new"><i class="fas fa-thumbs-up"></i></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>

@@ -11,7 +11,6 @@ use App\Service\CategoryService;
 use App\Service\ProductService;
 use App\Service\SortService;
 use Doctrine\Common\Collections\ArrayCollection;
-use function GuzzleHttp\Promise\queue;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -37,10 +36,21 @@ class ProductController extends AbstractController
         }
 
 
+        $similarProducts = new ArrayCollection();
+        foreach ($product->getCategory()->getProducts() as $simil) {
+            static $count = 0;
+            if($simil->getIsVisible() && $count<10){
+                $count++;
+                $similarProducts->add($productService->getProductPrice($simil));
+            }
+        }
+
+
         $recommended_products = $product->getRecommendProduct();
         $recommended = new ArrayCollection();
         foreach ($recommended_products as $recommended_product) {
-            $recommended->add($productService->getProductPrice($recommended_product));
+            if($recommended_product->getIsVisible())
+                $recommended->add($productService->getProductPrice($recommended_product));
         }
         $specifications = $productService->getSpecifications($product);
         $brand = $product->getBrand();
@@ -63,8 +73,7 @@ class ProductController extends AbstractController
         }
             
         $cookie = new Cookie('viewed_products', json_encode($viewed));
-        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin, 'crumbs' => $crumbs, 'recommend' => $recommended
-        ]));
+        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin, 'crumbs' => $crumbs, 'recommend' => $recommended, 'similar_products' => $similarProducts]));
         $response->headers->setCookie($cookie);
 
         return $response;
