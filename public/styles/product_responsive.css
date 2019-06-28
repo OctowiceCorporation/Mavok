@@ -581,7 +581,7 @@
 	}
 	.cat_menu_container
 	{
-		padding-left: 30px;
+		padding-left: 15px;
 	}
 	.menu_trigger_container
 	{
@@ -812,7 +812,7 @@
 @media only screen and (max-width: 479px)
 {
 	#resp_basket {
-		padding-left: 4rem;
+		padding-left: 5rem;
 	}
 }
 

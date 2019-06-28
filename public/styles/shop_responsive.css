@@ -691,7 +691,7 @@
 		display: inline;
 	}
 	#resp_basket {
-		padding-left: 4rem;
+		padding-left: 5em;
 	}
 }
 
@@ -713,7 +713,7 @@
 @media only screen and (max-width: 320px)
 {
 	#filter_container {
-		width: 50%;
+		width: 55%;
 	}
 	#resp_basket {
 		padding-left: 2rem;

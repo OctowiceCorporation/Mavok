@@ -26,6 +26,10 @@
 .line_item {
     display: inline-block;
 }
+.recent_button_container
+{
+    margin-top: unset;
+}
 .recently_viewed_item
 {
     justify-content: center;
