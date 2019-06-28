@@ -149,6 +149,9 @@
 	.logo a {
 		font-size: 50px;
 	}
+	.arrivals_slider_item {
+		width: 28%;
+	}
 	#gallery {
 		height: auto!important;
 	}
@@ -260,10 +263,6 @@
 	.shop_content
 	{
 		margin-top: 60px;
-	}
-	.product_item
-	{
-		width: 25%;
 	}
 	.product_description
 	{
@@ -382,6 +381,9 @@
 	{
 		margin-top: 0px;
 	}
+	.arrivals_slider_item {
+		width: 30%;
+	}
 	.banner_product_image
 	{
 		opacity: 0.5;
@@ -404,10 +406,6 @@
 	.char_item
 	{
 		padding-left: 36px;
-	}
-	.product_item
-	{
-		width: 33.33333333%;
 	}
 	.image_list li
 	{
@@ -615,6 +613,9 @@
 	{
 	    right: 15px;
 	}
+	.arrivals_slider_item {
+		width: 65%;
+	}
 	.button
 	{
 		height: 32px;
@@ -799,10 +800,7 @@
 
 @media only screen and (max-width: 480px)
 {
-	.product_item
-	{
-		width: 50%;
-	}
+
 }
 
 /************
