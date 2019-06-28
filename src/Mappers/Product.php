@@ -7,9 +7,22 @@ namespace App\Mappers;
 use App\DTO\Product as ProductDto;
 use App\DTO\ProductFormDTO;
 use App\Entity\Product as ProductEntity;
+use App\Repository\ProductRepository;
 
 class Product
 {
+    private $prodRepository;
+
+    /**
+     * Product constructor.
+     * @param $prodRepository
+     */
+    public function __construct(ProductRepository $prodRepository)
+    {
+        $this->prodRepository = $prodRepository;
+    }
+
+
     static function entityToDto(ProductEntity $entity, $spec = null, float $value = null, $amount = null): ProductDto
     {
         $product = new ProductDto(
@@ -63,12 +76,22 @@ class Product
         );
     }
 
-    static function EntityToFormDTO(ProductEntity $product): ProductFormDTO
+    public function EntityToFormDTO(ProductEntity $product): ProductFormDTO
     {
         $specif = [];
         foreach ($product->getSpecifications() as $key => $specification) {
             $specif[$key] = ['name' => $specification->getName(), 'unit' => $specification->getUnit(), 'value' => $specification->getValue()];
         }
+
+        $recom = $product->getRecommendProduct();
+        $arr = ['new' => [], 'already' => []];
+        if(!empty($recom)){
+            foreach ($recom as $item) {
+                $arr['already'][] = ['id' => $item->getId(), 'name' => $item->getName()];
+            }
+        }
+        $arr['new'] = $this->prodRepository->getNameAndId();
+
         return new ProductFormDTO(
             $product->getCategory(),
             $product->getName(),
@@ -84,7 +107,8 @@ class Product
             json_encode($specif),
             $product->getSale(),
             $product->getDescription(),
-            $product->getIsOnMain()
+            $product->getIsOnMain(),
+            json_encode($arr)
         );
     }
 }

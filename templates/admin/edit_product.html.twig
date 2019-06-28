@@ -89,7 +89,10 @@
 {% endblock %}
 
 {% block body %}
-    <div id="tegi"></div>
+    <div id="recommending-group" class="form-group" style="display: none">
+        <label>Товары в отделе "С этим товаром чаще всего покупают"</label>
+        <div id="recommending"></div>
+    </div>
     {{ form_start(form, {'attr': {'id': 'edit_product_form'}}) }}
 
     {{ form_end(form) }}
@@ -115,15 +118,26 @@
 
 <script>
     $(document).ready(function() {
-        let tags = $('#tegi').magicSuggest({
+        let all_products = JSON.parse($('#add_product_form_weRecommend').val());
+        let newq = [];
+        all_products['already'].forEach(function (elem) {
+            newq.push(elem['id']);
+        });
+        $('#add_product_form_weRecommend').val(JSON.stringify(newq));
+        let recommend = $('#recommending').magicSuggest({
             allowFreeEntries: false,
-            data: [{"id":"Paris", "name":"Paris"}, {"id":"New York", "name":"New York"}]
+            useCommaKey: false,
+            data: all_products['new'],
+            placeholder: 'Начните вводить текст'
         });
-        tags.addToSelection([{"id":"Paris", "name":"Paris"}, {"id":"123", "name":"456"}]);
+        recommend.addToSelection(all_products['already']);
 
-        $(tags).on('blur', function (c) {
-            console.log(JSON.stringify(this.getValue()));
+        $(recommend).on('blur', function () {
+            $('#add_product_form_weRecommend').val(JSON.stringify(this.getValue()));
         });
+
+        $('#add_product_form_weRecommend').after($('#recommending-group').show());
+
         $('.summernote').summernote({
             height: 300,
             popover: {

@@ -144,13 +144,13 @@ class ProductController extends AbstractController
 
     }
 
-    public function editProduct($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService)
+    public function editProduct($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService, Product $productMapper)
     {
         $product = $productRepository->findOneBy(['id' => $id]);
         if(empty($product))
             return new Response('Product not found', 404);
         $images =$product->getImages();
-        $form = $this->createForm(AddProductForm::class, Product::EntityToFormDTO($product));
+        $form = $this->createForm(AddProductForm::class, $productMapper->EntityToFormDTO($product));
         $form->handleRequest($request);
 
 
@@ -171,6 +171,22 @@ class ProductController extends AbstractController
                 ->setBrand($data->getBrand())
                 ->setMinimumWholesale($data->getMinimumWholesale())
                 ->setIsOnMain($data->getIsOnMain());
+
+            $recom = $product->getRecommendProduct();
+            foreach ($recom as $item) {
+                $product->removeRecommendProduct($item);
+            }
+
+
+            if(!empty($data->getWeRecommend())){
+                $arr = json_decode($data->getWeRecommend());
+                foreach ($arr as $id) {
+                    $recommendProduct = $productRepository->findOneBy(['id' => $id]);
+                    if(!empty($recommendProduct)){
+                        $product->addRecommendProduct($recommendProduct);
+                    }
+                }
+            }
             $entityManager->persist($product);
 
             foreach ($data->getImages() as $upload_image) {
