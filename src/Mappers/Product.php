@@ -43,7 +43,8 @@ class Product
             $entity->getProductUnit(),
             $entity->getCurrencyName(),
             $entity->getBrand(),
-            $entity->getImages()
+            $entity->getImages(),
+            $entity->getId()
         );
 
         if(!empty($spec)){
