@@ -8,7 +8,12 @@
 {% endblock %}
 
 {% block body %}
+    <div id="recommending-group" class="form-group" style="display: none">
+        <label>Товары в отделе "С этим товаром чаще всего покупают"</label>
+        <div id="recommending"></div>
+    </div>
     {{ form_start(form, {'attr': {'id': 'add_product_form'}}) }}
+
     {{ form_end(form) }}
 {% endblock %}
 
@@ -19,8 +24,28 @@
 
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+
+    <link href="/styles/magicsuggest-min.css" rel="stylesheet">
+    <script src="/js/magicsuggest-min.js"></script>
+
     <script>
         $(document).ready(function() {
+            let all_products = JSON.parse($('#add_product_form_weRecommend').val());
+            $('#add_product_form_weRecommend').val('');
+            let recommend = $('#recommending').magicSuggest({
+                allowFreeEntries: false,
+                useCommaKey: false,
+                data: all_products,
+                placeholder: 'Начните вводить текст'
+            });
+
+            $(recommend).on('blur', function () {
+                $('#add_product_form_weRecommend').val(JSON.stringify(this.getValue()));
+            });
+
+            $('#add_product_form_weRecommend').after($('#recommending-group').show());
+
+
             let a = $('<a id="add-brand-button" style="text-decoration: underline; color: #4954ff; cursor: pointer">Добавить нового производителя</a>').addClass('mb-2');
             $('#add_product_form_brand').after(a);
             

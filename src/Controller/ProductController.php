@@ -37,6 +37,11 @@ class ProductController extends AbstractController
         }
 
 
+        $recommended_products = $product->getRecommendProduct();
+        $recommended = new ArrayCollection();
+        foreach ($recommended_products as $recommended_product) {
+            $recommended->add($productService->getProductPrice($recommended_product));
+        }
         $specifications = $productService->getSpecifications($product);
         $brand = $product->getBrand();
         $crumbs = $productService->getParentCategories($product);
@@ -58,7 +63,8 @@ class ProductController extends AbstractController
         }
             
         $cookie = new Cookie('viewed_products', json_encode($viewed));
-        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin, 'crumbs' => $crumbs]));
+        $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin, 'crumbs' => $crumbs, 'recommend' => $recommended
+        ]));
         $response->headers->setCookie($cookie);
 
         return $response;

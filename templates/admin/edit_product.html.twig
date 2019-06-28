@@ -89,6 +89,7 @@
 {% endblock %}
 
 {% block body %}
+    <div id="tegi"></div>
     {{ form_start(form, {'attr': {'id': 'edit_product_form'}}) }}
 
     {{ form_end(form) }}
@@ -109,8 +110,20 @@
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 
+    <link href="/styles/magicsuggest-min.css" rel="stylesheet">
+    <script src="/js/magicsuggest-min.js"></script>
+
 <script>
     $(document).ready(function() {
+        let tags = $('#tegi').magicSuggest({
+            allowFreeEntries: false,
+            data: [{"id":"Paris", "name":"Paris"}, {"id":"New York", "name":"New York"}]
+        });
+        tags.addToSelection([{"id":"Paris", "name":"Paris"}, {"id":"123", "name":"456"}]);
+
+        $(tags).on('blur', function (c) {
+            console.log(JSON.stringify(this.getValue()));
+        });
         $('.summernote').summernote({
             height: 300,
             popover: {

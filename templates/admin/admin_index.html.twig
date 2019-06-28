@@ -251,5 +251,11 @@
   {% endblock %}
 
 </body>
+<script>
+  $('label').each(function() {
+    if($(this).hasClass('required'))
+      $(this).append($('<span style="color: red; font-size: 10px;"> * Обязательно</span>'));
+  });
+</script>
 
 </html>
