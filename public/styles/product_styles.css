@@ -616,6 +616,61 @@ section
 	line-height: 50px;
 	color: #a3a3a3 !important;
 }
+.scrolling-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	height: 300px;
+}
+/* width */
+.scrolling-wrapper::-webkit-scrollbar {
+	height: 5px;
+}
+
+/* Track */
+.scrolling-wrapper::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+.scrolling-wrapper::-webkit-scrollbar-thumb {
+	background: #0e8ce4;
+}
+
+/* Handle on hover */
+.scrolling-wrapper::-webkit-scrollbar-thumb:hover {
+	background: #0056b3;
+}
+.product_marks
+{
+	display: block;
+	position: absolute;
+	top: 33px;
+	left: 30px;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.product_discount {
+	display: block;
+	background: #df3b3b;
+}
+.product_mark {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 36px;
+	font-size: 12px;
+}
+.product_new {
+	display: block;
+	background: #0e8ce4;
+}
 .custom_dropdown
 {
 	width: calc((100% - 50px) * 0.399);
@@ -1344,6 +1399,20 @@ select option
 {
 	font-size: 13px;
 }
+.product_item {
+	position: relative;
+	left: -10px;
+	width: calc(100% + 20px);
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+	background: #FFFFFF;
+	cursor: pointer;
+	padding-top: 40px;
+	z-index: 0;
+}
 .product_text
 {
 	margin-top: 27px;
@@ -1355,6 +1424,20 @@ select option
 .product_text table {
 	width: auto !important;
 	height: auto!important;
+}
+.arrivals_slider_item
+{
+	height: 263px;
+	display: inline-block;
+	border: unset;
+	width: 22%;
+}
+.product_image img
+{
+	display: block;
+	position: relative;
+	max-width: 100%;
+	max-height: 115px;
 }
 .order_info
 {
