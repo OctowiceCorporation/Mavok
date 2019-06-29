@@ -141,13 +141,8 @@
                                 <a href="#">Контакты<i class="fa fa-angle-down"></i></a>
                             </li>
                         </ul>
-                        <div class="menu_contact">
-                            <div class="menu_contact_item">
-                                <div class="menu_contact_icon"><i class="fas fa-phone"></i></div>+38 068 005 3570
-                            </div>
-                            <div class="menu_contact_item">
-                                <div class="menu_contact_icon"><i class="fas fa-envelope"></i></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
-                            </div>
+                        <div id="menu_contact">
+                            {{ render(controller('App\\Controller\\DefaultController::responsiveContacts')) }}
                         </div>
                     </div>
                 </div>

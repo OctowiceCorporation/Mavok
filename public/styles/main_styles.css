@@ -3675,7 +3675,22 @@ select option
 {
 	margin-top: 42px !important; 
 }
-
+.cart_button {
+	display: inline-block;
+	border: none;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 48px;
+	color: #FFFFFF;
+	padding-left: 35px;
+	padding-right: 35px;
+	outline: none;
+	cursor: pointer;
+}
+.menu_contact
+{
+	text-align: center;
+}
 .copyright
 {
 	width: 100%;

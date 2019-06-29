@@ -479,6 +479,11 @@
 		padding: unset;
 		margin: unset;
 	}
+	.cart_button
+	{
+		font-size: 14px;
+		padding-bottom: 45px;
+	}
 	.footer_contact
 	{
 		order: 2;
@@ -491,6 +496,7 @@
 	{
 		padding-top: 10px;
 		order: 3;
+		text-align: right;
 	}
 	.basket_count {
 		font-size: small;

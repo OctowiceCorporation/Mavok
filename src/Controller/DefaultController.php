@@ -106,13 +106,19 @@ class DefaultController extends AbstractController
         return $this->render('header_contacts.html.twig', ['phone' => $phone, 'address' => $address]);
     }
 
+    public function responsiveContacts(CommonInfoService $service)
+    {
+        $phone = $service->getParameter('phone_number');
+        $mail = $service->getParameter('mail');
+        return $this->render('responsive_contacts.html.twig', ['phone' => $phone, 'mail' => $mail]);
+    }
+
     public function footer(CommonInfoService $service)
     {
         $phone = $service->getParameter('phone_number');
         $address = $service->getParameter('address');
         $about_us = $service->getParameter('footer_about_us');
         $mail = $service->getParameter('mail');
-
         return $this->render('footer.html.twig', ['phone' => $phone, 'address' => $address, 'about_us' => $about_us, 'mail' => $mail]);
     }
     public function categoryAction($slug, CategoryRepository $categoryRepository, CategoryService $categoryService, ProductService $productService, FilterService $filterService, Request $request, PaginatorInterface $pagination, SortService $sortService)
