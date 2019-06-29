@@ -927,7 +927,6 @@ select option
 }
 .cat_menu_container > ul
 {
-	padding-top: 13px;
 	padding-left: unset;
 }
 .cat_menu_container:hover .cat_menu
