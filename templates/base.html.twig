@@ -17,11 +17,13 @@
     <link rel="stylesheet" type="text/css" href="/styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="/styles/responsive.css">
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cantarell&display=swap" rel="stylesheet">
     {% endblock %}
 
 </head>
 <!-- Header -->
-<header class="header">
+<header class="header" id="header">
     <!-- Top Bar -->
     <div class="top_bar">
         <div class="container">
@@ -163,23 +165,8 @@
     {{ render(controller('App\\Controller\\ProductController::getRecentlyViewed')) }}
 </div>
 <!-- Copyright -->
-<div class="copyright">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="copyright_content">
-                    Copyright © Mavok <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                </div>
-            </div>
-            <div class="col-4"></div>
-            <div class="col-5"><div class="copyright_content"><a target="_blank" href="https://octowice.com/">Made By OctowiceWebStudio<img style="width: 30px; height: 30px" src="{{ asset('octo-logo.png') }}"></a></div></div>
-
-        </div>
-    </div>
-</div>
-</div>
+<footer id="footer">
+    {{ render(controller('App\\Controller\\DefaultController::footer')) }}
 </footer>
 {% block javascripts %}
     <script src="/js/jquery-3.3.1.min.js"></script>

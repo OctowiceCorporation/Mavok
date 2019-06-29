@@ -479,13 +479,18 @@
 		padding: unset;
 		margin: unset;
 	}
-	.carousel_price
+	.footer_contact
 	{
-		font-size: large;
+		order: 2;
 	}
-	.carousel_sale
+	.footer_about
 	{
-		font-size: x-large;
+		order: 1;
+	}
+	.footer_nav
+	{
+		padding-top: 10px;
+		order: 3;
 	}
 	.basket_count {
 		font-size: small;
