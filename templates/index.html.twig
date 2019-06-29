@@ -3,13 +3,13 @@
     <div class="super_container">
         <!-- Banner -->
         <div class="banner">
-            <div class="banner_background" style="background: linear-gradient(45deg, #cde3f0, white 70%)"></div>
+            <div class="banner_background" style="background: linear-gradient(45deg, #cde3f0, white 55%)"></div>
             <div class="container banner_content">
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div style="display: inline-flex">
-                                <div class="col-7">
+                                <div class="col-6" style="height: 300px">
                                     {% if first.sale is not null %}
                                     <div>
                                             <h2>Акция -{{ first.sale }}%</h2>
@@ -18,15 +18,11 @@
                                     <div class="mt-lg-4 mt-sm-0 text-dark">
                                         <h4>
                                             <a class="text-dark" href="{{ path('product', {'slug': first.slug}) }}">
-                                                {% if first.name | length < 60 %}
-                                                    {{ first.name }}
-                                                {% else %}
-                                                    {{ first.name | slice(0,60) }}...
-                                                {% endif %}
+                                                {{ first.name }}
                                             </a>
                                         </h4>
                                     </div>
-                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
                                                 <p class="carousel_sale">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} грн</p>
@@ -48,9 +44,8 @@
                                         {% endif %}
 
                                     </div>
-                                    <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block add_to_basket_main" value="{{ first.slug }}">Купить</button>
                                 </div>
-                                <div class="col-5">
+                                <div class="col-6">
                                     <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto; mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
                      "/images/{{ first.image.get(0).ImagePath }}"
                                     {% else %}
@@ -64,16 +59,16 @@
                         {% for mainPage in mainPageProducts %}
                             <div class="carousel-item">
                                 <div style="display: inline-flex">
-                                    <div class="col-7">
+                                    <div class="col-6" style="height: 300px">
                                         {% if mainPage.sale is not null %}
                                             <div>
                                                 <h2>Акция -{{ mainPage.sale }}%</h2>
                                             </div>
                                         {% endif %}
                                         <div class="mt-lg-4 mt-sm-0 text-dark">
-                                            <h4><a class="text-dark" href="{{ path('product', {'slug': first.slug}) }}">{{ first.name }}</a></h4>
+                                            <h4><a class="text-dark" href="{{ path('product', {'slug': mainPage.slug}) }}">{{ mainPage.name }}</a></h4>
                                         </div>
-                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex">
+                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
                                             {% if mainPage.sale is not null %}
                                                 {% if mainPage.productValue is not null %}
                                                     <p class="carousel_sale">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
@@ -95,9 +90,8 @@
                                             {% endif %}
 
                                         </div>
-                                        <button class="btn btn-primary mt-lg-2 mt-md-2 mt-sm-0 d-block add_to_basket_main" value="{{ mainPage.slug }}">Купить</button>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-6">
                                         <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto" src={% if mainPage.image.get(0).ImagePath is defined %}
                      "/images/{{ mainPage.image.get(0).ImagePath }}"
                                         {% else %}
@@ -161,7 +155,7 @@
         </div>
     <!-- Best Sellers -->
         {% if specialProducts.0 is defined %}
-        <div class="container">
+        <div class="container" id="sale">
             <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
                 <div class="viewed_title_container">
                     <div class="tabs clearfix tabs-right">
@@ -242,7 +236,7 @@
         {% endif %}
     <!-- Sale -->
         {% if saleProducts.0 is defined %}
-        <div class="container py-3">
+        <div class="container py-3" id="popular">
         <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
             <div class="viewed_title_container">
                 <div class="tabs clearfix tabs-right">

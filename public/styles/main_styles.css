@@ -40,7 +40,10 @@
 /*********************************
 2. Body and some general stuff
 *********************************/
-
+html
+{
+	scroll-behavior: smooth;
+}
 *
 {
 	margin: 0;
@@ -274,7 +277,9 @@ section
 {
 	font-size: xx-large;
 	color: red;
-	padding-right: 1rem
+	padding-right: 1rem;
+	font-family: 'Cantarell', sans-serif;
+	font-weight: 700;
 }
 .carousel_price
 {
@@ -3675,6 +3680,8 @@ select option
 {
 	width: 100%;
 	background: #fafafa;
+	padding-top: 2rem;
+	padding-bottom: 1rem;
 }
 .copyright_container
 {

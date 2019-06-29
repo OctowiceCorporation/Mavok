@@ -1,0 +1,51 @@
+<div class="copyright">
+    <div class="container">
+        <h2 style="font-family: 'Orbitron', sans-serif;">Mavok</h2>
+        <div class="row">
+            <div class="col footer_nav">
+                <p class="footer-links">
+                    <a href="#header">Главная</a>
+                    ·
+                    <a href="{{ path('showBlog') }}">Блог</a>
+                    ·
+                    <a href="#sale">Акции</a>
+                    ·
+                    <a href="#popular">Популярные</a>
+                    ·
+                    <a href="{{ path('about_us') }}">О Нас</a>
+                </p>
+                    <a style="border: unset; margin: unset;font-family: 'Raleway', sans-serif;" target="_blank" href="https://octowice.com/">
+                        <p>Made By <img style="width: 50px;" src="{{ asset('octo-logo.png') }}">OctowiceWebStudio</p>
+                    </a>
+                <p class="footer-company-name">
+                    Copyright © Mavok
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                </p>
+            </div>
+            <div class="col footer_contact">
+                <div class="d-inline-flex">
+                    <i class="fa fa-map-marker px-3"></i>
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/{{ address }}"><p>{{ address }}</p></a>
+                </div>
+                <br>
+                <div class="d-inline-flex">
+                    <i class="fa fa-phone px-3"></i>
+                    <a href="tel:{{ phone }}"><p>{{ phone }}</p></a>
+                </div>
+                <br>
+                <div class="d-inline-flex">
+                    <i class="fa fa-envelope px-3"></i>
+                    <a style="border: unset" href="mailto:{{ mail }}"><p>{{ mail }}</p></a>
+                </div>
+
+            </div>
+            <div class="col footer_about">
+                <p class="text-justify">
+                    {{ about_us }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
