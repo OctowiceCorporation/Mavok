@@ -28,7 +28,7 @@ class AddPostForm extends AbstractType
                 ]
             ])
             ->add('image', FileType::class,[
-                'label' => 'Фото'
+                'label' => 'Фото',
             ])
             ->add('is_visible', CheckboxType::class,[
                 'label' => 'Отображать',

@@ -279,7 +279,7 @@ class DefaultController extends AbstractController
 
     public function showBlog(BlogRepository $blogRepository)
     {
-        $posts = $blogRepository->findAll();
+        $posts = $blogRepository->findBy(['is_visible' => true]);
         return $this->render('blog.html.twig', [
             'posts' => $posts
         ]);

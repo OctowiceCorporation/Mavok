@@ -162,50 +162,23 @@
 <div id="recently_viewed">
     {{ render(controller('App\\Controller\\ProductController::getRecentlyViewed')) }}
 </div>
-<!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 footer_col">
-                <div class="footer_column footer_contact">
-                    <div class="logo_container">
-                        <div class="logo"><a style="font-size: 50px; font-family: 'Orbitron', sans-serif;" href="#">Mavok</a></div>
-                    </div>
-                    <div class="footer_title">Got Question? Call Us 24/7</div>
-                    <div class="footer_phone">+38 068 005 3570</div>
-                    <div class="footer_contact_text">
-                        <p>17 Princess Road, London</p>
-                        <p>Grester London NW18JR, UK</p>
-                    </div>
-                    <div class="footer_social">
-                        <ul>
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                            <li><a href="#"><i class="fab fa-google"></i></a></li>
-                            <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 <!-- Copyright -->
 <div class="copyright">
     <div class="container">
         <div class="row">
             <div class="col">
-                <div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
-                    <div class="copyright_content">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> Copyright © Mavok<script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
+                <div class="copyright_content">
+                    Copyright © Mavok <script>
+                        document.write(new Date().getFullYear());
+                    </script>
                 </div>
             </div>
+            <div class="col-4"></div>
+            <div class="col-5"><div class="copyright_content"><a target="_blank" href="https://octowice.com/">Made By OctowiceWebStudio<img style="width: 30px; height: 30px" src="{{ asset('octo-logo.png') }}"></a></div></div>
+
         </div>
     </div>
+</div>
 </div>
 </footer>
 {% block javascripts %}

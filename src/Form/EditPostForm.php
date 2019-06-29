@@ -33,7 +33,8 @@ class EditPostForm extends AbstractType
                 'label' => 'Фото'
             ])
             ->add('is_visible', CheckboxType::class,[
-                'label' => 'Отображать'
+                'label' => 'Отображать',
+                'required' => false
             ])
             ->add('save', SubmitType::class, ['label' => 'Сохранить изменения'])
             ->getForm();
