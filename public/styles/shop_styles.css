@@ -1454,7 +1454,7 @@ select option
 	background: #FFFFFF;
 	cursor: pointer;
 	text-align: center;
-	padding: 40px 3px 24px 3px;
+	padding: 40px 3px 0px 3px;
 }
 .product_border
 {
@@ -1601,7 +1601,6 @@ select option
 }
 .product_mark
 {
-	display: inline-block;
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
@@ -1614,20 +1613,19 @@ select option
 {
 	display: none;
 	background: #0e8ce4;
-	visibility: hidden;
-	opacity: 0;
+	visibility: visible;
+	opacity: 1;
 }
 .product_discount
 {
 	display: none;
 	background: #df3b3b;
-	visibility: hidden;
-	opacity: 0;
+	visibility: visible;
+	opacity: 1;
 }
 .product_item.is_new .product_new,
 .product_item.discount .product_discount
 {
-	display: inline-block;
 	visibility: visible;
 	opacity: 1;	
 }

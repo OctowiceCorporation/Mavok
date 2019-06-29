@@ -43,18 +43,6 @@
                     {% endfor %}
                 </ol>
             </nav>
-            {% if admin == true %}
-            <div class="row">
-                <div class="col-5"></div>
-                <div class="col-3"><b>Эту страницу видит только администратор</b></div>
-            </div>
-            {% endif %}
-            {% if is_granted('ROLE_ADMIN') %}
-                <div class="row">
-                    <div class="col-5"></div>
-                    <div class="col-3"><a href="{{ path('edit_product', {'id': product.id}) }}">Редактировать товар</a></div>
-                </div>
-            {% endif %}
             <div class="row">
                 <!-- Images -->
                 <div class="col-lg-2 order-lg-1 order-2" style="height: 525px; overflow-y: auto" id="gallery">
@@ -130,6 +118,12 @@
                                         <button type="button" class="button cart_button add_to_basket" style="{% if product.amount != 0 %}background-color: green;{% endif %} width: 90%" value="{{ product.slug }}">{% if product.amount != 0 %}В корзине <i class="fas fa-check"></i>{% else %}Купить <i class="fas fa-cart-plus"></i>{% endif %}</button>
                                     {% else %}
                                         Нет в наличии
+                                    {% endif %}
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <button type="button" class="btn btn-warning my-4"><a class="text-light" href="{{ path('edit_product', {'id': product.id}) }}">Редактировать товар</a></button>
+                                    {% endif %}
+                                    {% if admin == true %}
+                                        <br><b>Эту страницу видит только администратор</b>
                                     {% endif %}
                                 </div>
 
