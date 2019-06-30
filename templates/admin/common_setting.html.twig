@@ -2,7 +2,9 @@
 
 {% block body %}
     {% if form is not defined %}
-        <a href="{{ path('common_settings', {'type': 'edit'}) }}">Редактировать настройки</a><br>
+        <button class="btn btn-primary mb-3">
+            <a class="text-light" href="{{ path('common_settings', {'type': 'edit'}) }}">Редактировать настройки</a>
+        </button><br>
         <table class="table table-striped">
             <thead>
             <tr>
