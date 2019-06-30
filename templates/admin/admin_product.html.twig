@@ -11,6 +11,14 @@
                 Все товары
                 {% endif %}
             </h6>
+            <p style="float: right">
+                {% if category is defined %}
+                    <a href="{{ path('add_product', {'id': category.id}) }}">Добавить производителя</a>
+                {% else %}
+                    <a href="{{ path('add_product', {'id': products.0.category.id}) }}">Добавить производителя</a>
+                    {% endif %}
+
+            </p>
         </div>
         <div class="card-body">
             <div class="table-responsive">
