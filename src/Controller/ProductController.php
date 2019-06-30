@@ -26,13 +26,13 @@ class ProductController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $slug]);
         $admin = false;
         if(empty($product))
-            return new Response('Product not found', 404);
+            throw $this->createNotFoundException();
         if(!$product->getIsVisible()){
             if(!empty($this->getUser()) && in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
                 $admin = true;
             }
             else
-                return new Response('', 403);
+                throw $this->createNotFoundException();
         }
 
 

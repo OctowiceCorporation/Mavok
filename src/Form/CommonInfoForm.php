@@ -53,6 +53,9 @@ class CommonInfoForm extends AbstractType
                     'class' => 'summernote',
                 ]
             ])
+            ->add('footerAbout', TextareaType::class,[
+                'label' => 'Текст "О нас" в футере',
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Соханить'
             ]);

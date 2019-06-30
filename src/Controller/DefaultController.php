@@ -130,7 +130,7 @@ class DefaultController extends AbstractController
         }
         $result = $categoryService->generateRoute($array);
         if (empty($result['cat']))
-            return new Response('Gabela',404);
+            throw $this->createNotFoundException();
         if ($result['gabela'])
             return $this->redirectToRoute('category', ['slug' => substr($categoryService->generateUrlFromCategory($result['cat']->getParent()), 1)]);
 
@@ -807,7 +807,7 @@ class DefaultController extends AbstractController
         $slug = rtrim($slug,'/');
         $array = explode('/', $slug);
         if(empty($array[0]))
-            return new Response('gg wp', 404);
+            throw $this->createNotFoundException();
         $count = count($array);
         foreach ($array as $key => $item) {
             if($count != $key+1){

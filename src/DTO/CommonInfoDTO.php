@@ -23,6 +23,7 @@ class CommonInfoDTO
     private $address;
     private $name;
     private $about;
+    private $footer_about;
 
     /**
      * CommonInfoDTO constructor.
@@ -34,7 +35,7 @@ class CommonInfoDTO
      * @param $name
      * @param $about
      */
-    public function __construct($minimum, $eur, $usd, $number, $address, $name, $about)
+    public function __construct($minimum, $eur, $usd, $number, $address, $name, $about, $footer_about)
     {
         $this->minimum = $minimum;
         $this->eur = $eur;
@@ -43,6 +44,7 @@ class CommonInfoDTO
         $this->address = $address;
         $this->name = $name;
         $this->about = $about;
+        $this->footer_about = $footer_about;
     }
 
 
@@ -157,6 +159,24 @@ class CommonInfoDTO
     {
         $this->about = $about;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFooterAbout()
+    {
+        return $this->footer_about;
+    }
+
+    /**
+     * @param mixed $footer_about
+     */
+    public function setFooterAbout($footer_about): void
+    {
+        $this->footer_about = $footer_about;
+    }
+
+
 
 
 }
