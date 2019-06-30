@@ -17,7 +17,8 @@ class CommonInfo
             $service['phone_number'],
             $service['address'],
             $service['name_surname'],
-            $service['about_us']
+            $service['about_us'],
+            $service['footer_about_us']
         );
     }
 
@@ -30,6 +31,7 @@ class CommonInfo
         $service['phone_number'] = $commonInfoDTO->getNumber();
         $service['address'] = $commonInfoDTO->getAddress();
         $service['name_surname'] = $commonInfoDTO->getName();
+        $service['footer_about_us'] = $commonInfoDTO->getFooterAbout();
 
         return $service;
     }

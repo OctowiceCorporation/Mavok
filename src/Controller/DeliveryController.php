@@ -21,7 +21,7 @@ class DeliveryController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $request->get('slug')]);
         if(empty($product))
-            return new Response('Product not found', 404);
+            throw $this->createNotFoundException();
 
         $id = $product->getId();
         $basket = $session->get('basket');
@@ -53,31 +53,31 @@ class DeliveryController extends AbstractController
                 if(!empty($product->getProductValue())){
                     if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
                         if(!empty($product->getSale()))
-                            $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount() - ($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
+                            $total += intval($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount() - ($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
                         else
-                            $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount();
+                            $total += intval($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()* 100) / 100;
 
                     }
                     else{
                         if(!empty($product->getSale()))
-                            $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount() - ($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
+                            $total += intval($product->getProductValue()*$product->getRetailPrice()*$product->getAmount() - ($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
                         else
-                            $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount();
+                            $total += intval($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()* 100) / 100;
                     }
                 }
                 else{
                     if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
                         if(!empty($product->getSale()))
-                            $total += $product->getWholesalePrice()*$product->getAmount() - ($product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
+                            $total += intval($product->getWholesalePrice()*$product->getAmount() - ($product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
                         else
-                            $total += $product->getWholesalePrice()*$product->getAmount();
+                            $total += intval($product->getWholesalePrice()*$product->getAmount()* 100) / 100;
 
                     }
                     else{
                         if(!empty($product->getSale()))
-                            $total += $product->getRetailPrice()*$product->getAmount() - ($product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
+                            $total += intval($product->getRetailPrice()*$product->getAmount() - ($product->getRetailPrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
                         else
-                            $total += $product->getRetailPrice()*$product->getAmount();
+                            $total += intval($product->getRetailPrice()*$product->getAmount()* 100) / 100;
                     }
                 }
             }
@@ -119,7 +119,7 @@ class DeliveryController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
         if(empty($product))
-            return new Response('Product not found', 404);
+            throw $this->createNotFoundException();
 
         $id = $product->getId();
 
@@ -140,7 +140,7 @@ class DeliveryController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
         if(empty($product))
-            return new Response(null, 404);
+            throw $this->createNotFoundException();
 
         $id = $product->getId();
         $basket = $session->get('basket');
@@ -167,7 +167,7 @@ class DeliveryController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
         if(empty($product))
-            return new Response(null, 404);
+            throw $this->createNotFoundException();
 
         $id = $product->getId();
         $basket = $session->get('basket');
@@ -178,8 +178,6 @@ class DeliveryController extends AbstractController
             unset($basket[$id]);
 
         $session->set('basket', $basket);
-
-        return new Response(null);
     }
 
     public function getPostOffices(NovaPoshtaService $novaPoshtaService)

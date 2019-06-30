@@ -153,19 +153,16 @@ $(document).ready(function () {
             .done(function(json) {
                 let array = JSON.parse(json);
                 $('#mobile-search-result').html('');
-                $('#mobile-search-result').autocomplete({
-                    source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
-                });
-                // if(array.length === 0){
-                //     let submit = $('<a></a>').addClass('list-group-item list-group-item-action').html('Ничего не найдено');
-                //     $('#mobile-search-result').append(submit);
-                // }
-                // else {
-                //     array.forEach(function (product) {
-                //         let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/' + product['slug']).html(product['name']).css('z-index', 3);
-                //         $('#mobile-search-result').append(href);
-                //     });
-                // }
+                if(array.length === 0){
+                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').html('Ничего не найдено');
+                    $('#mobile-search-result').append(submit);
+                }
+                else {
+                    array.forEach(function (product) {
+                        let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/' + product['slug']).html(product['name']).css('z-index', 3);
+                        $('#mobile-search-result').append(href);
+                    });
+                }
             });
     });
 
@@ -185,21 +182,19 @@ $(document).ready(function () {
         })
             .done(function(json) {
                 let array = JSON.parse(json);
-                $('#desktop-result').autocomplete({
-                    source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
-                });
-                // if(array.length === 0){
-                //     let submit = $('<a></a>').addClass('list-group-item list-group-item-action').css('background-color','#0e8ce4').css('background-color','#0e8ce4').css('color', 'white').html('Ничего не найдено');
-                //     $('#desktop-result').append(submit);
-                // }
-                // else {
-                //     array.forEach(function (product) {
-                //         let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/' + product['slug']).html(product['name']);
-                //         $('#desktop-result').append(href);
-                //     });
-                //     let submit = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product_search?search_text=' + value).css('background-color', '#0e8ce4').css('color', 'white').html('Посмотреть все варианты');
-                //     $('#desktop-result').append(submit);
-                // }
+                $('#desktop-result').html('');
+                if(array.length === 0){
+                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').css('background-color','#0e8ce4').css('background-color','#0e8ce4').css('color', 'white').html('Ничего не найдено');
+                    $('#desktop-result').append(submit);
+                }
+                else {
+                    array.forEach(function (product) {
+                        let href = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product/' + product['slug']).html(product['name']);
+                        $('#desktop-result').append(href);
+                    });
+                    let submit = $('<a></a>').addClass('list-group-item list-group-item-action').attr('href', '/product_search?search_text=' + value).css('background-color', '#0e8ce4').css('color', 'white').html('Посмотреть все варианты');
+                    $('#desktop-result').append(submit);
+                }
             });
     });
 
