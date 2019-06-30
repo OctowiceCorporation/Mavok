@@ -37,7 +37,7 @@ $.ajax({
     method: "GET",
     url: '/get_product_amount',
 })
-    .done(function(amount) {;
+    .done(function(amount) {
         $('#basket-product-amount').html(amount);
     });
 

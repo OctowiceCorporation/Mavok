@@ -55,7 +55,7 @@
                                                 <div class="cart_item_title">Цена</div>
                                                 <div class="cart_item_text product-price">
                                                     {% if product.ProductValue is not null%}
-                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount and product.WholesalePrice is not null%}
                                                             {% if product.sale is empty %}
                                                                 {{ (product.WholesalePrice * product.ProductValue)|round(1) }} UAH
                                                             {% else %}
@@ -65,21 +65,21 @@
                                                             {% if product.sale is empty %}
                                                                 {{ (product.retailPrice * product.ProductValue)|round(1) }} UAH
                                                             {% else %}
-                                                                {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))|number_format(1) }} UAH
+                                                                {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))|round(1) }} UAH
                                                             {% endif %}
                                                         {% endif %}
                                                     {% else %}
-                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount and product.WholesalePrice is not null%}
                                                             {% if product.sale is empty %}
-                                                                {{ (product.WholesalePrice) }} UAH
+                                                               {{ (product.WholesalePrice)|round(1) }} UAH
                                                             {% else %}
-                                                                {{ product.WholesalePrice - (product.WholesalePrice /100 * product.sale) }} UAH
+                                                                {{ (product.WholesalePrice - (product.WholesalePrice /100 * product.sale))|round(1) }} UAH
                                                             {% endif %}
                                                         {% else %}
                                                             {% if product.sale is empty %}
-                                                                {{ (product.retailPrice) }} UAH
+                                                                {{ (product.retailPrice)|round(1) }} UAH
                                                             {% else %}
-                                                                {{ product.retailPrice - (product.retailPrice /100 * product.sale) }} UAH
+                                                                {{ (product.retailPrice - (product.retailPrice /100 * product.sale))|round(1) }} UAH
                                                             {% endif %}
                                                         {% endif %}
                                                     {% endif %}
@@ -89,31 +89,31 @@
                                                 <div class="cart_item_title">Итого</div>
                                                 <div class="cart_item_text product-sum">
                                                     {% if product.ProductValue is not null%}
-                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount and product.WholesalePrice is not null%}
                                                             {% if product.sale is empty %}
                                                                 {{ (product.WholesalePrice * product.ProductValue * product.amount)|round(1) }} UAH
                                                             {% else %}
-                                                                {{ (product.WholesalePrice * product.ProductValue - (product.WholesalePrice * product.ProductValue/100 * product.sale))* product.amount }} UAH
+                                                                {{ ((product.WholesalePrice * product.ProductValue - (product.WholesalePrice * product.ProductValue/100 * product.sale))* product.amount)|round(1) }} UAH
                                                             {% endif %}
                                                         {% else %}
                                                             {% if product.sale is empty %}
                                                                 {{ (product.retailPrice * product.ProductValue * product.amount)|round(1) }} UAH
                                                             {% else %}
-                                                                {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))* product.amount }} UAH
+                                                                {{ ((product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))* product.amount)|round(1) }} UAH
                                                             {% endif %}
                                                         {% endif %}
                                                     {% else %}
-                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount%}
+                                                        {% if product.MinimumWholesale is not null and  product.MinimumWholesale <= product.amount and product.WholesalePrice is not null%}
                                                             {% if product.sale is empty %}
-                                                                {{ (product.WholesalePrice * product.amount) }} UAH
+                                                                {{ (product.WholesalePrice * product.amount)|round(1) }} UAH
                                                             {% else %}
-                                                                {{ (product.WholesalePrice - (product.WholesalePrice /100 * product.sale))* product.amount }} UAH
+                                                                {{ ((product.WholesalePrice - (product.WholesalePrice /100 * product.sale))* product.amount)|round(1) }} UAH
                                                             {% endif %}
                                                         {% else %}
                                                             {% if product.sale is empty %}
-                                                                {{ (product.retailPrice * product.amount) }} UAH
+                                                                {{ (product.retailPrice * product.amount)|round(1) }} UAH
                                                             {% else %}
-                                                                {{ (product.retailPrice - (product.retailPrice /100 * product.sale))* product.amount }} UAH
+                                                                {{ ((product.retailPrice - (product.retailPrice /100 * product.sale))* product.amount)|round(1) }} UAH
                                                             {% endif %}
                                                         {% endif %}
                                                     {% endif %}
@@ -204,7 +204,7 @@
                     .done(function() {
                         $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - Number(elem.closest('.basket-product-card').find('.quantity_input').val()));
                         elem.closest('.basket-product-card').remove();
-                        $('#total').html((Number($('#total').html()) - Number(elem.parent().find('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]);
+                        $('#total').html((Number($('#total').html()) - Number(elem.parent().find('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
                         sum = Number($('#total').html());
                     });
             });
@@ -219,8 +219,8 @@
                 let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
                 let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
                 if(value !== 0) {
-                    wholesale = (wholesale * value).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0];
-                    retail = (retail * value).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0];
+                    wholesale = (wholesale * value).toFixed(1);
+                    retail = (retail * value).toFixed(1);
                 }
 
                 $.ajax({
@@ -228,18 +228,18 @@
                     url: '/plus_basket/'+slug,
                 })
                     .done(function() {
-                        $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]);
+                        $('#total').html((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1));
 
                         let amount = Number(input.val(Number(input.val()) + 1).val());
-                        if((minimum <= 0) || (minimum > 0 && amount < minimum)){
-                            elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]) + ' UAH');
-                            elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
-                            $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail)).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]));
+                        if((minimum <= 0) || (minimum > 0 && amount < minimum && wholesale > 0) || (wholesale <= 0)){
+                            elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toFixed(1)) + ' UAH');
+                            elem.closest('.cart_item_info').find('.product-price').html(Number(retail).toFixed(1) + ' UAH');
+                            $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail)).toFixed(1)));
                         }
                         else{
-                            elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]) + ' UAH');
-                            elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
-                            $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]));
+                            elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toFixed(1)) + ' UAH');
+                            elem.closest('.cart_item_info').find('.product-price').html(Number(wholesale).toFixed(1) + ' UAH');
+                            $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                         }
                         sum = Number($('#total').html());
                         $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
@@ -264,8 +264,8 @@
                         let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
                         let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
                         if(value !== 0){
-                            wholesale = (wholesale*value).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0];
-                            retail = (retail*value).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0];
+                            wholesale = (wholesale*value).toFixed(1);
+                            retail = (retail*value).toFixed(1);
                         }
 
 
@@ -274,20 +274,20 @@
                             url: '/minus_basket/'+slug,
                         })
                             .done(function() {
-                                $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]));
+                                $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1)));
                                 let amount = Number(input.val(Number(input.val()) - 1).val());
                                 if(amount === 0)
                                     elem.closest('.basket-product-card').remove();
                                 else{
-                                    if((minimum <= 0) || (minimum > 0 && amount < minimum)){
-                                        elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]) + ' UAH');
-                                        elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
-                                        $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail))).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]);
+                                    if((minimum <= 0) || (minimum > 0 && amount < minimum) || (wholesale <= 0)){
+                                        elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toFixed(1)) + ' UAH');
+                                        elem.closest('.cart_item_info').find('.product-price').html(Number(retail).toFixed(1) + ' UAH');
+                                        $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail))).toFixed(1));
                                     }
                                     else{
-                                        elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]) + ' UAH');
-                                        elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
-                                        $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]));
+                                        elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toFixed(1)) + ' UAH');
+                                        elem.closest('.cart_item_info').find('.product-price').html(Number(wholesale).toFixed(1) + ' UAH');
+                                        $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                                     }
                                 }
                                 sum = Number($('#total').html());
@@ -303,8 +303,8 @@
                     let retail = Number(quantity_buttons.attr('data-retail').replace(/[^\d.-]/g, ''));
                     let value = Number(quantity_buttons.attr('data-value').replace(/[^\d.-]/g, ''));
                     if(value !== 0){
-                        wholesale = (wholesale*value).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0];
-                        retail = (retail*value).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0];
+                        wholesale = (wholesale*value).toFixed(1);
+                        retail = (retail*value).toFixed(1);
                     }
 
 
@@ -313,20 +313,20 @@
                         url: '/minus_basket/'+slug,
                     })
                         .done(function() {
-                            $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]));
+                            $('#total').html(parseFloat((Number($('#total').html()) - Number(elem.closest('.cart_item_info').find('.product-sum').html().replace(/[^\d.-]/g, ''))).toFixed(1)));
                             let amount = Number(input.val(Number(input.val()) - 1).val());
                             if(amount === 0)
                                 elem.closest('.basket-product-card').remove();
                             else{
-                                if((minimum <= 0) || (minimum > 0 && amount < minimum)){
-                                    elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]) + ' UAH');
-                                    elem.closest('.cart_item_info').find('.product-price').html(retail + ' UAH');
-                                    $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail)).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]));
+                                if((minimum <= 0) || (minimum > 0 && amount < minimum) || (wholesale <= 0)){
+                                    elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*retail).toFixed(1)) + ' UAH');
+                                    elem.closest('.cart_item_info').find('.product-price').html(Number(retail).toFixed(1) + ' UAH');
+                                    $('#total').html(parseFloat((Number($('#total').html()) + (amount*retail)).toFixed(1)));
                                 }
                                 else{
-                                    elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]) + ' UAH');
-                                    elem.closest('.cart_item_info').find('.product-price').html(wholesale + ' UAH');
-                                    $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toString().match(/^-?\d+(?:\.\d{0,1})?/)[0]));
+                                    elem.closest('.cart_item_info').find('.product-sum').html(parseFloat((amount*wholesale).toFixed(1)) + ' UAH');
+                                    elem.closest('.cart_item_info').find('.product-price').html(Number(wholesale).toFixed(1) + ' UAH');
+                                    $('#total').html(parseFloat((Number($('#total').html()) + (amount*wholesale)).toFixed(1)));
                                 }
                             }
                             sum = Number($('#total').html());

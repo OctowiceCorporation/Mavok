@@ -53,33 +53,34 @@ class DeliveryController extends AbstractController
                 if(!empty($product->getProductValue())){
                     if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
                         if(!empty($product->getSale()))
-                            $total += intval($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount() - ($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
+                            $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount() - ($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
                         else
-                            $total += intval($product->getProductValue()*$product->getWholesalePrice()*$product->getAmount()* 100) / 100;
+                            $total += $product->getProductValue()*$product->getWholesalePrice()*$product->getAmount();
 
                     }
                     else{
                         if(!empty($product->getSale()))
-                            $total += intval($product->getProductValue()*$product->getRetailPrice()*$product->getAmount() - ($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
+                            $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount() - ($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
                         else
-                            $total += intval($product->getProductValue()*$product->getRetailPrice()*$product->getAmount()* 100) / 100;
+                            $total += $product->getProductValue()*$product->getRetailPrice()*$product->getAmount();
                     }
                 }
                 else{
                     if(!empty($product->getMinimumWholesale() && $product->getAmount() >= $product->getMinimumWholesale())){
                         if(!empty($product->getSale()))
-                            $total += intval($product->getWholesalePrice()*$product->getAmount() - ($product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
+                            $total += $product->getWholesalePrice()*$product->getAmount() - ($product->getWholesalePrice()*$product->getAmount()*$product->getSale()/100);
                         else
-                            $total += intval($product->getWholesalePrice()*$product->getAmount()* 100) / 100;
+                            $total += $product->getWholesalePrice()*$product->getAmount();
 
                     }
                     else{
                         if(!empty($product->getSale()))
-                            $total += intval($product->getRetailPrice()*$product->getAmount() - ($product->getRetailPrice()*$product->getAmount()*$product->getSale()/100)* 100) / 100;
+                            $total += $product->getRetailPrice()*$product->getAmount() - ($product->getRetailPrice()*$product->getAmount()*$product->getSale()/100);
                         else
-                            $total += intval($product->getRetailPrice()*$product->getAmount()* 100) / 100;
+                            $total += $product->getRetailPrice()*$product->getAmount();
                     }
                 }
+                $total = intval($total * 10)/ 10;
             }
             else{
                 unset($basket[$index]);
@@ -178,6 +179,8 @@ class DeliveryController extends AbstractController
             unset($basket[$id]);
 
         $session->set('basket', $basket);
+
+        return new Response(null);
     }
 
     public function getPostOffices(NovaPoshtaService $novaPoshtaService)

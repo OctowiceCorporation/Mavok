@@ -73,7 +73,7 @@
                                 {{ (product.wholesalePrice * product.ProductValue) }} грн / {{ product.wholesalePrice }} {{ product.currencyName }}
                             {% else %}
                                 {{ product.wholesalePrice }} грн
-                                {% endif %} - при заказе от {{ product.minimumWholesale }} штук
+                                {% endif %} - при заказе от {{ product.minimumWholesale }} {{ product.productUnit }}
                             </div>
                         {% endif %}
                         <div></div>
@@ -95,17 +95,17 @@
                                     {% if product.ProductValue is not null %}
                                     {% if product.sale is not empty %}
                                         <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} грн</s><br>
-                                        {{ product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale) }} грн
+                                        {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))|round(1) }} грн
                                     {% else %}
-                                        {{ (product.retailPrice * product.ProductValue) }} грн
+                                        {{ (product.retailPrice * product.ProductValue)|round(1) }} грн
                                     {% endif %}
                                 </div>
                                 {% else %}
                                 {% if product.sale is not empty %}
                                     <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} грн</s><br>
-                                    {{ product.retailPrice - (product.retailPrice/100 * product.sale) }} грн
+                                    {{ (product.retailPrice - (product.retailPrice/100 * product.sale))|round(1) }} грн
                                 {% else %}
-                                    {{ (product.retailPrice) }} грн
+                                    {{ (product.retailPrice)|round(1)    }} грн
                                 {% endif %}
 
                         </div>
