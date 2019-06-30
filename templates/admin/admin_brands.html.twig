@@ -9,7 +9,7 @@
         </h6>
 
         <p style="float: right">
-            <a href="{{ path('add_brand') }}">Добавить производителя</a>
+            <button class="btn btn-primary"><a class="text-light" href="{{ path('add_brand') }}">Добавить производителя</a></button>
         </p>
     </div>
     <div class="card-body">
@@ -26,7 +26,7 @@
                             </tr>
                             </thead>
                             <tfoot>
-                            <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Age</th><th rowspan="1" colspan="1">Start date</th><th rowspan="1" colspan="1"></th></tr>
+                            <tr><th rowspan="1" colspan="1">Название</th><th rowspan="1" colspan="1">Страна</th><th rowspan="1" colspan="1">Стоимость доллара</th><th rowspan="1" colspan="1">Стоимость евро</th><th rowspan="1" colspan="1">Редактировать</th><th rowspan="1" colspan="1"></th></tr>
                             </tfoot>
                             <tbody id="product-tbody">
                             {% for brand in brands %}

@@ -189,7 +189,7 @@
 
                                 </div>
                                     <div class="product_name">
-                                        <p style="width : 150px; height: auto; text-overflow: ellipsis; overflow: visible; margin-bottom: 1rem;">
+                                        <p style="width : 150px; height: 69px; text-overflow: ellipsis; overflow: visible; margin-bottom: 1rem;">
                                             {% if product.name | length > 52 %}
                                                 {{ product.name | slice(0,52) }}...
                                             {% else %}
@@ -306,7 +306,7 @@
         });
     }
     else {
-        $('#filter_form_save').css('width', '100%').css('border-radius','5rem').appendTo($('#filter-submit'));
+        $('#filter_form_save').css('width', '100%').css('border-radius','5rem').css('cursor','pointer').appendTo($('#filter-submit'));
 
         $(document).on('click mousedown', '.slider-range', function () {
             if(!$(this).find($('#filter-submit')).length){

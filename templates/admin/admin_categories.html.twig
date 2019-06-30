@@ -50,10 +50,10 @@
                     if(category['sub'].length === undefined)
                         is_sub_exist = true;
 
-                    let li = $('<li style="border: solid thin #dadada"></li>').addClass('alert alert-light mb-2 pb-3');
-                    let row = $('<div class="row"><div class="col-10"><a style="display: inline;" href="/category'+category["link"]+'">'+category["name"]+'</a></div>"');
-                    let col = $('<div class="col-2"></div>');
-                    let div = $('<div></div>').addClass('dropdown'); //TODO Тут пихай стили
+                    let li = $('<li style="border: solid thin #dadada; list-style-type: none;"></li>').addClass('alert alert-light mb-2 pb-3');
+                    let row = $('<div class="row"><div class="col-lg-10 col-md-8 col-sm-6"><a style="display: inline; text-overflow: ellipsis; overflow: visible;" href="/category'+category["link"]+'">'+category["name"]+'</a></div>"');
+                    let col = $('<div class="col-lg-2 col-md-4 col-sm-6 text-right pr-3"></div>');
+                    let div = $('<div></div>').addClass('dropdown');
                     div.append(' <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
                         '            Действия\n' +
                         '        </button>');

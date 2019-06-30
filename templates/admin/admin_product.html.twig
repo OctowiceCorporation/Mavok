@@ -13,9 +13,9 @@
             </h6>
             <p style="float: right">
                 {% if category is defined %}
-                    <a href="{{ path('add_product', {'id': category.id}) }}">Добавить товар</a>
+                    <button class="btn btn-primary"><a class="text-light" href="{{ path('add_product', {'id': category.id}) }}">Добавить товар</a></button>
                 {% else %}
-                    <a href="{{ path('add_product', {'id': products.0.category.id}) }}">Добавить товар</a>
+                    <button class="btn btn-primary"><a class="text-light" href="{{ path('add_product', {'id': products.0.category.id}) }}">Добавить товар</a></button>
                     {% endif %}
 
             </p>
