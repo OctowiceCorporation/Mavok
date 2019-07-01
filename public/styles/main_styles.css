@@ -929,12 +929,13 @@ select option
 {
 	padding-left: unset;
 }
-.cat_menu_container:hover .cat_menu
-{
-	visibility: visible;
-	opacity: 1;
-	padding-left: unset;
-}
+/*.cat_menu_container:hover .cat_menu*/
+/*{*/
+/*	visibility: visible;*/
+/*	opacity: 1;*/
+/*	padding-left: unset;*/
+/*}*/
+
 .cat_menu li
 {
 	display: block;
