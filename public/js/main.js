@@ -43,9 +43,13 @@ $.ajax({
 
 $(document).ready(function () {
 
+    $(document).on('click', '#menu_trigger', function () {
+        $('.mobile-header-opened').click();
+    });
+
 
     if(window.screen.width < 800){
-        $('#header_dropdown').css('width', '95vw');
+        $('#header_dropdown').css('width', '95vw').css('visibility', 'visible');
         $(document).on('click', '.open-ul',function () {
             let uls = $('.open-ul-opened');
             let not_closing = $(this).parents('ul');
@@ -95,21 +99,25 @@ $(document).ready(function () {
 
         $(document).on('click', '.mobile-header-closed', function (e) {
                 if (e.target === this || e.target === $('.cat_menu_text')[0] || e.target.tagName === 'SPAN' || e.target === $('.cat_menu_title')[0] || e.target === $('.cat_burger')[0]){
-                $('#header_dropdown').css('left', '20%').css('left', 0).css('opacity', 1);
+                $('#header_dropdown').css('left', '20%').css('left', 0).css('opacity', 1).css('visibility','visible');
                 $(this).removeClass('mobile-header-closed').addClass('mobile-header-opened');
                     $('#filter_container').css('visibility','hidden');
             }
-        });
 
-        $(document).on('click', '.mobile-header-opened', function (e) {
-            if (e.target === this || e.target === $('.cat_menu_text')[0] || e.target.tagName === 'SPAN' || e.target === $('.cat_menu_title')[0] || e.target === $('.cat_burger')[0]){
-                $('#header_dropdown').css('opacity', 0).css('left', '15%');
-                $(this).removeClass('mobile-header-opened').addClass('mobile-header-closed');
-                $('#filter_container').css('visibility','visible');
-            }
+            $(document).on('click', '.mobile-header-opened', function (e) {
+                if (e.target === this || e.target === $('.cat_menu_text')[0] || e.target.tagName === 'SPAN' || e.target === $('.cat_menu_title')[0] || e.target === $('.cat_burger')[0]){
+                    $('#header_dropdown').css('opacity', 0).css('left', '15%').css('visibility','hidden');
+                    $(this).removeClass('mobile-header-opened').addClass('mobile-header-closed');
+                    $('#filter_container').css('visibility','visible');
+                }
+
+            });
         });
     }
     else{
+        // $(document).on('mouseover', '.mobile-header-closed',function () {
+        //         $('#header_dropdown').css('visibility', 'visible');
+        // });
         $(document).on('mouseover', '.header_hassubs',function () {
             let elements = $(this).find('ul')[0];
             $(elements).each(function () {

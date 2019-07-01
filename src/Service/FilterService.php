@@ -120,6 +120,12 @@ class FilterService
         }
         if(!empty($sort))
             $this->sortService->sort($sort, $arr);
+        else{
+            usort($arr, function($a, $b)
+            {
+                return $a->isIsAvailable() < $b->isIsAvailable();
+            });
+        }
         $products = new ArrayCollection();
 
         foreach ($arr as $product) {

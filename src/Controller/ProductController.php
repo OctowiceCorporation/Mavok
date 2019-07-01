@@ -5,7 +5,6 @@ namespace App\Controller;
 
 
 use App\Mappers\Category;
-use App\Mappers\Specification;
 use App\Repository\ProductRepository;
 use App\Service\CategoryService;
 use App\Service\ProductService;
