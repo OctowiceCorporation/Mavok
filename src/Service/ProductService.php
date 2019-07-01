@@ -27,6 +27,10 @@ class ProductService
     }
 
 
+    /**
+     * @param Category $category
+     * @return Product[]
+     */
     public function getProductsFromCategory(Category $category): ArrayCollection
     {
         $products = new ArrayCollection();

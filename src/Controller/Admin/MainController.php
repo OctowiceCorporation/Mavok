@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Form\CommonInfoForm;
 use App\Mappers\CommonInfo;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Repository\VisitorsRepository;
 use App\Service\CommonInfoService;
@@ -24,15 +25,25 @@ class MainController extends AbstractController
         return $this->render('admin/admin_index.html.twig');
     }
 
-    public function productsView(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request)
+    public function productsView(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request, CategoryRepository $categoryRepository)
     {
-        $products  = $paginator->paginate(
-            $productRepository->getProductsQuery(),
-            $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 30)
-        );
+        $sort = $request->get('sort_by');
+        $category = $categoryRepository->findOneBy([]);
+        if(empty($sort))
+            $products  = $paginator->paginate(
+                $productRepository->getProductsQuery(),
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 30)
+            );
+        else{
+            $products  = $paginator->paginate(
+                $productRepository->searchProducts(null, $sort),
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 30)
+            );
+        }
 
-        return $this->render('admin/admin_product.html.twig', ['products' => $products]);
+        return $this->render('admin/admin_product.html.twig', ['products' => $products, 'sort' => $sort, 'category' => $category]);
     }
 
     public function viewVisitors(VisitorsRepository $visitorsRepository)

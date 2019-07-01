@@ -23,6 +23,26 @@ class CategoryService
         $this->session = $session;
     }
 
+    public function getChildCategoriesId(Category $category): array
+    {
+        $arr[] = $category->getId();
+
+        foreach ($category->getChildren() as $child) {
+            $this->callbackCategoryId($child, $arr);
+        }
+
+        return $arr;
+    }
+
+    private function callbackCategoryId(Category $category, array &$arr)
+    {
+        $arr[] = $category->getId();
+
+        foreach ($category->getChildren() as $child) {
+            $this->callbackCategoryId($child, $arr);
+        }
+    }
+
     private function callbackGetProducts(Category $category, array &$array)
     {
         if($category->getProducts()->isEmpty()){
@@ -71,7 +91,7 @@ class CategoryService
         return $array;
     }
 
-    private function callbackCategory(Category $category, array &$array)
+    public function callbackCategory(Category $category, array &$array)
     {
         $array['name'] = $category->getName();
         $array['link'] = $this->generateUrlFromCategory($category);

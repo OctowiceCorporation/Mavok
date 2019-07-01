@@ -21,14 +21,38 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param string $text
+     * @param null $sort
      * @return Product[]
      */
-    public function searchProducts(string $text): iterable
+    public function searchProducts(string $text = null, $sort = null, $categories = null): iterable
     {
-        return $this->createQueryBuilder('p')
-            ->where('p.name LIKE :text')
-            ->setParameter('text', '%'.$text.'%')
-            ->getQuery()->getResult();
+        $query =  $this->createQueryBuilder('p');
+        if(!empty($text)){
+            $query
+                ->where('p.name LIKE :text')
+                ->setParameter('text', '%'.$text.'%');
+        }
+        if(!empty($sort)){
+            switch ($sort){
+                case 'sale':
+                    $query->andWhere('p.sale IS NOT NULL');
+                    break;
+                case 'top':
+                    $query->andWhere('p.special_offer = true');
+                    break;
+                case 'main':
+                    $query->andWhere('p.is_on_main = true');
+                    break;
+            }
+        }
+
+        if(!empty($categories)){
+            $query->setParameter('categories', $categories)
+                ->andWhere('p.category IN (:categories)');
+        }
+
+
+        return $query->getQuery()->getResult();
     }
 
     public function getNameAndId()

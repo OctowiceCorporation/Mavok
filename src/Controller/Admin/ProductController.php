@@ -28,11 +28,34 @@ class ProductController extends AbstractController
 
     public function getProducts($id, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request, ProductService $productService)
     {
+        $sort = $request->get('sort_by');
         $category = $categoryRepository->findOneBy(['id' => $id]);
         if(empty($category))
             return new Response('Category not found', 404);
 
         $products = $productService->getProductsFromCategory($category);
+        if(!empty($sort)){
+            switch ($sort){
+                case 'sale':
+                    foreach ($products as $index => $product) {
+                        if(empty($product->getSale()))
+                            $products->remove($index);
+                    }
+                    break;
+                case 'top':
+                    foreach ($products as $index => $product) {
+                        if(!$product->getSpecialOffer())
+                            $products->remove($index);
+                    }
+                    break;
+                case 'main':
+                    foreach ($products as $index => $product) {
+                        if(!$product->getIsOnMain())
+                            $products->remove($index);
+                    }
+                    break;
+            }
+        }
 
         $products = $paginator->paginate(
             $products,
@@ -42,7 +65,9 @@ class ProductController extends AbstractController
 
         return $this->render('admin/admin_product.html.twig', [
             'products' => $products,
-            'category' => $category]);
+            'category' => $category,
+            'sort' => $sort,
+            'search_category' => $category->getId()]);
     }
 
     public function addProduct($id, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager, UploadFileService $fileService, ProductRepository $productRepository)
@@ -100,22 +125,28 @@ class ProductController extends AbstractController
 
     }
 
-    public function searchProduct($text, ProductRepository $productRepository)
+    public function searchProduct($text, $sort,  ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, CategoryService $categoryService)
     {
-        $products = $productRepository->searchProducts($text);
+        $category = $request->get('category');
+        $categories = null;
+        if(!empty($category)){
+            $category = $categoryRepository->findOneBy(['id' => $category]);
+            $categories = $categoryService->getChildCategoriesId($category);
+        }
+        $products = $productRepository->searchProducts($text, $sort, $categories);
         $array = [];
         foreach ($products as $key => $product) {
-            $array[$key]['name'] = $product->getName();
-            if($product->getIsAvailable())
-                $array[$key]['is_available'] = 'Да';
-            else
-                $array[$key]['is_available'] = 'Нет';
-            $array[$key]['slug'] = $product->getSlug();
-            $array[$key]['id'] = $product->getId();
-            $array[$key]['maker'] = $product->getBrand()->getName();
-            $array[$key]['price'] = $product->getRetailPrice().' '.$product->getCurrencyName();
-            $array[$key]['category'] = $product->getCategory()->getName();
-            $array[$key]['updated_at'] = $product->getUpdatedAt();
+                $array[$key]['name'] = $product->getName();
+                if($product->getIsAvailable())
+                    $array[$key]['is_available'] = 'Да';
+                else
+                    $array[$key]['is_available'] = 'Нет';
+                $array[$key]['slug'] = $product->getSlug();
+                $array[$key]['id'] = $product->getId();
+                $array[$key]['maker'] = $product->getBrand()->getName();
+                $array[$key]['price'] = $product->getRetailPrice().' '.$product->getCurrencyName();
+                $array[$key]['category'] = $product->getCategory()->getName();
+                $array[$key]['updated_at'] = $product->getUpdatedAt();
         }
         return new Response(json_encode($array));
     }

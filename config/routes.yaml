@@ -19,7 +19,7 @@ ajax_search:
     path: /ajax_search/{text}
     controller: App\Controller\ProductController::ajaxSearch
 search_product:
-    path: /search_product/{text}
+    path: /search_product/{text}/{sort}
     controller: App\Controller\Admin\ProductController::searchProduct
 add_to_basket:
     path: /add_to_basket

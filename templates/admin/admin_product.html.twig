@@ -11,6 +11,17 @@
                 Все товары
                 {% endif %}
             </h6>
+            <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Отображать только товары:
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a style="cursor: pointer" class="dropdown-item" onclick=getUrl('');>Все</a>
+                        <a style="cursor: pointer" class="dropdown-item" onclick=getUrl('sale');>Со скидкой</a>
+                        <a style="cursor: pointer" class="dropdown-item" onclick=getUrl('main');>С главной страницы</a>
+                        <a style="cursor: pointer" class="dropdown-item" onclick=getUrl('top');>С хитом продаж</a>
+                  </div>
+            </div>
             <p style="float: right">
                 {% if category is defined %}
                     <button class="btn btn-primary"><a class="text-light" href="{{ path('add_product', {'id': category.id}) }}">Добавить товар</a></button>
@@ -20,6 +31,7 @@
 
             </p>
         </div>
+        <input id="sorting_type" type="hidden" value="{{ sort }}">
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row">
@@ -65,6 +77,14 @@
 
 {% block javasprict %}
     <script>
+    function getUrl(sorting_type) {
+                let link = window.location.href;
+                let url = new URL(link);
+                let params = new URLSearchParams(url.search.slice(1));
+
+                params.set('sort_by', sorting_type);
+                location.href = '?'+params.toString();
+            }
         $(document).ready(function () {
             document.onkeyup = function(e) {
               if (e.keyCode === 13) {
@@ -73,11 +93,20 @@
             };
             $(document).on('click', '#admin-product-search-button',function () {
                 let text = $('#admin-product-search').val();
+                let sort =$('#sorting_type').val();
+                if(sort === '')
+                    sort = 'null';
+                console.log(sort);
                 if(/\S/.test(text)){
                     $('#product-loader').show();
                     $.ajax({
                         method: "GET",
-                        url: "/search_product/" + text,
+                        url: "/search_product/" + text+'/'+sort,
+                        {% if search_category is defined %}
+                        data: {
+                            category: {{ search_category }}
+                        }
+                        {% endif %}
                     })
                         .done(function (result) {
                             result = JSON.parse(result);
@@ -107,5 +136,7 @@
             });
 
         });
+
+
     </script>
 {% endblock %}
