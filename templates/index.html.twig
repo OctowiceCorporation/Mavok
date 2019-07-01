@@ -25,21 +25,21 @@
                                     <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
-                                                <p class="carousel_sale">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} грн</p>
+                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1) }} грн</p>
                                             {% else %}
-                                                <p class="carousel_sale">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} грн</p>
+                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale))|round(1) }} грн</p>
                                             {% endif %}
 
                                             {% if first.productValue is not null %}
-                                                <s class="carousel_price">{{ first.productValue * first.retailPrice }} грн</s>
+                                                <s class="carousel_price">{{ (first.productValue * first.retailPrice)|round(1) }} грн</s>
                                             {% else %}
-                                                <s class="carousel_price">{{ first.retailPrice }} грн</s>
+                                                <s class="carousel_price">{{ first.retailPrice|round(1) }} грн</s>
                                             {% endif %}
                                         {% else %}
                                             {% if first.productValue is not null %}
-                                                <p class="carousel_sale">{{ first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale) }} грн</p>
+                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1) }} грн</p>
                                             {% else %}
-                                                <p class="carousel_sale">{{ first.retailPrice - (first.retailPrice /100 * first.sale)}} грн</p>
+                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale))|round(1) }} грн</p>
                                             {% endif %}
                                         {% endif %}
 
