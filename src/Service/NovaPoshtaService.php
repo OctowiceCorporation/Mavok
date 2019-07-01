@@ -18,7 +18,7 @@ class NovaPoshtaService
     public function getJson()
     {
         $arr = [];
-        $cities = $this->cityRepository->findAll();
+        $cities = $this->cityRepository->findBy([],['name' => 'ASC']);
         foreach ($cities as $key => $city) {
             $arr[$key] = [];
             $arr[$key]['city'] = $city->getName();
