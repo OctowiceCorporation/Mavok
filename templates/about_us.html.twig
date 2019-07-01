@@ -17,30 +17,31 @@
 
                         <!-- Contact Item -->
                         <div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
-                            <div class="contact_info_image"><img src="images/contact_1.png" alt=""></div>
+                            <div class="contact_info_image"><i class="fas text-primary fa-2x fa-mobile-alt"></i></div>
                             <div class="contact_info_content">
                                 <div class="contact_info_title">Номер телефона</div>
                                 <div class="contact_info_text">
-                                    {{ phone }}
+                                    <a href="tel:{{ phone }}"><p>{{ phone }}</p></a>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Contact Item -->
                         <div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
-                            <div class="contact_info_image"><img src="images/contact_2.png" alt=""></div>
+                            <div class="contact_info_image"><i class="fas text-primary fa-2x fa-envelope"></i></div>
                             <div class="contact_info_content">
                                 <div class="contact_info_title">Email</div>
-                                <div class="contact_info_text">fastsales@gmail.com</div>
+                                <div class="contact_info_text"><a style="border: unset" href="mailto:{{ mail }}"><p>{{ mail }}</p></a></div>
                             </div>
                         </div>
 
                         <!-- Contact Item -->
                         <div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
-                            <div class="contact_info_image"><img src="images/contact_3.png" alt=""></div>
+                            <div class="contact_info_image"><i class="fas fa-2x text-primary fa-map-marker-alt"></i></div>
                             <div class="contact_info_content">
                                 <div class="contact_info_title">Адресс</div>
-                                <div class="contact_info_text">{{ address }}</div>
+                                <div class="contact_info_text"><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/{{ address }}"><p>{{ address }}</p></a>
+                                </div>
                             </div>
                         </div>
 

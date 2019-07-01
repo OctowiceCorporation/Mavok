@@ -288,8 +288,9 @@ class DefaultController extends AbstractController
     {
         $phone = $commonInfoService->getParameter('phone_number');
         $address = $commonInfoService->getParameter('address');
+        $mail = $commonInfoService->getParameter('mail');
         $about = $commonInfoService->getParameter('about_us');
-        return $this->render('about_us.html.twig', ['phone' => $phone, 'address' => $address, 'about' => $about]);
+        return $this->render('about_us.html.twig', ['phone' => $phone, 'address' => $address, 'mail' => $mail, 'about' => $about]);
     }
 
     public function showBlog(BlogRepository $blogRepository)

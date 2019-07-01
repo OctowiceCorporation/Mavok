@@ -18,28 +18,32 @@
                                     <div class="mt-lg-4 mt-sm-0 text-dark">
                                         <h4>
                                             <a class="text-dark" href="{{ path('product', {'slug': first.slug}) }}">
-                                                {{ first.name }}
+                                                {% if first.name | length > 110 %}
+                                                    {{ first.name | slice(0,110) }}...
+                                                {% else %}
+                                                    {{ first.name }}
+                                                {% endif %}
                                             </a>
                                         </h4>
                                     </div>
-                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 20px;">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
-                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1) }} грн</p>
+                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1,'common') }} грн</p>
                                             {% else %}
-                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale))|round(1) }} грн</p>
+                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale))|round(1,'common') }} грн</p>
                                             {% endif %}
 
                                             {% if first.productValue is not null %}
-                                                <s class="carousel_price">{{ (first.productValue * first.retailPrice)|round(1) }} грн</s>
+                                                <s class="carousel_price">{{ (first.productValue * first.retailPrice)|round(1,'common') }} грн</s>
                                             {% else %}
-                                                <s class="carousel_price">{{ first.retailPrice|round(1) }} грн</s>
+                                                <s class="carousel_price">{{ first.retailPrice|round(1,'common') }} грн</s>
                                             {% endif %}
                                         {% else %}
                                             {% if first.productValue is not null %}
-                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1) }} грн</p>
+                                                <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1,'common') }} грн</p>
                                             {% else %}
-                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale))|round(1) }} грн</p>
+                                                <p class="carousel_sale">{{ (first.retailPrice - (first.retailPrice /100 * first.sale))|round(1,'common') }} грн</p>
                                             {% endif %}
                                         {% endif %}
 
@@ -66,26 +70,32 @@
                                             </div>
                                         {% endif %}
                                         <div class="mt-lg-4 mt-sm-0 text-dark">
-                                            <h4><a class="text-dark" href="{{ path('product', {'slug': mainPage.slug}) }}">{{ mainPage.name }}</a></h4>
+                                            <h4><a class="text-dark" href="{{ path('product', {'slug': mainPage.slug}) }}">
+                                                    {% if mainPage.name | length > 110 %}
+                                                        {{ mainPage.name | slice(0,110) }}...
+                                                    {% else %}
+                                                        {{ mainPage.name }}
+                                                    {% endif %}
+                                                </a></h4>
                                         </div>
-                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
+                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 20px;">
                                             {% if mainPage.sale is not null %}
                                                 {% if mainPage.productValue is not null %}
-                                                    <p class="carousel_sale">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
+                                                    <p class="carousel_sale">{{ (mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale))|round(1,'common') }} грн</p>
                                                 {% else %}
-                                                    <p class="carousel_sale">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
+                                                    <p class="carousel_sale">{{ (mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale))|round(1,'common')}} грн</p>
                                                 {% endif %}
 
                                                 {% if mainPage.productValue is not null %}
-                                                    <s class="carousel_price">{{ mainPage.productValue * mainPage.retailPrice }} грн</s>
+                                                    <s class="carousel_price">{{ (mainPage.productValue * mainPage.retailPrice)|round(1,'common') }} грн</s>
                                                 {% else %}
-                                                    <s class="carousel_price">{{ mainPage.retailPrice }} грн</s>
+                                                    <s class="carousel_price">{{ mainPage.retailPrice|round(1,'common') }} грн</s>
                                                 {% endif %}
                                             {% else %}
                                                 {% if mainPage.productValue is not null %}
-                                                    <p class="carousel_sale">{{ mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale) }} грн</p>
+                                                    <p class="carousel_sale">{{ (mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale))|round(1,'common') }} грн</p>
                                                 {% else %}
-                                                    <p class="carousel_sale">{{ mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale)}} грн</p>
+                                                    <p class="carousel_sale">{{ (mainPage.retailPrice - (mainPage.retailPrice /100 * mainPage.sale))|round(1,'common')}} грн</p>
                                                 {% endif %}
                                             {% endif %}
 

@@ -10,7 +10,25 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
-
+    <style>
+        .cat_menu_container ul
+        {
+            visibility: hidden;
+        }
+        .basket_count {
+            position: absolute;
+            font-size: large;
+            right: -10px;
+            top: 35px;
+        }
+        @media only screen and (max-width: 575px) {
+            .basket_count {
+                font-size: small !important;
+                right: -14px !important;
+                top: 18px !important;
+            }
+        }
+    </style>
 
 {% endblock %}
 
