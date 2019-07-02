@@ -8,8 +8,8 @@
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div style="display: inline-flex; height: 300px">
-                                <div class="col-6"">
+                            <div class="row" style="display: inline-flex; height: 300px">
+                                <div class="col-6">
                                     {% if first.sale is not null %}
                                     <div>
                                             <h2>Акция -{{ first.sale }}%</h2>
@@ -17,7 +17,7 @@
                                     {% endif %}
                                     <div class="mt-lg-4 mt-sm-0 text-dark">
                                         <h4>
-                                            <a class="text-dark" href="{{ path('product', {'slug': first.slug}) }}">
+                                            <a class="text-dark" style="word-break: break-word" href="{{ path('product', {'slug': first.slug}) }}">
                                                 {% if first.name | length > 110 %}
                                                     {{ first.name | slice(0,110) }}...
                                                 {% else %}
@@ -49,7 +49,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6" style="text-align: right">
                                     <img onerror="this.src = '/no-image.png'" style="mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
                      "/images/{{ first.image.get(0).ImagePath }}"
                                     {% else %}
@@ -62,7 +62,7 @@
 
                         {% for mainPage in mainPageProducts %}
                             <div class="carousel-item">
-                                <div style="display: inline-flex; height: 300px">
+                                <div class="row" style="display: inline-flex; height: 300px">
                                     <div class="col-6" style="height: 300px">
                                         {% if mainPage.sale is not null %}
                                             <div>
@@ -70,7 +70,7 @@
                                             </div>
                                         {% endif %}
                                         <div class="mt-lg-4 mt-sm-0 text-dark">
-                                            <h4><a class="text-dark" href="{{ path('product', {'slug': mainPage.slug}) }}">
+                                            <h4><a class="text-dark" style="word-break: break-word" href="{{ path('product', {'slug': mainPage.slug}) }}">
                                                     {% if mainPage.name | length > 110 %}
                                                         {{ mainPage.name | slice(0,110) }}...
                                                     {% else %}
@@ -101,7 +101,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6" style="text-align: right">
                                         <img onerror="this.src = '/no-image.png'" src={% if mainPage.image.get(0).ImagePath is defined %}
                      "/images/{{ mainPage.image.get(0).ImagePath }}"
                                         {% else %}
