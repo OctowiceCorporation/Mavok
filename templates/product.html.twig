@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: auto" class="product_text">{{ product.description|raw }}</div>
+            <div id="description" style="width: auto" class="product_text">{{ product.description|raw }}</div>
             <table class="table">
                 <thead>
                 <tr>
@@ -344,6 +344,16 @@
     <script src="/js/main.js"></script>
 
     <script>
+        $('#description').find('*').css('font-family','Rubik');
+        $('#description').find('table').css('width', '50% !important');
+        (function() {
+            var allimgs = document.images;
+            for (var i = 0; i < allimgs.length; i++) {
+                allimgs[i].onerror = function() {
+                    this.src='/no-image.png';
+                }
+            }
+        })();
         $(document).on('click', '#quantity_inc_button', function () {
             $.ajax({
                 method: "POST",
