@@ -8,8 +8,8 @@
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div style="display: inline-flex">
-                                <div class="col-6" style="height: 300px">
+                            <div style="display: inline-flex; height: 300px">
+                                <div class="col-6"">
                                     {% if first.sale is not null %}
                                     <div>
                                             <h2>Акция -{{ first.sale }}%</h2>
@@ -26,7 +26,7 @@
                                             </a>
                                         </h4>
                                     </div>
-                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 20px;">
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
                                                 <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1,'common') }} грн</p>
@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto; mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
+                                    <img onerror="this.src = '/no-image.png'" style="mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
                      "/images/{{ first.image.get(0).ImagePath }}"
                                     {% else %}
                                         "/no-image.png"
@@ -62,7 +62,7 @@
 
                         {% for mainPage in mainPageProducts %}
                             <div class="carousel-item">
-                                <div style="display: inline-flex">
+                                <div style="display: inline-flex; height: 300px">
                                     <div class="col-6" style="height: 300px">
                                         {% if mainPage.sale is not null %}
                                             <div>
@@ -78,7 +78,7 @@
                                                     {% endif %}
                                                 </a></h4>
                                         </div>
-                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 20px;">
+                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
                                             {% if mainPage.sale is not null %}
                                                 {% if mainPage.productValue is not null %}
                                                     <p class="carousel_sale">{{ (mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale))|round(1,'common') }} грн</p>
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <img onerror="this.src = '/no-image.png'" style="width: inherit; height: auto" src={% if mainPage.image.get(0).ImagePath is defined %}
+                                        <img onerror="this.src = '/no-image.png'" src={% if mainPage.image.get(0).ImagePath is defined %}
                      "/images/{{ mainPage.image.get(0).ImagePath }}"
                                         {% else %}
                                             "/no-image.png"

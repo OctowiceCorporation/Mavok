@@ -5,13 +5,16 @@ namespace App\Controller;
 
 
 
+use App\DTO\Review as ReviewDto;
 use App\Entity\Category;
 use App\Entity\Image;
 use App\Entity\NovaPoshtaCity;
 use App\Entity\NovaPoshtaPostOffice;
 use App\Entity\Product;
+use App\Entity\Review;
 use App\Entity\Specification;
 use App\Entity\Visitors;
+use App\Form\AddReview;
 use App\Form\FilterForm;
 use App\Mappers\Blog as BlogMapper;
 use App\Mappers\Blog;
@@ -19,10 +22,12 @@ use App\Repository\BlogRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\NovaPoshtaCityRepository;
 use App\Repository\ProductRepository;
+use App\Repository\ReviewRepository;
 use App\Service\CommonInfoService;
 use App\Service\FilterService;
 use App\Service\ProductService;
 use App\Service\SortService;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -41,21 +46,21 @@ class DefaultController extends AbstractController
 
     public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository, ProductService $productService, EntityManagerInterface $em)
     {
-        $ip = filter_input(INPUT_SERVER, 'HTTP_CLIENT_IP', FILTER_VALIDATE_IP)
-            ?: filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP)
-                ?: $_SERVER['REMOTE_ADDR']
-                ?? '0.0.0.0';
-        $info = json_decode(file_get_contents('https://www.iplocate.io/api/lookup/'.$ip), true);
-        $visitor = new Visitors();
-        $visitor->setCity($info['city']);
-        $visitor->setCountry($info['country']);
-        $visitor->setIp($ip);
-        $visitor->setLat($info['latitude']);
-        $visitor->setLng($info['longitude']);
-        $visitor->setPage('Главная');
-        $visitor->setOrganization($info['org']);
-        $em->persist($visitor);
-        $em->flush();
+//        $ip = filter_input(INPUT_SERVER, 'HTTP_CLIENT_IP', FILTER_VALIDATE_IP)
+//            ?: filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP)
+//                ?: $_SERVER['REMOTE_ADDR']
+//                ?? '0.0.0.0';
+//        $info = json_decode(file_get_contents('https://www.iplocate.io/api/lookup/'.$ip), true);
+//        $visitor = new Visitors();
+//        $visitor->setCity($info['city']);
+//        $visitor->setCountry($info['country']);
+//        $visitor->setIp($ip);
+//        $visitor->setLat($info['latitude']);
+//        $visitor->setLng($info['longitude']);
+//        $visitor->setPage('Главная');
+//        $visitor->setOrganization($info['org']);
+//        $em->persist($visitor);
+//        $em->flush();
 
 
         $mainCategories = $categoryRepository->findBy(['parent' => null]);
@@ -317,6 +322,31 @@ class DefaultController extends AbstractController
             'related' => $related
         ]);
 
+    }
+
+    public function showReviews(Request $request, EntityManagerInterface $manager, ReviewRepository $repository)
+    {
+        $reviews = $repository->findAll();
+        $dto = new ReviewDto();
+        $form = $this->createForm(AddReview::class,$dto);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $review = new Review();
+            $review->setName($dto->getName())
+                   ->setReview($dto->getReview())
+                   ->setCons($dto->getCons())
+                   ->setPros($dto->getPros())
+                   ->setDate(new DateTime())
+                   ->setIsVisible(true)
+            ;
+            $manager->persist($review);
+            $manager->flush();
+            return $this->redirectToRoute('showReviews');
+        }
+        return $this->render('reviews.html.twig',[
+            'reviews' => $reviews,
+            'form' => $form->createView()
+        ]);
     }
 
     public function parceNP(EntityManagerInterface $em)

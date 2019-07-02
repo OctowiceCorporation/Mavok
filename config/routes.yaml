@@ -57,6 +57,9 @@ showBlog:
 showBlogPost:
     path: /post/{id}
     controller: App\Controller\DefaultController::showBlogPost
+showReviews:
+    path: /reviews
+    controller: App\Controller\DefaultController::showReviews
 admin:
     path: /adminPage
     controller: App\Controller\Admin\MainController:index

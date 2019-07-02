@@ -273,6 +273,11 @@ section
 {
 	display: none;
 }
+.carousel-item img
+{
+	max-height: 300px;
+	width: auto;
+}
 .carousel_sale
 {
 	font-size: xx-large;
