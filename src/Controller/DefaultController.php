@@ -337,11 +337,12 @@ class DefaultController extends AbstractController
                    ->setCons($dto->getCons())
                    ->setPros($dto->getPros())
                    ->setDate(new DateTime())
+                   ->setRating($dto->getRating())
                    ->setIsVisible(true)
             ;
             $manager->persist($review);
             $manager->flush();
-            return $this->redirectToRoute('showReviews');
+            $reviews[] = $review;
         }
         return $this->render('reviews.html.twig',[
             'reviews' => $reviews,

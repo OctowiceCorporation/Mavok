@@ -46,6 +46,11 @@ class Review
      */
     private $is_visible;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $rating;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +124,18 @@ class Review
     public function setIsVisible(bool $is_visible): self
     {
         $this->is_visible = $is_visible;
+
+        return $this;
+    }
+
+    public function getRating(): ?float
+    {
+        return $this->rating;
+    }
+
+    public function setRating(float $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }

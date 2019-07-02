@@ -35,6 +35,9 @@
                                 {{ review.cons }}
                             {% endif %}
                         </p>
+                        <span class="text-warning h5">Оценка:</span>
+                            <div class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
+
                     </div>
                 </div>
                 {% endfor %}
@@ -46,6 +49,26 @@
         <div class="col-4">
             {{ form_start(form) }}
             {{ form_end(form) }}
+            <div id="rating" data-rateyo-rating="5"></div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+    <script>
+        let form_group = $('<div class="form-group"></div>');
+        form_group.append('<label>Оценка</label>');
+        form_group.append($('#rating'));
+        $('#add_review_rating').after(form_group).val(5);
+        $('#rating').rateYo({
+            ratedFill: "#ffa600",
+            onSet: function (rating) {
+                $('#add_review_rating').val(rating);
+            }
+        });
+        $('.rating').rateYo({});
+    </script>
 {% endblock %}
