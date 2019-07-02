@@ -329,6 +329,11 @@
 		width: 100%;
 		height: auto;
 	}
+	.product_text .gr
+	{
+		width: 22vw;
+		word-break: break-word;
+	}
 }
 
 /************
@@ -446,6 +451,10 @@
 	}
 	#view_all_resp {
 		display: inherit!important;
+	}
+	#view_all
+	{
+		display: none;
 	}
 	#filter_trigger {
 		display: none;

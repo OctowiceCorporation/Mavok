@@ -140,6 +140,11 @@
     .recently_viewed_item {
         width: 65%;
     }
+    .viewed
+    {
+        padding-bottom: 30px;
+        padding-top: 30px;
+    }
 }
 
 /************
