@@ -237,12 +237,7 @@
 	{
 		visibility: hidden;
 		opacity: 0;
-		padding-left: 1rem;
         width: fit-content;
-	}
-	.header_hassubs ul {
-		padding-left: 25px;
-		margin-left: 15px;
 	}
 	.char_col:not(:last-child):not(:nth-child(3))
 	{

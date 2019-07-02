@@ -200,8 +200,8 @@
 	}
 	.cat_menu_container ul
 	{
-		visibility: hidden!important;
-		opacity: 0!important;
+		visibility: hidden;
+		opacity: 0;
 	}
 	.char_col:not(:last-child):not(:nth-child(3))
 	{
@@ -453,11 +453,6 @@
 	{
 		font-size: 13px!important;
 		line-height: 36px!important;
-	}
-	.cat_menu li ul
-	{
-		left: 50% !important;
-		z-index: 10!important;
 	}
 	.page_menu_item > a
 	{

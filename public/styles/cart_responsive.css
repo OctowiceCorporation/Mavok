@@ -125,6 +125,10 @@
 	{
 		top: unset!important;
 	}
+	.container img
+	{
+		width: 100%;
+	}
 	.header_search
 	{
 		height: 50px;
