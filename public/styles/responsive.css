@@ -460,6 +460,11 @@
 	#basket {
 		display: none;
 	}
+	.carousel-item img
+	{
+		max-height: 20vh;
+		max-width: 40vw;
+	}
 	#resp_basket {
 		display: inline-block!important;
 		padding-left: 7rem;

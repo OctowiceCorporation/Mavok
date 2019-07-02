@@ -9,7 +9,7 @@
 {% endblock %}
 {% block body %}
     <div class="container py-5 row w-75 m-auto">
-        <div class="col-8">
+        <div class="col-lg-8 col-sm-12">
             {% if reviews is not empty %}
                 {% for review in reviews %}
                 <div class="container row py-3">
@@ -43,9 +43,12 @@
                 <h2 class="text-center">Пока что отзывов нет:(</h2>
             {% endif %}
         </div>
-        <div class="col-4">
+        <div class="col-lg-4 col-sm-12">
             {{ form_start(form) }}
             {{ form_end(form) }}
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
 {% endblock %}
