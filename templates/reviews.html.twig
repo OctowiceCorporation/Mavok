@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/product_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/product_responsive.css') }}">
     <style>
         .cat_menu_container ul{
             visibility: hidden;
@@ -31,7 +33,7 @@
                 <div class="single_review container mb-3 mx-auto row py-3">
                     <div class="col-lg-2 col-sm-12 py-lg-3 py-sm-1">
                        <span>{{ review.name }}</span>
-                       <p>{{ review.date | date('d-m-Y') }}</p>
+                       <p>{{ review.date | date('d/m/Y H:i') }}</p>
                     </div>
                     <div class="col-lg-10 col-sm-12 p-3" style="background-color: #f5f5f5;border-bottom: solid thin #e8e8e8;box-shadow: 0px 1px 5px rgba(0,0,0,0.1);">
                         <p class="text-dark">{{ review.review }}</p>
@@ -51,6 +53,9 @@
                                 {{ review.cons }}
                             {% endif %}
                         </p>
+                        <span class="text-warning h5">Оценка:</span>
+                            <div style="z-index: 0" class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
+
                     </div>
                 </div>
                 {% endfor %}
@@ -62,9 +67,26 @@
         <div class="col-lg-4 col-sm-12">
             {{ form_start(form) }}
             {{ form_end(form) }}
+            <div id="rating" data-rateyo-rating="5"></div>
         </div>
     </div>
 {% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+    <script>
+        let form_group = $('<div class="form-group"></div>');
+        form_group.append('<label>Оценка</label>');
+        form_group.append($('#rating'));
+        $('#add_review_rating').after(form_group).val(5);
+        $('#rating').rateYo({
+            ratedFill: "#ffa600",
+            onSet: function (rating) {
+                $('#add_review_rating').val(rating);
+            }
+        });
+        $('.rating').rateYo({});
+    </script>
 {% endblock %}

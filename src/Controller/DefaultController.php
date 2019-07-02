@@ -326,7 +326,7 @@ class DefaultController extends AbstractController
 
     public function showReviews(Request $request, EntityManagerInterface $manager, ReviewRepository $repository)
     {
-        $reviews = $repository->findAll();
+        $reviews = $repository->findBy([],['date' => 'DESC']);
         $dto = new ReviewDto();
         $form = $this->createForm(AddReview::class,$dto);
         $form->handleRequest($request);
@@ -337,6 +337,7 @@ class DefaultController extends AbstractController
                    ->setCons($dto->getCons())
                    ->setPros($dto->getPros())
                    ->setDate(new DateTime())
+                   ->setRating($dto->getRating())
                    ->setIsVisible(true)
             ;
             $manager->persist($review);

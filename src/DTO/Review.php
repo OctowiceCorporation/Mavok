@@ -14,8 +14,9 @@ class Review
     private $cons;
     private $date;
     private $is_visible;
+    private $rating;
 
-    public function __construct(string $name = null, string $review = null, string $pros = null, string $cons = null, DateTime $date = null, bool $is_visible = null)
+    public function __construct(string $name = null, string $review = null, string $pros = null, string $cons = null, DateTime $date = null, bool $is_visible = null, $rating = null)
     {
         $this->name = $name;
         $this->review = $review;
@@ -23,6 +24,7 @@ class Review
         $this->cons = $cons;
         $this->date = $date;
         $this->is_visible = $is_visible;
+        $this->rating = $rating;
     }
 
     public function getName(): ?string
@@ -85,4 +87,13 @@ class Review
         $this->is_visible = $is_visible;
     }
 
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    public function setRating($rating): void
+    {
+        $this->rating = $rating;
+    }
 }
