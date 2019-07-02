@@ -17,7 +17,7 @@
                                     {% endif %}
                                     <div class="mt-lg-4 mt-sm-0 text-dark">
                                         <h4>
-                                            <a class="text-dark" href="{{ path('product', {'slug': first.slug}) }}">
+                                            <a class="text-dark" style="word-break: break-word" href="{{ path('product', {'slug': first.slug}) }}">
                                                 {% if first.name | length > 110 %}
                                                     {{ first.name | slice(0,110) }}...
                                                 {% else %}
@@ -70,7 +70,7 @@
                                             </div>
                                         {% endif %}
                                         <div class="mt-lg-4 mt-sm-0 text-dark">
-                                            <h4><a class="text-dark" href="{{ path('product', {'slug': mainPage.slug}) }}">
+                                            <h4><a class="text-dark" style="word-break: break-word" href="{{ path('product', {'slug': mainPage.slug}) }}">
                                                     {% if mainPage.name | length > 110 %}
                                                         {{ mainPage.name | slice(0,110) }}...
                                                     {% else %}
