@@ -54,7 +54,7 @@
                             {% endif %}
                         </p>
                         <span class="text-warning h5">Оценка:</span>
-                            <div style="z-index: 0" class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
+                            <div style="z-index: 0; padding: 0" class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
 
                     </div>
                 </div>
@@ -83,10 +83,13 @@
         $('#add_review_rating').after(form_group).val(5);
         $('#rating').rateYo({
             ratedFill: "#ffa600",
+            starWidth: "14px",
             onSet: function (rating) {
                 $('#add_review_rating').val(rating);
             }
         });
-        $('.rating').rateYo({});
+        $('.rating').rateYo({
+            starWidth: "14px"
+        });
     </script>
 {% endblock %}
