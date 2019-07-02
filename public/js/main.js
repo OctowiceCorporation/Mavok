@@ -49,7 +49,7 @@ $(document).ready(function () {
 
 
     if(window.screen.width < 800){
-        $('#header_dropdown').css('width', '95vw').css('visibility', 'visible');
+        $('#header_dropdown').css('width', '95vw').css('visibility', 'hidden');
         $(document).on('click', '.open-ul',function () {
             let uls = $('.open-ul-opened');
             let not_closing = $(this).parents('ul');
