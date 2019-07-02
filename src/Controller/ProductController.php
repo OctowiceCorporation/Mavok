@@ -10,6 +10,7 @@ use App\Service\CategoryService;
 use App\Service\ProductService;
 use App\Service\SortService;
 use Doctrine\Common\Collections\ArrayCollection;
+use DOMDocument;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -70,6 +71,12 @@ class ProductController extends AbstractController
         if(sizeof($viewed) == 11){
             unset($viewed[10]);
         }
+
+        error_reporting(E_ERROR | E_PARSE);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($product->getDescription(), 'HTML-ENTITIES', "UTF-8"));
+        $product->setDescription($doc->saveHTML());
+        error_reporting(-1);
             
         $cookie = new Cookie('viewed_products', json_encode($viewed));
         $response = new Response($this->renderView('product.html.twig', ['product' => $product, 'specifications' => $specifications, 'brand' => $brand, 'admin' => $admin, 'crumbs' => $crumbs, 'recommend' => $recommended, 'similar_products' => $similarProducts]));

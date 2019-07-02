@@ -220,6 +220,16 @@ class Product
         $this->specifications = $specifications;
     }
 
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+
+
 
 
 
