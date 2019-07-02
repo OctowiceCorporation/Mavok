@@ -1,11 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-        .cat_menu_container ul{
-            visibility: hidden;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/styles/product_styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/product_responsive.css">
 {% endblock %}
 {% block body %}
     <div class="container py-5 row w-75 m-auto">
@@ -36,7 +33,7 @@
                             {% endif %}
                         </p>
                         <span class="text-warning h5">Оценка:</span>
-                            <div class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
+                            <div style="z-index: 0" class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
 
                     </div>
                 </div>

@@ -326,7 +326,7 @@ class DefaultController extends AbstractController
 
     public function showReviews(Request $request, EntityManagerInterface $manager, ReviewRepository $repository)
     {
-        $reviews = $repository->findAll();
+        $reviews = $repository->findBy([],['date' => 'DESC']);
         $dto = new ReviewDto();
         $form = $this->createForm(AddReview::class,$dto);
         $form->handleRequest($request);
@@ -342,7 +342,7 @@ class DefaultController extends AbstractController
             ;
             $manager->persist($review);
             $manager->flush();
-            $reviews[] = $review;
+            return $this->redirectToRoute('showReviews');
         }
         return $this->render('reviews.html.twig',[
             'reviews' => $reviews,
