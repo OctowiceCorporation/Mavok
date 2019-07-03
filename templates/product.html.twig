@@ -174,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            <div class="scrolling-wrapper">
+            <div class="scrolling-wrapper" style="-webkit-overflow-scrolling: touch;">
                 {% for specialProduct in recommend %}
                     <a href="{{ path('product', {'slug': specialProduct.slug }) }}">
                         <div class="arrivals_slider_item card">
@@ -252,7 +252,7 @@
                     </div>
                 </div>
             </div>
-            <div class="scrolling-wrapper">
+            <div class="scrolling-wrapper" style=" -webkit-overflow-scrolling: touch;">
                 {% for specialProduct in similar_products %}
                     <a href="{{ path('product', {'slug': specialProduct.slug }) }}">
                         <div class="arrivals_slider_item card">
