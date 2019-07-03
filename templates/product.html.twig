@@ -49,7 +49,7 @@
                 <div class="col-lg-2 order-lg-1 order-2" style="height: 525px; overflow-y: auto" id="gallery">
                     <ul class="image_list">
                         {% for image in product.image %}
-                            <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" onerror="this.src='/no-image.png'"  alt=""></li>
+                            <li data-image="/images/{{ image.ImagePath }}"><img style="object-fit: contain" src="/images/{{ image.ImagePath }}" onerror="this.src='/no-image.png'"  alt=""></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -335,10 +335,11 @@
     <script src="/js/main.js"></script>
 
     <script>
-        $('#description').find('*').css('font-family','Rubik').css('font-size','14px').css('color', 'black');
+        $('#description').find('*').removeAttr('style').css('font-family','Rubik').css('font-size','14px').css('color', 'black').removeAttr('href');
         $('#description').find('strong, h3, h2, h1, h4, h5, h6, b, s').each(function () {
             $(this).replaceWith('<p>'+$(this).html()+'</p>');
         });
+        $('#description').find('ol').css('padding-left', '15px');
         $('#description').find('table').removeAttr('style').addClass('table-responsive');
         (function() {
             var allimgs = document.images;
