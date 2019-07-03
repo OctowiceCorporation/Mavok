@@ -339,7 +339,7 @@
         $('#description').find('strong, h3, h2, h1, h4, h5, h6, b, s').each(function () {
             $(this).replaceWith('<p>'+$(this).html()+'</p>');
         });
-        $('#description').find('table').css('width', '50% !important');
+        $('#description').find('table').removeAttr('style').addClass('table-responsive');
         (function() {
             var allimgs = document.images;
             for (var i = 0; i < allimgs.length; i++) {
