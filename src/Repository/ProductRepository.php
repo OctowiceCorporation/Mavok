@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -130,6 +131,17 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return Query
+     */
+    public function getSaleProductsQuery()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.sale is not null')
+            ->getQuery();
+    }
+
     public function getProductsQuery(int $id = null)
     {
         $query =  $this->createQueryBuilder('p');

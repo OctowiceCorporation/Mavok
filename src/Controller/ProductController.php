@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Mappers\Category;
+use App\Mappers\Product;
 use App\Repository\ProductRepository;
 use App\Service\CategoryService;
 use App\Service\ProductService;
@@ -83,6 +84,32 @@ class ProductController extends AbstractController
         $response->headers->setCookie($cookie);
 
         return $response;
+    }
+
+    public function saleProducts(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request, ProductService $productService, SortService $sortService)
+    {
+        $sort = $request->get('sort_by');
+        $products = $productRepository->getSaleProducts();
+        $productArray = [];
+        foreach ($products as $product) {
+            if($product->getIsVisible())
+                $productArray[] = $productService->getProductPrice($product);
+        }
+        if(!empty($sort))
+            $sortService->sort($sort, $productArray);
+        else{
+            usort($productArray, function($a, $b)
+            {
+                return $a->isIsAvailable() < $b->isIsAvailable();
+            });
+        }
+        $productsPaginated = $paginator->paginate(
+            $productArray,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 20)
+        );
+
+        return $this->render('sale.html.twig',['products' => $productsPaginated, 'length' => sizeof($products)]);
     }
 
     public function searchProduct(ProductRepository $productRepository, Request $request, PaginatorInterface $paginator, ProductService $productService, SortService $sortService)

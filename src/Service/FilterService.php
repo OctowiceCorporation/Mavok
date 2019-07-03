@@ -44,6 +44,7 @@ class FilterService
     public function getSpecificationsFromCategory(Category $category): array
     {
         $specifications = [];
+        $special = ['name' => 'Товары с акцией', 'is_countable' => null, 'values' => ['да' => 'да']];
         $manuf = ['name' => 'Производитель', 'is_countable' => null, 'values' => []];
         $country = ['name' => 'Страна производитель', 'is_countable' => null, 'values' => []];
         foreach($this->specificationRepository->getSpecificationFromCategory($category->getId()) as $item){
@@ -63,7 +64,7 @@ class FilterService
         }
 
 
-        $specifications = [$manuf['name'] => $manuf, $country['name'] => $country] + $specifications;
+        $specifications = [$special['name'] => $special, $manuf['name'] => $manuf, $country['name'] => $country] + $specifications;
 
         return array_values($specifications);
     }
@@ -86,7 +87,7 @@ class FilterService
                 }
             }
             foreach ($filter as $key =>$item) {
-                if (count($item['values']) == 1) {
+                if (count($item['values']) == 1 && $item['name'] !== 'Товары с акцией') {
                     unset($filter[$key]);
                 }
             }
@@ -98,6 +99,7 @@ class FilterService
     {
         if(empty($pagination))
             $pagination = 1;
+        $onlySale = false;
         foreach ($filter as $index => $item) {
             if(!is_array($data[$index]))
                 $filter[$index]['values'] = explode(';',$data[$index]);
@@ -105,6 +107,10 @@ class FilterService
                 $filter[$index]['values'] = $data[$index];
             if(empty($filter[$index]['values']) || empty($filter[$index]['values'][0]) || (isset($filter[$index]['min']) &&$filter[$index]['values'][0] == $filter[$index]['min'] && $filter[$index]['values'][1] == $filter[$index]['max']))
                 unset($filter[$index]);
+            elseif($filter[$index]['name'] === 'Товары с акцией'){
+                unset($filter[$index]);
+                $onlySale = true;
+            }
         }
 
         $result = $last_category->getProducts()->toArray();
@@ -112,10 +118,20 @@ class FilterService
         $basket = $this->session->get('basket');
         foreach ($result as $item) {
             if($item->getIsVisible()){
-                $amount = 0;
-                if(isset($basket[$item->getId()]))
-                    $amount = $basket[$item->getId()];
-                $arr[] = $this->productService->getProductPrice($item, true, $amount);
+                if($onlySale){
+                    if(!empty($item->getSale())){
+                        $amount = 0;
+                        if(isset($basket[$item->getId()]))
+                            $amount = $basket[$item->getId()];
+                        $arr[] = $this->productService->getProductPrice($item, true, $amount);
+                    }
+                }
+                else{
+                    $amount = 0;
+                    if(isset($basket[$item->getId()]))
+                        $amount = $basket[$item->getId()];
+                    $arr[] = $this->productService->getProductPrice($item, true, $amount);
+                }
             }
         }
         if(!empty($sort))

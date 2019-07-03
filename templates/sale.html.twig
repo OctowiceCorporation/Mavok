@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <title>Поиск</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="OneTech shop project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+    <link href="/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/styles/shop_styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/product_styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/shop_responsive.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div class="shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop_content">
+                        <div class="shop_bar clearfix">
+                            <div class="shop_product_count"><span>{{ length }}</span> Товаров найдено</div>
+                            <div class="shop_sorting">
+                                <ul>
+                                    <li>
+                                        <span>Сортировать по:</span>
+                                        <span class="sorting_text">
+                                            <i class="fas fa-chevron-down"></span></i>
+                                        <ul>
+
+                                            <li class="shop_sorting_button" ><a onclick=getUrl('name');>По названию</a></li>
+                                            <li class="shop_sorting_button"><a onclick=getUrl('date');>По новизне</a></li>
+                                            <li class="shop_sorting_button"><a onclick=getUrl('price_up');>По возрастанию цены</a></li>
+                                            <li class="shop_sorting_button"><a onclick=getUrl('price_down');>По убыванию цены</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                        <div class="product_grid">
+                            {%  for product in products %}
+                                <div class="product_item is_new col-lg-3 col-sm-6 px-0" style="height: 400px;">
+                                    <a href="{{ path('product', {'slug': product.slug}) }}">
+                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src=
+                                            {% if product.image.get(0).ImagePath is defined %}
+                                            "/images/{{ product.image.get(0).ImagePath }}"
+                                            {% else %}
+                                                "/no-image.png"
+                                            {% endif %}
+                                            alt=""></div>
+                                        <div class="product_content" style="height: auto">
+                                            {% if product.ProductValue is not null %}
+                                            <div class="product_price">
+                                                {% if product.sale is not empty %}
+                                                    <div class="sale">
+                                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн</s><br>
+                                                        {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale)) | round(1,'common') }} грн
+                                                    </div>
+                                                {% else %}
+
+                                                    <div class="price">
+                                                        {{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн
+                                                    </div>
+                                                {% endif %}
+                                                {% else %}
+                                                <div class="product_price">
+                                                    {% if product.sale is not empty %}
+                                                        <div class="sale">
+                                                            <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) | round(1,'common') }} грн</s><br>
+                                                            {{ (product.retailPrice - (product.retailPrice/100 * product.sale)) | round(1,'common') }} грн
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="price">
+                                                            {{ (product.retailPrice) | round(1,'common') }} грн
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% endif %}
+                                                </div>
+
+                                            </div>
+                                            <div class="product_name">
+                                                <p style="width : 150px; height: 100px; text-overflow: ellipsis; overflow: visible; margin: unset">
+                                                    {% if product.name | length > 52 %}
+                                                        {{ product.name | slice(0,52) }}...
+                                                    {% else %}
+                                                        {{ product.name }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                    </a>
+                                    <div class="button_container" style="margin-top: unset">
+                                        {% if product.IsAvailable == true %}
+                                            <button type="button" class="button cart_button add_to_basket" style="{% if product.amount != 0 %}background-color: green;{% endif %} width: 90%" value="{{ product.slug }}">{% if product.amount != 0 %}В корзине <i class="fas fa-check"></i>{% else %}Купить <i class="fas fa-cart-plus"></i>{% endif %}</button>
+                                        {% else %}
+                                            <button type="button" disabled style="font-size: 14px; padding-right:16.5px;padding-left: 16.5px; background: lightgrey; border: solid thin #dadada" class="button cart_button add_to_basket text-dark" value="{{ product.slug }}">Нет в наличии {{ product.IsAvailable }}</button>
+                                        {% endif %}
+                                    </div>
+                                    <ul class="product_marks">
+                                        {% if product.sale is not null %}
+                                            <li class="product_mark product_discount">-{{ product.sale }}%</li>
+                                        {% endif %}
+                                        {% if product.specialOffer == 1 %}
+                                            <li class="product_mark product_new"><i class="fas fa-thumbs-up"></i></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Shop Page Navigation -->
+                {% if products is not null %}
+                <div class="navigation pt-4" id="pagination_lg">
+                    {{ knp_pagination_render(products, null, {}, {
+                        'size': 'large',
+                        'rounded': true,
+                    }) }}
+                </div>
+                <div class="navigation pt-4" id="pagination_sm" style="float: right">
+                    {{ knp_pagination_render(products, null, {}, {
+                        'size': 'medium',
+                        'rounded': true,
+                    }) }}
+                </div>
+            </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}`
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/styles/bootstrap4/popper.js"></script>
+    <script src="/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="/plugins/greensock/TweenMax.min.js"></script>
+    <script src="/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="/plugins/easing/easing.js"></script>
+    <script src="/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="/plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="/js/shop_custom.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+
+        function getUrl(sorting_type) {
+            let link = window.location.href;
+            let url = new URL(link);
+            let params = new URLSearchParams(url.search.slice(1));
+
+            params.set('sort_by', sorting_type);
+            location.href = '?'+params.toString();
+        }
+    </script>
+{% endblock %}

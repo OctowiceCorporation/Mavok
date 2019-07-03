@@ -15,6 +15,9 @@ product:
 product_search:
     path: /product_search
     controller: App\Controller\ProductController::searchProduct
+sale_products:
+    path: /sale_products
+    controller: App\Controller\ProductController::saleProducts
 ajax_search:
     path: /ajax_search/{text}
     controller: App\Controller\ProductController::ajaxSearch

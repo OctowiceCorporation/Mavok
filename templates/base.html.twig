@@ -90,6 +90,7 @@
                         <!-- Main Nav Menu -->
                         <div class="main_nav_menu ml-auto">
                             <ul class="standard_dropdown main_nav_dropdown">
+                                <li><a href="{{ path('sale_products') }}">Акции<i class="fas fa-chevron-down"></i></a></li>
                                 <li><a href="{{ path('showBlog') }}">Блог<i class="fas fa-chevron-down"></i></a></li>
                                 <li><a href="{{ path('showReviews')}}">Отзывы<i class="fas fa-chevron-down"></i></a></li>
                                 <li><a href="{{ path('about_us') }}">О нас<i class="fas fa-chevron-down"></i></a></li>
@@ -188,5 +189,6 @@
         if($(this).hasClass('required'))
             $(this).append($('<span style="color: red; font-size: 10px;"> * Обязательно</span>'));
     });
+    console.log($('h1'));
 </script>
 </html>
