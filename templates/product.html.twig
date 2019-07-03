@@ -70,11 +70,23 @@
                         <div class="product_name">{{ product.name }}</div>
                         {% if product.wholesalePrice is not null and product.minimumWholesale is not null %}
                             <div>
-                                Оптовая цена: {% if product.ProductValue is not null %}
-                                {{ (product.wholesalePrice * product.ProductValue) }} грн / {{ product.wholesalePrice }} {{ product.currencyName }}
-                            {% else %}
-                                {{ product.wholesalePrice }} грн
-                                {% endif %} - при заказе от {{ product.minimumWholesale }} {{ product.productUnit }}
+                                Оптовая цена:
+                                {% if product.sale is not empty %}
+                                    {% if product.ProductValue is not null %}
+                                        <s style="color: #787d76">{{ (product.wholesalePrice * product.ProductValue) }} грн</s>
+                                        {{ (product.wholesalePrice * product.ProductValue - (product.wholesalePrice * product.ProductValue/100 * product.sale))|round(1) }} грн
+                                    {% else %}
+                                        <s style="color: #787d76">{{ (product.wholesalePrice)|round(1) }} грн</s>
+                                        {{ (product.wholesalePrice - (product.wholesalePrice/100 * product.sale))|round(1) }} грн
+                                    {% endif %}
+                                {% else %}
+                                {% if product.ProductValue is not null %}
+                                    {{ (product.wholesalePrice * product.ProductValue)|round(1) }} грн
+                                {% else %}
+                                    {{ product.wholesalePrice|round(1) }} грн
+                                {% endif %}
+                                {% endif %}
+                                - при заказе от {{ product.minimumWholesale }} {{ product.productUnit }}
                             </div>
                         {% endif %}
                         <div></div>
@@ -335,75 +347,76 @@
     <script src="/js/main.js"></script>
 
     <script>
-        $('#description').find('*').removeAttr('style').css('font-family','Rubik').css('font-size','14px').css('color', 'black').removeAttr('href');
-        $('#description').find('strong, h3, h2, h1, h4, h5, h6, b, s').each(function () {
-            $(this).replaceWith('<p>'+$(this).html()+'</p>');
-        });
-        $('#description').find('ol').css('padding-left', '15px');
-        $('#description').find('table').removeAttr('style').addClass('table-responsive');
-        (function() {
+        $(document).ready(function () {
+            $('#description').find('*').removeAttr('style').css('font-family','Rubik').css('font-size','14px').css('color', 'black').removeAttr('href');
+            $('#description').find('strong, h3, h2, h1, h4, h5, h6, b, s').each(function () {
+                $(this).replaceWith('<p>'+$(this).html()+'</p>');
+            });
+            $('#description').find('ol').css('padding-left', '15px');
+            $('#description').find('table').removeAttr('style').addClass('table-responsive');
+
+            $(document).on('click', '#quantity_inc_button', function () {
+                $.ajax({
+                    method: "POST",
+                    url: '/add_to_basket',
+                    data: {
+                        'slug': $(this).attr('data-slug'),
+                    }
+                })
+                    .done(function() {
+                        if(Number($('#quantity_input').val()) === 0) {
+                            $('.add_to_basket').css('background-color','green').html('В корзине <i class="fas fa-check"></i>');
+                        }
+                        $('#quantity_input').val(Number($('#quantity_input').val()) + 1);
+                        $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
+                    });
+            });
+
+            $(document).on('click', '#quantity_dec_button', function () {
+                if(Number($('#quantity_input').val()) === 0){
+                    return;
+                }
+                if(Number($('#quantity_input').val()) === 1){
+                    let slug = $(this).attr('data-slug');
+                    $('#exampleModalCenter').modal('show');
+                    document.getElementById('dismiss').onclick = function () {
+                        $('#exampleModalCenter').modal('hide');
+                    };
+                    document.getElementById('accept').onclick = function () {
+                        $.ajax({
+                            method: "POST",
+                            url: '/minus_basket/'+slug,
+                        })
+                            .done(function() {
+                                $('.add_to_basket').css('background-color','#0e8ce4').html('Купить <i class="fas fa-cart-plus"></i>');
+                                $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
+                                $('#quantity_input').val(Number($('#quantity_input').val()) - 1);
+                                $('#exampleModalCenter').modal('hide');
+                            });
+                    }
+                }
+                else{
+                    $.ajax({
+                        method: "POST",
+                        url: '/minus_basket/'+$(this).attr('data-slug'),
+                    })
+                        .done(function() {
+                            $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
+                            $('#quantity_input').val(Number($('#quantity_input').val()) - 1);
+                        });
+                }
+            });
+
+            $(document).on('click', '.add_to_basket', function () {
+                $('#quantity_input').val(Number($('#quantity_input').val()) + 1);
+            })
             var allimgs = document.images;
             for (var i = 0; i < allimgs.length; i++) {
                 allimgs[i].onerror = function() {
                     this.src='/no-image.png';
                 }
             }
-        })();
-        $(document).on('click', '#quantity_inc_button', function () {
-            $.ajax({
-                method: "POST",
-                url: '/add_to_basket',
-                data: {
-                    'slug': $(this).attr('data-slug'),
-                }
-            })
-                .done(function() {
-                    if(Number($('#quantity_input').val()) === 0) {
-                        $('.add_to_basket').css('background-color','green').html('В корзине <i class="fas fa-check"></i>');
-                    }
-                        $('#quantity_input').val(Number($('#quantity_input').val()) + 1);
-                    $('#basket-product-amount').html(Number($('#basket-product-amount').html()) + 1);
-                });
         });
-
-        $(document).on('click', '#quantity_dec_button', function () {
-            if(Number($('#quantity_input').val()) === 0){
-                return;
-            }
-            if(Number($('#quantity_input').val()) === 1){
-                let slug = $(this).attr('data-slug');
-                $('#exampleModalCenter').modal('show');
-                document.getElementById('dismiss').onclick = function () {
-                    $('#exampleModalCenter').modal('hide');
-                };
-                document.getElementById('accept').onclick = function () {
-                    $.ajax({
-                        method: "POST",
-                        url: '/minus_basket/'+slug,
-                    })
-                        .done(function() {
-                            $('.add_to_basket').css('background-color','#0e8ce4').html('Купить <i class="fas fa-cart-plus"></i>');
-                            $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
-                            $('#quantity_input').val(Number($('#quantity_input').val()) - 1);
-                            $('#exampleModalCenter').modal('hide');
-                        });
-                }
-            }
-            else{
-                $.ajax({
-                    method: "POST",
-                    url: '/minus_basket/'+$(this).attr('data-slug'),
-                })
-                    .done(function() {
-                        $('#basket-product-amount').html(Number($('#basket-product-amount').html()) - 1);
-                        $('#quantity_input').val(Number($('#quantity_input').val()) - 1);
-                    });
-            }
-        });
-
-        $(document).on('click', '.add_to_basket', function () {
-            $('#quantity_input').val(Number($('#quantity_input').val()) + 1);
-        })
     </script>
 
 {% endblock %}
