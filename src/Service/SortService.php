@@ -39,6 +39,14 @@ class SortService
                     elseif($a->isIsAvailable() > $b->isIsAvailable())
                         return false;
                     else{
+                        $firstRetail = $a->getRetailPrice();
+                        $secondRetail = $b->getRetailPrice();
+                        if(!empty($a->getSale()))
+                            $a->setRetailPrice($a->getRetailPrice()-($a->getRetailPrice()*$a->getSale()/100));
+                        if(!empty($b->getSale()))
+                            $b->setRetailPrice($b->getRetailPrice() - ($b->getRetailPrice()*$b->getSale()/100));
+
+
                         if(!empty($a->getProductValue()))
                             $first = $a->getProductValue()*$a->getRetailPrice();
                         else
@@ -48,6 +56,12 @@ class SortService
                             $second = $b->getProductValue()*$b->getRetailPrice();
                         else
                             $second = $b->getRetailPrice();
+
+                        $a->setRetailPrice($firstRetail);
+                        $b->setRetailPrice($secondRetail);
+
+
+
 
                         return $first < $second;
                     }
@@ -60,16 +74,27 @@ class SortService
                         return true;
                     elseif($a->isIsAvailable() > $b->isIsAvailable())
                         return false;
-                    else {
-                        if (!empty($a->getProductValue()))
-                            $first = $a->getProductValue() * $a->getRetailPrice();
+                    else{
+                        $firstRetail = $a->getRetailPrice();
+                        $secondRetail = $b->getRetailPrice();
+                        if(!empty($a->getSale()))
+                            $a->setRetailPrice($a->getRetailPrice()-($a->getRetailPrice()*$a->getSale()/100));
+                        if(!empty($b->getSale()))
+                            $b->setRetailPrice($b->getRetailPrice() - ($b->getRetailPrice()*$b->getSale()/100));
+
+
+                        if(!empty($a->getProductValue()))
+                            $first = $a->getProductValue()*$a->getRetailPrice();
                         else
                             $first = $a->getRetailPrice();
 
-                        if (!empty($b->getProductValue()))
-                            $second = $b->getProductValue() * $b->getRetailPrice();
+                        if(!empty($b->getProductValue()))
+                            $second = $b->getProductValue()*$b->getRetailPrice();
                         else
                             $second = $b->getRetailPrice();
+
+                        $a->setRetailPrice($firstRetail);
+                        $b->setRetailPrice($secondRetail);
 //
                         return $first > $second;
                     }

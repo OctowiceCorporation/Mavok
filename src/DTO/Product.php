@@ -228,6 +228,15 @@ class Product
         $this->description = $description;
     }
 
+    /**
+     * @param float $retail_price
+     */
+    public function setRetailPrice(float $retail_price): void
+    {
+        $this->retail_price = $retail_price;
+    }
+
+
 
 
 
