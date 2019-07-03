@@ -39,8 +39,9 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background-color: white">
                     {% for crumb in crumbs %}
-                        <li class="breadcrumb-item"><a href="{{ path('category',{'slug': crumb.slug}) }}">{{ crumb.name }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('category',{'slug': crumb.slug}) }}">{{ crumb.name }} </a></li>
                     {% endfor %}
+                    <li class="breadcrumb-item">{{ product.name }}</li>
                 </ol>
             </nav>
             <div class="row">
