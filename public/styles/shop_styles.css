@@ -1856,6 +1856,10 @@ select option
 	color: rgba(0,0,0,0.5);
 	margin-bottom: 0px;
 }
+.display-none
+{
+    display: none;
+}
 .sidebar_subtitle
 {
 	font-size: 14px;
