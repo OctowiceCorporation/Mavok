@@ -45,7 +45,7 @@
                                                     {% endif %}</div>
                                                 <div class="product_quantity clearfix">
                                                     <input class="quantity_input" type="text" readonly="readonly" value="{{ product.amount }}">
-                                                    <div class="quantity_buttons" data-product-name="{{ product.slug }}" data-minimum="{{ product.MinimumWholesale }}" data-wholesale="{% if product.sale is not empty %}{{ product.WholesalePrice*product.sale }}{% else %}{{ product.WholesalePrice }}{% endif %}" data-retail="{% if product.sale is not empty %}{{ product.retailPrice - ( product.retailPrice* product.sale/100) }}{% else %}{{ product.retailPrice }}{% endif %}" data-value="{{ product.ProductValue }}">
+                                                    <div class="quantity_buttons" data-product-name="{{ product.slug }}" data-minimum="{{ product.MinimumWholesale }}" data-wholesale="{% if product.sale is not empty %}{{ product.WholesalePrice - ( product.WholesalePrice   * product.sale/100) }}{% else %}{{ product.WholesalePrice }}{% endif %}" data-retail="{% if product.sale is not empty %}{{ product.retailPrice - ( product.retailPrice* product.sale/100) }}{% else %}{{ product.retailPrice }}{% endif %}" data-value="{{ product.ProductValue }}">
                                                         <div class="quantity_inc_button quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
                                                         <div class="quantity_dec_button quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
                                                     </div>

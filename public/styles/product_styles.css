@@ -1435,8 +1435,8 @@ select option
 	margin-bottom: 0px;
 }
 .product_text table {
-	width: auto !important;
-	height: auto!important;
+	width: 95vw !important;
+	height: auto !important;
 }
 .arrivals_slider_item
 {
