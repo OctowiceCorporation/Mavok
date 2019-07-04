@@ -620,7 +620,7 @@ section
 	overflow-x: scroll;
 	overflow-y: hidden;
 	white-space: nowrap;
-	height: 340px;
+	height: 350px;
 }
 /* width */
 .scrolling-wrapper::-webkit-scrollbar {
@@ -1411,7 +1411,7 @@ select option
 	font-size: 13px;
 }
 .product_item {
-	height: 340px;
+	height: 315px;
 	position: relative;
 	left: -10px;
 	width: calc(100% + 20px);
@@ -1692,7 +1692,7 @@ select option
 .button_container
 {
 	margin-top: 43px;
-	bottom: 5px;
+	bottom: 15px;
 }
 .cart_button
 {
