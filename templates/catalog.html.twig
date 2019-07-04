@@ -1,49 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    <style>
-        #filter-submit{
-            height:70px !important;
-            width:220px !important;
-            margin-left: 500px;
-            background-color: #fcfcfc;
-            border: 1px solid #dadada;
-            z-index: 2;
-            padding: 4%;
-        }
-        #filter-submit:before {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: -11px;
-            width: 20px;
-            height: 20px;
-            -webkit-transform: translateY(-50%) rotate(46deg);
-            -ms-transform: translateY(-50%) rotate(45deg);
-            background-color: #fcfcfc;
-            border-left: 1px solid #dadada;
-            border-bottom: 1px solid #dadada;
-            z-index: -1;
-        }
-        #mobile-filter-submit{
-            position: fixed;
-            bottom: 1rem;
-            left: 0;
-            padding-left: 2%;
-            padding-right: 2%;
-            width: 100%;
-            margin: auto;
-            text-align: center;
-            z-index: 4;
-        }
-        .sale {
-            margin-top: 4px;
-        }
-        .price {
-            margin-top: 40px;
-        }
-
-    </style>
     <title>{{ category.name }}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,17 +17,12 @@
     <link rel="stylesheet" type="text/css" href="/styles/shop_responsive.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
-    <style>
-        @media screen {
-
-        }
-    </style>
 {% endblock %}
 {% block body %}
     <div class="shop">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3" style="z-index: 2" id="filter">
+                <div class="col-lg-3" id="filter">
                     <div class="shop_sidebar">
                         {% if form is defined %}
                             {{ form_start(form, {'attr': {'id': 'form_filter'}}) }}
@@ -82,7 +33,7 @@
                                         <div class="sidebar_subtitle">{{ form_label(fo) }}</div>
                                         <div class="filter_price">
                                             <div class="slider-range" min="{{ fo.vars.attr.min }}" max="{{ fo.vars.attr.max }}" value="{% if fo.vars.value is not empty%}{{ fo.vars.value }}{% else %}{{ fo.vars.attr.min ~ ';' ~    fo.vars.attr.max }}{% endif %}"></div>
-                                            <div class="slider-label" style="padding-top: 10px;"><span style="padding-left: 15px" class="slider-value"></span></div>
+                                            <div class="slider-label"><span class="slider-value"></span></div>
                                         </div></div>
                                 {% else %}
                                     {% if fo.vars.attr.class is not defined %}
@@ -148,21 +99,21 @@
 
                         <div class="product_grid">
                             {%  for product in products %}
-                            <div class="product_item is_new col-lg-3 col-md-4 col-sm-6 px-0" style="height: 400px;">
+                            <div class="product_item is_new col-lg-3 col-md-4 col-sm-6 px-0">
                                 <a href="{{ path('product', {'slug': product.slug}) }}">
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img style="object-fit: contain; width: 100px; height: 100px" src=
+                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src=
                                     {% if product.image.get(0).ImagePath is defined %}
                                     "/images/{{ product.image.get(0).ImagePath }}"
                                     {% else %}
                                         "/no-image.png"
                                     {% endif %}
                                     alt=""></div>
-                                <div class="product_content" style="height: auto">
+                                <div class="product_content">
                                         {% if product.ProductValue is not null %}
                                     <div class="product_price">
                                             {% if product.sale is not empty %}
                                                 <div class="sale">
-                                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн</s><br>
+                                                    <s>{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн</s><br>
                                                     {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale)) | round(1,'common') }} грн
                                                 </div>
                                             {% else %}
@@ -175,7 +126,7 @@
                                             <div class="product_price">
                                             {% if product.sale is not empty %}
                                                 <div class="sale">
-                                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) | round(1,'common') }} грн</s><br>
+                                                    <s>{{ (product.retailPrice) | round(1,'common') }} грн</s><br>
                                                     {{ (product.retailPrice - (product.retailPrice/100 * product.sale)) | round(1,'common') }} грн
                                                 </div>
                                             {% else %}
@@ -189,20 +140,20 @@
 
                                 </div>
                                     <div class="product_name">
-                                        <p style="width : 150px; height: 69px; text-overflow: ellipsis; overflow: visible; margin-bottom: 1rem;">
-                                            {% if product.name | length > 52 %}
-                                                {{ product.name | slice(0,52) }}...
+                                        <p>
+                                            {% if product.name | length > 43 %}
+                                                {{ product.name | slice(0,43) }}...
                                             {% else %}
                                                 {{ product.name }}
                                             {% endif %}
                                         </p>
                                     </div>
                                 </a>
-                                    <div class="button_container" style="margin-top: unset">
+                                    <div class="button_container mt-0">
                                         {% if product.IsAvailable == true %}
                                             <button type="button" class="button cart_button add_to_basket" style="{% if product.amount != 0 %}background-color: green;{% endif %} width: 90%" value="{{ product.slug }}">{% if product.amount != 0 %}В корзине <i class="fas fa-check"></i>{% else %}Купить <i class="fas fa-cart-plus"></i>{% endif %}</button>
                                         {% else %}
-                                            <button type="button" disabled style="font-size: 14px; padding-right:16.5px;padding-left: 16.5px; background: lightgrey; border: solid thin #dadada" class="button cart_button add_to_basket text-dark" value="{{ product.slug }}">Нет в наличии {{ product.IsAvailable }}</button>
+                                            <button type="button" disabled class="button cart_button add_to_basket text-dark not_available" value="{{ product.slug }}">Нет в наличии {{ product.IsAvailable }}</button>
                                         {% endif %}
                                     </div>
                                 <ul class="product_marks">
@@ -229,7 +180,7 @@
                             'rounded': true,
                         }) }}
                     </div>
-                    <div class="navigation pt-4" id="pagination_sm" style="float: right">
+                    <div class="navigation pt-4 float-right" id="pagination_sm">
                         {{ knp_pagination_render(products, null, {}, {
                             'size': 'medium',
                             'rounded': true,
@@ -243,14 +194,14 @@
             </div>
         </div>
     </div>
-    <div id="filter-submit" style="display: none"></div>
+    <div id="filter-submit" class="d-none"></div>
 {% endblock %}
 {% block filter %}
     {% if categories is null %}
-        <div class="row px-4 py-2 justify-content-center" id="filter_container" style="display: none; z-index: 0">
+        <div class="row px-4 py-2 justify-content-center d-none" id="filter_container">
             <div id="filter_trigger">
-                <div class="menu_trigger_text text-primary" style="font-size: large; text-align: center">Фильтр</div>
-                <div class="cat_burger menu_burger_inner text-primary"><i style="font-size: 1.2rem" class="fas fa-filter"></i></div>
+                <div class="menu_trigger_text text-primary text-center filter_trigger">Фильтр</div>
+                <div class="cat_burger menu_burger_inner text-primary"><i class="fas fa-filter"></i></div>
             </div>
         </div>
     {% endif %}

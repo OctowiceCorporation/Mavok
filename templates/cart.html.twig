@@ -43,7 +43,7 @@
                                                 <div class="cart_item_title">Количество{% if product.ProductUnit is not null %}
                                                     / {{ product.ProductUnit }}
                                                     {% endif %}</div>
-                                                <div class="product_quantity clearfix" style="margin-top: 20px; width: 120px">
+                                                <div class="product_quantity clearfix">
                                                     <input class="quantity_input" type="text" readonly="readonly" value="{{ product.amount }}">
                                                     <div class="quantity_buttons" data-product-name="{{ product.slug }}" data-minimum="{{ product.MinimumWholesale }}" data-wholesale="{% if product.sale is not empty %}{{ product.WholesalePrice*product.sale }}{% else %}{{ product.WholesalePrice }}{% endif %}" data-retail="{% if product.sale is not empty %}{{ product.retailPrice - ( product.retailPrice* product.sale/100) }}{% else %}{{ product.retailPrice }}{% endif %}" data-value="{{ product.ProductValue }}">
                                                         <div class="quantity_inc_button quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
@@ -146,7 +146,7 @@
         <div class="modal fade" id="modal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="border: unset">
+                    <div class="modal-header border-0">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -156,8 +156,8 @@
                             Извините, но минимальная сумма заказа составляет {{ minOrder }}грн.
                         </h4>
                     </div>
-                    <div class="modal-footer" style="border: unset">
-                        <button type="button" class="btn-primary btn" data-dismiss="modal" aria-label="Close" style="font-size: 15px">Продолжить покупки</button>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn-primary btn" data-dismiss="modal" aria-label="Close"><h6>Продолжить покупки</h6></button>
                     </div>
                 </div>
             </div>

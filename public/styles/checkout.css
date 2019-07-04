@@ -1,0 +1,10 @@
+.cat_menu_container ul
+{
+    visibility: hidden;
+}
+.basket_count {
+    position: absolute;
+    font-size: large;
+    right: -10px;
+    top: 35px;
+}

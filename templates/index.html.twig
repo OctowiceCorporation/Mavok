@@ -3,12 +3,12 @@
     <div class="super_container">
         <!-- Banner -->
         <div class="banner">
-            <div class="banner_background" style="background: linear-gradient(45deg, #cde3f0, white 55%)"></div>
+            <div class="banner_background"></div>
             <div class="container banner_content">
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="row" style="display: inline-flex; height: 300px">
+                            <div class="row d-inline-flex height-300">
                                 <div class="col-6">
                                     {% if first.sale is not null %}
                                     <div>
@@ -17,7 +17,7 @@
                                     {% endif %}
                                     <div class="mt-lg-4 mt-sm-0 text-dark">
                                         <h4>
-                                            <a class="text-dark" style="word-break: break-word" href="{{ path('product', {'slug': first.slug}) }}">
+                                            <a class="text-dark text-break" href="{{ path('product', {'slug': first.slug}) }}">
                                                 {% if first.name | length > 110 %}
                                                     {{ first.name | slice(0,110) }}...
                                                 {% else %}
@@ -26,7 +26,7 @@
                                             </a>
                                         </h4>
                                     </div>
-                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex position-fixed bottom-35">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
                                                 <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1,'common') }} грн</p>
@@ -49,7 +49,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6" style="text-align: right">
+                                <div class="col-6 text-right">
                                     <img onerror="this.src = '/no-image.png'" style="mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
                      "/images/{{ first.image.get(0).ImagePath }}"
                                     {% else %}
@@ -62,15 +62,15 @@
 
                         {% for mainPage in mainPageProducts %}
                             <div class="carousel-item">
-                                <div class="row" style="display: inline-flex; height: 300px">
-                                    <div class="col-6" style="height: 300px">
+                                <div class="row d-inline-flex height-300">
+                                    <div class="col-6 height-300">
                                         {% if mainPage.sale is not null %}
                                             <div>
                                                 <h2>Акция -{{ mainPage.sale }}%</h2>
                                             </div>
                                         {% endif %}
                                         <div class="mt-lg-4 mt-sm-0 text-dark">
-                                            <h4><a class="text-dark" style="word-break: break-word" href="{{ path('product', {'slug': mainPage.slug}) }}">
+                                            <h4><a class="text-dark text-break" href="{{ path('product', {'slug': mainPage.slug}) }}">
                                                     {% if mainPage.name | length > 110 %}
                                                         {{ mainPage.name | slice(0,110) }}...
                                                     {% else %}
@@ -78,7 +78,7 @@
                                                     {% endif %}
                                                 </a></h4>
                                         </div>
-                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex" style="position: fixed; bottom: 35px;">
+                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex position-fixed bottom-35">
                                             {% if mainPage.sale is not null %}
                                                 {% if mainPage.productValue is not null %}
                                                     <p class="carousel_sale">{{ (mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale))|round(1,'common') }} грн</p>
@@ -101,7 +101,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-6" style="text-align: right">
+                                    <div class="col-6 text-right">
                                         <img onerror="this.src = '/no-image.png'" src={% if mainPage.image.get(0).ImagePath is defined %}
                      "/images/{{ mainPage.image.get(0).ImagePath }}"
                                         {% else %}
@@ -123,7 +123,7 @@
                     <!-- Char. Item -->
                     <div class="col-lg-3 col-md-6 char_col">
                         <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                            <div class="char_icon"><i class="fas fa-truck fa-2x" style="color: #0e8ce4;"></i></div>
+                            <div class="char_icon"><i class="fas fa-truck fa-2x text-primary"></i></div>
                             <div class="char_content">
                                 <div class="char_title">Быстрая доставка</div>
                                 <div class="char_subtitle">Новой почтой</div>
@@ -133,7 +133,7 @@
                     <!-- Char. Item -->
                     <div class="col-lg-3 col-md-6 char_col">
                         <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                            <div class="char_icon"><i class="far fa-clock fa-2x" style="color:#0e8ce4;"></i></div>
+                            <div class="char_icon"><i class="far fa-clock fa-2x text-primary"></i></div>
                             <div class="char_content">
                                 <div class="char_title">24/7</div>
                                 <div class="char_subtitle">Работаем круглочуточно</div>
@@ -143,7 +143,7 @@
                     <!-- Char. Item -->
                     <div class="col-lg-3 col-md-6 char_col">
                         <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                            <div class="char_icon"><i class="fas fa-2x fa-thumbs-up" style="color: #0e8ce4"></i></div>
+                            <div class="char_icon"><i class="fas fa-2x fa-thumbs-up text-primary"></i></div>
                             <div class="char_content">
                                 <div class="char_title">Надежность</div>
                                 <div class="char_subtitle">Довольные покупатели</div>
@@ -153,7 +153,7 @@
                     <!-- Char. Item -->
                     <div class="col-lg-3 col-md-6 char_col">
                         <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                            <div class="char_icon"><i class="fas fa-percent fa-2x" style="color: #0e8ce4"></i></div>
+                            <div class="char_icon"><i class="fas fa-percent fa-2x text-primary"></i></div>
                             <div class="char_content">
                                 <div class="char_title">Акции</div>
                                 <div class="char_subtitle">Постоянные скидки</div>
@@ -166,13 +166,13 @@
     <!-- Best Sellers -->
         {% if specialProducts.0 is defined %}
         <div class="container" id="sale">
-            <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
+            <div class="col px-0 py-3 d-inline-block">
                 <div class="viewed_title_container">
                     <div class="tabs clearfix tabs-right">
-                        <div class="new_arrivals_title font-weight-bold">Хиты продаж<a id="view_all_resp" style="float: right; display: none;" href="#">Посмотреть все</a></div>
+                        <div class="new_arrivals_title font-weight-bold">Хиты продаж<a id="view_all_resp" class="d-none float-right" href="#">Посмотреть все</a></div>
                         <ul class="clearfix" id="view_all">
                             <li class="active">
-                                <a class="font-weight-bold" style="font-size: large" href="#">Посмотреть все</a>
+                                <a class="font-weight-bold h5 text-primary" href="#">Посмотреть все</a>
                             </li>
                         </ul>
                         <div class="tabs_line"><span></span></div>
@@ -198,7 +198,7 @@
                                     <div class="product_price">
                                             {% if specialProduct.sale is not empty %}
                                                 <div class="sale">
-                                                    <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} грн</s><br>
+                                                    <s>{{ (specialProduct.retailPrice * specialProduct.ProductValue) | round(1,'common') }} грн</s><br>
                                                     {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) | round(1,'common') }} грн
                                                 </div>
                                             {% else %}
@@ -211,7 +211,7 @@
                                             <div class="product_price">
                                                 {% if specialProduct.sale is not empty %}
                                                     <div class="sale">
-                                                        <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} грн</s><br>
+                                                        <s>{{ (specialProduct.retailPrice) | round(1,'common') }} грн</s><br>
                                                         {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} грн
                                                     </div>
                                                 {% else %}
@@ -223,7 +223,7 @@
                                         {% endif %}
                                 </div>
                                 <div class="product_name">
-                                    <p  style="width : 150px; overflow:hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap">
+                                    <p>
                                         {% if specialProduct.name | length > 52 %}
                                             {{ specialProduct.name | slice(0,52) }}...
                                         {% else %}
@@ -247,13 +247,13 @@
     <!-- Sale -->
         {% if saleProducts.0 is defined %}
         <div class="container py-3" id="popular">
-        <div class="col px-0 pb-1" style="padding-bottom: 1rem; padding-top: 1rem; display: inline-block">
+        <div class="col px-0 d-inline-block py3">
             <div class="viewed_title_container">
                 <div class="tabs clearfix tabs-right">
-                    <div class="new_arrivals_title font-weight-bold">Акционные товары<a id="view_all_resp" style="float: right; display: none;" href="#">Посмотреть все</a></div>
+                    <div class="new_arrivals_title font-weight-bold">Акционные товары<a id="view_all_resp" class="d-none float-right" href="#">Посмотреть все</a></div>
                     <ul class="clearfix" id="view_all">
                         <li class="active">
-                            <a class="font-weight-bold" style="font-size: large" href="#">Посмотреть все</a>
+                            <a class="font-weight-bold h5 text-primary" href="#">Посмотреть все</a>
                         </li>
                     </ul>
                     <div class="tabs_line"><span></span></div>
@@ -279,25 +279,33 @@
                                     <div class="product_price">
                                         {% if specialProduct.ProductValue is not null %}
                                             {% if specialProduct.sale is not empty %}
-                                                <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} грн</s><br>
-                                                {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) |round(1,'common') }} грн
+                                                <div class="sale">
+                                                    <s>{{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} грн</s><br>
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue - (specialProduct.retailPrice * specialProduct.ProductValue/100 * specialProduct.sale)) |round(1,'common') }} грн
+                                                </div>
                                             {% else %}
-                                                {{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} грн
+                                                <div class="price">
+                                                    {{ (specialProduct.retailPrice * specialProduct.ProductValue) |round(1,'common') }} грн
+                                                </div>
                                             {% endif %}
                                     </div>
                                         {% else %}
                                             {% if specialProduct.sale is not empty %}
-                                                <s style="color: #787d76; font-size: medium">{{ (specialProduct.retailPrice) | round(1,'common') }} грн</s><br>
-                                                {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} грн
+                                                <div class="sale">
+                                                    <s>{{ (specialProduct.retailPrice) | round(1,'common') }} грн</s><br>
+                                                    {{ (specialProduct.retailPrice - (specialProduct.retailPrice/100 * specialProduct.sale)) | round(1,'common') }} грн
+                                                </div>
                                             {% else %}
-                                                {{ (specialProduct.retailPrice) | round(1,'common') }} грн
+                                                <div class="price">
+                                                    {{ (specialProduct.retailPrice) | round(1,'common') }} грн
+                                                </div>
                                             {% endif %}
                                     </div>
                                         {% endif %}
                                 </div>
                     </div>
                             <div class="product_name">
-                                <p style="width : 150px; overflow:hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap">
+                                <p>
                                     {% if specialProduct.name | length > 52 %}
                                         {{ specialProduct.name | slice(0,52) }}...
                                     {% else %}

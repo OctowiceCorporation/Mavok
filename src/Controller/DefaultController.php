@@ -201,7 +201,7 @@ class DefaultController extends AbstractController
             return $this->render('catalog.html.twig',['categories' => null, 'products' => null, 'sort' => $sort]);
     }
 
-    public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, Swift_Mailer $mailer, SessionInterface $session, EntityManagerInterface $em)
+    public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, Swift_Mailer $mailer, SessionInterface $session, EntityManagerInterface $em, CommonInfoService $commonInfoService)
     {
         $ip = filter_input(INPUT_SERVER, 'HTTP_CLIENT_IP', FILTER_VALIDATE_IP)
             ?: filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP)
@@ -267,10 +267,11 @@ class DefaultController extends AbstractController
                 }
             }
         }
-
+        $email = $commonInfoService->getParameter('mail');
+        $phone = $commonInfoService->getParameter('phone_number');
         $mail = new Swift_Message('Вы оформили заказ на сайте Mavok!');
         $mail->setFrom('dzhezik@gmail.com')
-            ->setTo('dzhezik@gmail.com')
+            ->setTo('zhenya1995q@gmail.com')
             ->setBody(
                 $this->renderView(
                     'confirmation.html.twig',
@@ -279,7 +280,9 @@ class DefaultController extends AbstractController
                         'surname' =>$info['surname'],
                         'delivery' => $info['delivery'],
                         'products' => $products,
-                        'total' =>$total
+                        'total' => $total,
+                        'mail' => $email,
+                        'phone' => $phone
                     ]
                 ),
                 'text/html'

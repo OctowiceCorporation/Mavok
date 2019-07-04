@@ -1420,12 +1420,21 @@ select option
 	display: none;
 }
 #filter_container {
+	z-index: 0;
 	margin: auto;
 	width: fit-content;
 	width: -moz-fit-content;
 }
 #resp_basket {
 	display: none;
+}
+.filter_trigger
+{
+	font-size: large;
+}
+#filter_trigger i
+{
+	font-size: 1.2rem;
 }
 .basket_count
 {
@@ -1473,6 +1482,9 @@ select option
 }
 .product_image img
 {
+	object-fit: contain;
+	width: 100px;
+	height: 100px;
 	display: block;
 	position: relative;
 	max-width: 100%;
@@ -1480,6 +1492,7 @@ select option
 }
 .product_content
 {
+	height: auto;
 	width: 100%;
 }
 .product_price
@@ -1490,6 +1503,64 @@ select option
 .product_item.discount
 {
 	color: #df3b3b;
+}
+.slider-label
+{
+	padding-top: 10px;
+}
+.slider-label span
+{
+	padding-left: 15px;
+}
+#filter
+{
+	z-index: 2;
+}
+#filter-submit{
+	height:70px !important;
+	width:220px !important;
+	margin-left: 500px;
+	background-color: #fcfcfc;
+	border: 1px solid #dadada;
+	z-index: 2;
+	padding: 4%;
+}
+#filter-submit:before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: -11px;
+	width: 20px;
+	height: 20px;
+	-webkit-transform: translateY(-50%) rotate(46deg);
+	-ms-transform: translateY(-50%) rotate(45deg);
+	background-color: #fcfcfc;
+	border-left: 1px solid #dadada;
+	border-bottom: 1px solid #dadada;
+	z-index: -1;
+}
+#mobile-filter-submit{
+	position: fixed;
+	bottom: 1rem;
+	left: 0;
+	padding-left: 2%;
+	padding-right: 2%;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	z-index: 4;
+}
+.sale {
+	margin-top: 4px;
+}
+.sale s
+{
+	color: #787d76;
+	font-size: medium;
+}
+.price {
+	margin-top: 40px;
 }
 .product_price span
 {
@@ -1515,6 +1586,14 @@ select option
 	margin-top: 4px;
 	overflow: hidden;
 }
+.product_name p
+{
+	width : 150px;
+	height: 69px;
+	text-overflow: ellipsis;
+	overflow: visible;
+	margin-bottom: 1rem;
+}
 .product_name div
 {
 	width: 100%;
@@ -1535,6 +1614,18 @@ select option
 .product_name div a:hover
 {
 	color: #0e8ce4;
+}
+.not_available
+{
+	font-size: 14px!important;
+	padding-right:16.5px!important;
+	padding-left: 16.5px!important;
+	background: lightgrey!important;
+	border: solid thin #dadada!important;
+}
+.height-400
+{
+	height: 400px;
 }
 .product_fav
 {

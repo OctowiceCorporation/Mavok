@@ -63,10 +63,10 @@
             <div class="row">
                 <div class="col d-flex flex-row" id="info">
                     <div class="top_bar_contact_item px-2">
-                        <div class="top_bar_icon">+38 068 005 3570</div>
+                        <div class="top_bar_icon"><a class="h4" href="tel:{{ phone }}">{{ phone }}</a></div>
                     </div>
                     <div class="top_bar_contact_item px-2">
-                        <div class="top_bar_icon of"><a class="pl-2" href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+                        <div class="top_bar_icon of"><a class="pl-lg-2 h4" href="mailto:{{ mail }}">{{ mail }}</a></div>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <!-- Logo -->
                 <div style="text-align: center">
                     <div class="logo_container pl-5"    >
-                        <div class="logo"><a style="font-size: 55px" href="{{ path('index') }}">Mavoc</a></div>
+                        <div class="logo"><a style="font-size: 55px" href="{{ path('index') }}">Mavok</a></div>
                     </div>
                 </div>
             </div>
@@ -89,13 +89,13 @@
 <body class="col-sm-11 col-lg-8 px-0" style="width: 100vw; margin: auto; border-right: thin solid #dadada; border-left: thin solid #dadada;">
     <div style="text-align: center; padding-top: 2rem">
         <h2 class="font-weight-bold">
-            Thanks for order!
+            Спасибо за заказ!
         </h2>
         <h4 class="col-sm-11 col-lg-9 m-auto">
-            You'll receive an email when your items are shipped. If you have any questions, Call us 1-800-1234-5678.
+            Мы свяжемся с вами в ближайшее время! Если у вас возникнут вопросы, обращайтесь по тел. {{ phone }}.
         </h4>
     </div>
-    <div style="padding-top: 2rem">
+    <div style="padding-top: 2rem; text-align: -webkit-center">
         <table class="col-lg-9 col-sm-11 m-auto" style="border: solid thin #dadada; background: rgba(14, 140, 228, 0.1);">
             <tr style="border-bottom: thin solid #dadada">
                 <td class="table_header" style="width: 50%;text-align: center; border-right: thin solid #dadada">
@@ -108,7 +108,7 @@
             <tr>
                 <td class="px-3 px-lg-5" style="border-right: thin solid #dadada">
                     Дата оформления:	{{ "now"|date("d/m/Y") }}<br>
-                    Сумма заказа:	{{ total }}UAN<br>
+                    Сумма заказа:	{{ total | round(1,'common') }} грн<br>
                 </td>
                 <td class="px-3 px-lg-5">
                     {{ surname }} {{ name }}<br>
@@ -116,7 +116,6 @@
                         Самовывоз<br>
                     {% elseif delivery.type == 2 %}
                         Новая Почта
-                        {{ delivery.city }}<br>
                         {{ delivery.data }}<br>
                     {% else %}
                         Другое
@@ -149,36 +148,19 @@
                 <td class="table_text" style=" width: 15%; margin: auto; text-align: center;">
                     <h4>
                         {% if product.ProductValue is not null %}
-                            {{ (product.retailPrice * product.ProductValue * product.amount) }} UAH
+                            {{ (product.retailPrice * product.ProductValue * product.amount) | round(1,'common') }} UAH
                         {% else %}
-                            {{ product.retailPrice * product.amount}} UAH
+                            {{ product.retailPrice * product.amount | round(1,'common')}} UAH
                         {% endif %}
                     </h4>
                 </td>
             </tr>
             {% endfor %}
         </table>
-    </div>
-        <div class="col-lg-8 col-sm-8 py-4 m-auto payment">
-            <table>
-                <tr>
-                    <td>Subtotal (3 items):</td>
-                    <td>$40.57</td>
-                </tr>
-                <tr>
-                    <td>Flat-rate Shipping: </td>
-                    <td>FREE</td>
-                </tr>
-                <tr>
-                    <td>Discount: </td>
-                    <td>$40.57</td>
-                </tr>
-                <tr>
-                    <td>Order Total:</td>
-                    <td>$40.57</td>
-                </tr>
-            </table>
+        <div style="font-size: large; text-align: right; width: 75%; padding: 1rem;">
+            Итого: {{ total | round(1,'common') }}грн
         </div>
+    </div>
 </body>
 <footer>
     <!-- Copyright -->
@@ -188,10 +170,10 @@
                 <div class="col">
                     <div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
                         <div class="copyright_content">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> Copyright ©<script>
+                            Copyright ©
+                            <script>
                                 document.write(new Date().getFullYear());
                             </script> All rights reserved | Made <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://octowice.com" target="_blank">Octowice</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                     </div>
                 </div>

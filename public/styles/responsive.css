@@ -398,6 +398,12 @@
 	{
 		padding-left: 36px;
 	}
+	.cat_menu li a i:hover >
+	{
+		top: 0;
+		visibility: visible;
+		opacity: 1;
+	}
 	.banner_2_item
 	{
 		height: auto;

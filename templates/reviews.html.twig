@@ -3,24 +3,7 @@
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/product_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/product_responsive.css') }}">
-    <style>
-        .single_review
-        {
-            border-bottom: solid thin #e8e8e8;
-            box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
-        }
-        .review
-        {
-            width: 75%;
-        }
-        @media only screen and (max-width: 575px)
-        {
-            .review
-            {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 {% endblock %}
 {% block body %}
     <div class="container review my-3 row mx-auto">
@@ -32,7 +15,7 @@
                        <span>{{ review.name }}</span>
                        <p>{{ review.date | date('d/m/Y H:i') }}</p>
                     </div>
-                    <div class="col-lg-10 col-sm-12 p-3" style="background-color: #f5f5f5;border-bottom: solid thin #e8e8e8;box-shadow: 0px 1px 5px rgba(0,0,0,0.1);">
+                    <div class="col-lg-10 col-sm-12 p-3 nice_border">
                         <p class="text-dark">{{ review.review }}</p>
                         <span class="text-success h5">Достоинства:</span>
                         <p>
@@ -51,7 +34,7 @@
                             {% endif %}
                         </p>
                         <span class="text-warning h5">Оценка:</span>
-                            <div style="z-index: 0; padding: 0" class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
+                            <div class="rating" data-rateyo-read-only="true" data-rateyo-rating="{% if review.rating == 0 %}5{% else %}{{ review.rating }}{% endif %}"></div>
 
                     </div>
                 </div>
@@ -71,7 +54,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
     <script>
         let form_group = $('<div class="form-group"></div>');

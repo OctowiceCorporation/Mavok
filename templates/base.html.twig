@@ -53,7 +53,7 @@
                         <div class="header_search_content">
                             <div class="header_search_form_container">
                                 <form action="{{ path('product_search') }}" class="header_search_form clearfix" method="get">
-                                    <input autocomplete="off" id="desktop-search" name="search_text" type="search" required="required" class="header_search_input" placeholder="Найти товар..." style="width: 100%">
+                                    <input autocomplete="off" id="desktop-search" name="search_text" type="search" required="required" class="header_search_input" placeholder="Найти товар...">
                                     <button type="submit" class="header_search_button trans_300" value="Submit"><i class="fas fa-2x text-white fa-search"></i></button>
                                 </form>
                             </div>
@@ -63,10 +63,10 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-9 order-lg-3 order-2 text-right">
-                    <div class="logo_container" style="display: inline-block">
-                        <div class="logo" id="basket"><a href="{{ path('basket_view') }}"><i style="color: #0e8ce4" class="fas fa-shopping-cart fa-2x"></i></a></div>
-                        <a  id="resp_logo" style="display:none; font-size: 50px; font-family: 'Orbitron', sans-serif;" href="{{ path('index') }}">Mavok</a>
-                        <a style="display: none" id="resp_basket" href="{{ path('basket_view') }}"><i style="color: #0e8ce4" class="fas fa-shopping-cart fa-2x"></i></a>
+                    <div class="logo_container">
+                        <div class="logo" id="basket"><a href="{{ path('basket_view') }}"><i class="fas fa-shopping-cart text-primary fa-2x"></i></a></div>
+                        <a  id="resp_logo" style="display:none;	font-size: 50px;font-family: 'Orbitron', sans-serif;" href="{{ path('index') }}">Mavok</a>
+                        <a class="d-none" id="resp_basket" href="{{ path('basket_view') }}"><i class="fas fa-shopping-cart text-primary fa-2x"></i></a>
                         <span class="basket_count badge badge-pill badge-danger notify" id="basket-product-amount"></span>
                     </div>
                 </div>
@@ -75,9 +75,9 @@
     </div>
     <!-- Main Navigation -->
     <nav class="main_nav">
-        <div class="container" id="container" style="padding: unset">
+        <div class="container p-0" id="container">
             <div class="row">
-                <div class="col" style="padding: unset">
+                <div class="col p-0">
                     <div class="main_nav_content d-flex flex-row">
                         <!-- Categories Menu -->
                         <div class="cat_menu_container mobile-header-closed">
@@ -85,7 +85,7 @@
                                 <div class="cat_burger"><span></span><span></span><span></span></div>
                                 <div class="cat_menu_text">категории</div>
                             </div>
-                            <ul class="cat_menu" style="z-index: 1" id="header_dropdown"></ul>
+                            <ul class="cat_menu" id="header_dropdown"></ul>
                         </div>
                         <!-- Main Nav Menu -->
                         <div class="main_nav_menu ml-auto">

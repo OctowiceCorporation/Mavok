@@ -50,6 +50,27 @@
 {
     margin-top: 35px;
 }
+.recent_sale s
+{
+    color: #787d76;
+    font-size: medium;
+}
+.recently_viewed_name p
+{
+    width : 150px;
+    overflow:hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.not_available
+{
+    font-size: 14px!important;
+    padding-right:16.5px!important;
+    padding-left: 16.5px!important;
+    background: lightgrey!important;
+    border: solid thin #dadada!important;
+}
 .recently_viewed_border
 {
     display: block;

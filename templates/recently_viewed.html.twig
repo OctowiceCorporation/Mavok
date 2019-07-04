@@ -23,12 +23,12 @@
                                     {% else %}
                                         "/no-image.png"
                                     {% endif %} alt=""></div>
-                            <div class="recently_viewed_content" style="height: auto">
+                            <div class="recently_viewed_content h-auto">
                                 {% if product.ProductValue is not null %}
                                     <div class="recently_viewed_price">
                                         {% if product.sale is not empty %}
                                             <div class="recent_sale">
-                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн</s><br>
+                                                <s>{{ (product.retailPrice * product.ProductValue) | round(1,'common') }} грн</s><br>
                                                 {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale)) | round(1,'common') }} грн
                                             </div>
                                         {% else %}
@@ -41,7 +41,7 @@
                                     <div class="recently_viewed_price">
                                         {% if product.sale is not empty %}
                                             <div class="recent_sale">
-                                                <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) | round(1,'common') }} грн</s><br>
+                                                <s>{{ (product.retailPrice) | round(1,'common') }} грн</s><br>
                                                 {{ (product.retailPrice - (product.retailPrice/100 * product.sale)) | round(1,'common') }} грн
                                             </div>
                                         {% else %}
@@ -53,7 +53,7 @@
                                 {% endif %}
                             </div>
                                 <div class="recently_viewed_name">
-                                    <p style="width : 150px; overflow:hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap">
+                                    <p>
                                     {% if product.name | length > 52 %}
                                             {{ product.name | slice(0,52) }}...
                                         {% else %}
@@ -62,11 +62,11 @@
                                     </p>
                                 </div>
                         </a>
-                            <div class="recent_button_container" style="text-align: center">
+                            <div class="recent_button_container text-center"">
                                 {% if product.IsAvailable == true %}
                                     <button type="button" class="button cart_button add_to_basket text-light" style="{% if product.amount != 0 %}background-color: green;{% endif %} width: 90%" value="{{ product.slug }}">{% if product.amount != 0 %}В корзине <i class="fas fa-check"></i>{% else %}Купить{% endif %}</button>
                                 {% else %}
-                                    <button type="button" disabled style="font-size: 14px; background: lightgrey; border: solid thin #dadada; width: 90%" class="button cart_button add_to_basket text-dark" value="{{ product.slug }}">Нет в наличии {{ product.IsAvailable }}</button>
+                                    <button type="button" disabled class="button cart_button add_to_basket text-dark not_available" value="{{ product.slug }}">Нет в наличии {{ product.IsAvailable }}</button>
                                 {% endif %}
                             </div>
                             <ul class="recently_viewed_marks">

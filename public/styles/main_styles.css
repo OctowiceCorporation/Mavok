@@ -274,7 +274,8 @@ section
 {
 	display: none;
 }
-.cat_menu_container > ul {
+.cat_menu_container > ul
+{
 	padding-top: 13px;
 }
 .carousel-item img
@@ -520,7 +521,12 @@ section
 }
 .logo_container
 {
+	display: inline-block;
 	height: 175px;
+}
+.resp_logo
+{
+
 }
 .logo
 {
@@ -1232,9 +1238,15 @@ select option
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center center;
+	background: linear-gradient(45deg, #cde3f0, white 55%)
+}
+.height-300
+{
+	height: 300px;
+}
+.bottom-35
+{
+	bottom: 35px;
 }
 .banner_content
 {
@@ -1714,6 +1726,11 @@ select option
 {
 	margin-top: 4px;
 }
+.sale s
+{
+	color: #787d76;
+	font-size: medium;
+}
 .price
 {
 	margin-top: 40px;
@@ -1735,7 +1752,14 @@ select option
 	margin-top: 4px;
 	overflow: hidden;
 }
-
+.product_name p
+{
+	width : 150px;
+	overflow:hidden;
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 .product_name div a
 {
 	font-size: 14px;
@@ -3707,6 +3731,10 @@ select option
 	padding-top: 2rem;
 	padding-bottom: 1rem;
 }
+.copyright h2
+{
+	font-family: 'Orbitron', sans-serif;
+}
 .copyright_container
 {
 	width: 100%;
@@ -4644,8 +4672,6 @@ select option
 	position: absolute;
 	top: 100%;
 	left: 0;
-	/*visibility: hidden;
-	opacity: 0;*/
 	min-width: 100%;
 	background: #FFFFFF;
 	box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
@@ -4663,6 +4689,7 @@ select option
 {
 	visibility: visible;
 	opacity: 1;
+	z-index: 1;
 }
 
 .cat_menu li
@@ -4723,17 +4750,6 @@ select option
 	background: #FFFFFF;
 	box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
 }
-@media only screen and (min-width: 700px)
-{
-	.cat_menu li a i:hover >
-	{
-		top: 0;
-		visibility: visible;
-		opacity: 1;
-	}
-}
-
-
 .main_nav_dropdown li
 {
 	margin-right: 35px;

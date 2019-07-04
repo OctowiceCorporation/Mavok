@@ -1,0 +1,9 @@
+@media only screen and (max-width: 575px)
+{
+    .basket_count
+    {
+        font-size: small !important;
+        right: -14px !important;
+        top: 18px !important;
+    }
+}
