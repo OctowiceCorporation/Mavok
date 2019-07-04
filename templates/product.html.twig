@@ -75,13 +75,25 @@
                     <div class="product_description">
                         <div class="product_name">{{ product.name }}</div>
                         {% if product.wholesalePrice is not null and product.minimumWholesale is not null %}
-                            <div>
-                                Оптовая цена: {% if product.ProductValue is not null %}
-                                {{ (product.wholesalePrice * product.ProductValue) }} грн / {{ product.wholesalePrice }} {{ product.currencyName }}
+                        <div>
+                            Оптовая цена:
+                            {% if product.sale is not empty %}
+                                {% if product.ProductValue is not null %}
+                                    <s style="color: #787d76">{{ (product.wholesalePrice * product.ProductValue) }} грн</s>
+                                    {{ (product.wholesalePrice * product.ProductValue - (product.wholesalePrice * product.ProductValue/100 * product.sale))|round(1) }} грн
+                                {% else %}
+                                    <s style="color: #787d76">{{ (product.wholesalePrice)|round(1) }} грн</s>
+                                    {{ (product.wholesalePrice - (product.wholesalePrice/100 * product.sale))|round(1) }} грн
+                                {% endif %}
                             {% else %}
-                                {{ product.wholesalePrice }} грн
-                                {% endif %} - при заказе от {{ product.minimumWholesale }} {{ product.productUnit }}
-                            </div>
+                                {% if product.ProductValue is not null %}
+                                    {{ (product.wholesalePrice * product.ProductValue)|round(1) }} грн
+                                {% else %}
+                                    {{ product.wholesalePrice|round(1) }} грн
+                                {% endif %}
+                            {% endif %}
+                            - при заказе от {{ product.minimumWholesale }} {{ product.productUnit }}
+                        </div>
                         {% endif %}
                         <div></div>
                         <div class="order_info d-flex flex-row">
@@ -101,26 +113,18 @@
                                 <div class="product_price">
                                     {% if product.ProductValue is not null %}
                                     {% if product.sale is not empty %}
-                                        <div class="sale"
-                                            <s>{{ (product.retailPrice * product.ProductValue) }} грн</s><br>
-                                            {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))|round(1) }} грн
-                                        </div>
+                                        <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} грн</s>
+                                        {{ (product.retailPrice * product.ProductValue - (product.retailPrice * product.ProductValue/100 * product.sale))|round(1) }} грн
                                     {% else %}
-                                        <div class="price">
-                                            {{ (product.retailPrice * product.ProductValue)|round(1) }} грн
-                                        </div>
+                                        {{ (product.retailPrice * product.ProductValue)|round(1) }} грн
                                     {% endif %}
                                 </div>
                                 {% else %}
                                 {% if product.sale is not empty %}
-                                    <div class="sale">
-                                        <s>{{ (product.retailPrice) }} грн</s><br>
-                                        {{ (product.retailPrice - (product.retailPrice/100 * product.sale))|round(1) }} грн
-                                    </div>
+                                    <s style="color: #787d76; font-size: medium">{{ (product.retailPrice) }} грн</s>
+                                    {{ (product.retailPrice - (product.retailPrice/100 * product.sale))|round(1) }} грн
                                 {% else %}
-                                    <div class="price">
-                                        {{ (product.retailPrice)|round(1)    }} грн
-                                    </div>
+                                    {{ (product.retailPrice)|round(1)    }} грн
                                 {% endif %}
 
                         </div>
