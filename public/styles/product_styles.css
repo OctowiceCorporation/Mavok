@@ -1397,7 +1397,6 @@ select option
 {
 	font-size: 30px;
 	font-weight: 500;
-	margin-top: 11px;
 }
 .product_rating
 {
@@ -1423,7 +1422,7 @@ select option
 	transition: all 200ms ease;
 	background: #FFFFFF;
 	cursor: pointer;
-	padding-top: 40px;
+	padding-top: 20px;
 	z-index: 0;
 }
 .product_text
@@ -1479,7 +1478,7 @@ select option
 	overflow:hidden;
 	display: inline-block;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	margin: unset;
 }
 .nice_border
 {
@@ -1693,6 +1692,7 @@ select option
 .button_container
 {
 	margin-top: 43px;
+	bottom: 5px;
 }
 .cart_button
 {
