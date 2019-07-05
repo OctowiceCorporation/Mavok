@@ -609,18 +609,12 @@ section
 	line-height: 50px;
 	color: #a3a3a3 !important;
 }
-.header_search_input::input-placeholder
-{
-	font-size: 16px !important;
-	font-weight: 300;
-	line-height: 50px;
-	color: #a3a3a3 !important;
-}
 .scrolling-wrapper {
 	overflow-x: scroll;
 	overflow-y: hidden;
 	white-space: nowrap;
-	height: 350px;
+	height: 340px;
+	-webkit-overflow-scrolling: touch;
 }
 /* width */
 .scrolling-wrapper::-webkit-scrollbar {
@@ -1411,7 +1405,7 @@ select option
 	font-size: 13px;
 }
 .product_item {
-	height: 315px;
+	height: 340px;
 	position: relative;
 	left: -10px;
 	width: calc(100% + 20px);
@@ -1692,7 +1686,7 @@ select option
 .button_container
 {
 	margin-top: 43px;
-	bottom: 15px;
+	bottom: 3px;
 }
 .cart_button
 {
@@ -2062,11 +2056,6 @@ select option
 	font-size: 16px;
 	color: rgba(0,0,0,0.3);
 }
-.newsletter_input::input-placeholder
-{
-	font-size: 16px;
-	color: rgba(0,0,0,0.3);
-}
 .newsletter_button
 {
 	position: absolute;
@@ -2122,15 +2111,6 @@ select option
 	height: auto;
 	margin-bottom: 18px;
 	margin-top: -10px;
-}
-.footer .logo
-{
-	top: auto;
-	-webkit-transform: transform: none;
-    -moz-transform: transform: none;
-    -ms-transform: transform: none;
-    -o-transform: transform: none;
-    transform: none;
 }
 .footer .logo a
 {

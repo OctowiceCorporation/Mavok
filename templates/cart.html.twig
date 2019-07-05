@@ -185,16 +185,19 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
             let sum = Number($('#total').html());
             let minOrder = {{ minOrder }};
-            document.getElementById('checkout_button').addEventListener('click', function(evt) {
-                if ( minOrder  > sum){
-                    evt.preventDefault();
-                    $('#modal').modal('show');
-                }
-            }, false);
+            if (!isNaN(sum)) {
+                document.getElementById('checkout_button').addEventListener('click', function (evt) {
+                    if (minOrder > sum) {
+                        evt.preventDefault();
+                        $('#modal').modal('show');
+                    }
+                }, false);
+            }
 
             $(document).on('click', '.delete-product-from-basket', function () {
                 let elem = $(this);
