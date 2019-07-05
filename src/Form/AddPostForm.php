@@ -24,7 +24,8 @@ class AddPostForm extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Текст поста',
                 'attr' => [
-                    'rows' => 10
+                    'rows' => 10,
+                    'class' => 'summernote'
                 ]
             ])
             ->add('image', FileType::class,[

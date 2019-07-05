@@ -28,7 +28,7 @@
                         <div class="blog_post">
                             <div class="blog_image" style="background-image:url('{{asset('/images/blog/' ~ post.image)}}')"></div>
                             <div class="blog_text px-4 pt-2">{{ post.title }}...</div>
-                            <div class="pt-1 px-4">{{ post.description | slice(0,100) }}...</div>
+                            <div class="pt-1 px-4">{{ post.description|striptags|slice(0, 100)|raw|nl2br  }}...</div>
                             <div class="blog_button"><a href={{ path('showBlogPost', {'slug': post.slug}) }}>Читать дальше</a></div>
                         </div>
                         {% endfor %}
