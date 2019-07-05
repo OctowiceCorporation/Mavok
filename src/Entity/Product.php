@@ -20,7 +20,7 @@ class Product
     private $id;
 
     /**
-     * @Gedmo\Slug(fields={"name", "description"})
+     * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=100, unique=true)
      */
     private $slug;
@@ -178,9 +178,6 @@ class Product
     {
         $this->id = $id;
     }
-
-    
-
     /**
      * @return mixed
      */

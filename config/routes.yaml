@@ -58,7 +58,7 @@ showBlog:
     path: /blog
     controller: App\Controller\DefaultController::showBlog
 showBlogPost:
-    path: /post/{id}
+    path: /post/{slug}
     controller: App\Controller\DefaultController::showBlogPost
 showReviews:
     path: /reviews

@@ -62,7 +62,6 @@ class DefaultController extends AbstractController
 //        $em->persist($visitor);
 //        $em->flush();
 
-
         $mainCategories = $categoryRepository->findBy(['parent' => null]);
         $specialProducts = $productRepository->getSpecialProducts();
         $specialCollection = new ArrayCollection();
@@ -309,9 +308,9 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    public function showBlogPost(int $id, BlogRepository $blogRepository)
+    public function showBlogPost(string $slug, BlogRepository $blogRepository)
     {
-        $post = $blogRepository->findOneBy(['id' => $id]);
+        $post = $blogRepository->findOneBy(['slug' => $slug]);
         $postDto = BlogMapper::entityToDto($post);
         $related = $blogRepository->findBy(['is_visible' => 1]);
         if (($key = array_search($post, $related)) !== false) {

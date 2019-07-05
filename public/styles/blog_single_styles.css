@@ -1244,6 +1244,7 @@ select option
 	font-weight: 300;
 	color: rgba(0,0,0,0.7);
 	line-height: 2;
+	margin-top: 20px;
 }
 .single_post_text p:not(:first-of-type)
 {
@@ -1254,14 +1255,14 @@ select option
 	margin-top: 43px;
 	border: solid 1px #e8e8e8;
 	box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
-	padding-left: 60px;
-	padding-right: 60px;
 	padding-top: 35px;
 	padding-bottom: 40px;
 }
-.quote_image
+.quote_image img
 {
-	
+	width: 80%;
+	height: auto;
+	object-fit: contain;
 }
 .quote_text
 {

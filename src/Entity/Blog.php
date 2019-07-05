@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogRepository")
@@ -45,6 +46,12 @@ class Blog
      * @ORM\Column(type="boolean")
      */
     private $is_visible;
+
+    /**
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=100, unique=true)
+     */
+    private $slug;
 
     public function getId(): ?int
     {
@@ -119,6 +126,18 @@ class Blog
     public function setIsVisible(bool $is_visible): self
     {
         $this->is_visible = $is_visible;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
