@@ -3,6 +3,7 @@
     overflow-y: hidden;
     white-space: nowrap;
     height: 350px;
+    -webkit-overflow-scrolling: touch;
 }
 /* width */
 .recent-wrapper::-webkit-scrollbar {
