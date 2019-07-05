@@ -35,7 +35,7 @@
                         <div class="blog_post">
                             <div class="blog_image" style="background-image:url('{{asset('/images/blog/' ~ post.image)}}')"></div>
                             <div class="blog_text">{{ post.description |striptags|slice(0, 100)|raw|nl2br }}...</div>
-                            <div class="blog_button"><a href={{ path('showBlogPost', {'id': post.id}) }}>Читать дальше</a></div>
+                            <div class="blog_button"><a href={{ path('showBlogPost', {'slug': post.slug}) }}>Читать дальше</a></div>
                         </div>
                         {% endfor %}
                     </div>
