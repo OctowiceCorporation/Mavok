@@ -55,7 +55,7 @@
                 <div class="col-lg-2 order-lg-1 order-2" id="gallery">
                     <ul class="image_list">
                         {% for image in product.image %}
-                            <li data-image="/images/{{ image.ImagePath }}"><img src="/images/{{ image.ImagePath }}" onerror="this.src='/no-image.png'"  alt=""></li>
+                            <li data-image="/images/{{ image.ImagePath }}"><img style="object-fit: contain" src="/images/{{ image.ImagePath }}" onerror="this.src='/no-image.png'"  alt=""></li>
                         {% endfor %}
                     </ul>
                 </div>
