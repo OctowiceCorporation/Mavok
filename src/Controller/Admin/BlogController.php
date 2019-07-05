@@ -68,7 +68,7 @@ class BlogController extends AbstractController
             $this->manager->persist($post);
             $this->manager->flush();
 
-            return $this->redirectToRoute('showBlogPost',['slug' => $post->getId()]);
+            return $this->redirectToRoute('showBlogPost',['slug' => $post->getSlug()]);
         }
         return $this->render('admin/edit_post.html.twig',[
             'form' => $form->createView(),
