@@ -2137,6 +2137,10 @@ select option
 {
 	right: 40px;
 }
+.description
+{
+	margin-top: 5rem;
+}
 
 /*********************************
 9. Newsletter
