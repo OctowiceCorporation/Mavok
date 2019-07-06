@@ -26,7 +26,7 @@
                                             </a>
                                         </h4>
                                     </div>
-                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex position-fixed bottom-35">
+                                    <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex position-absolute bottom-15" style="width: max-content">
                                         {% if first.sale is not null %}
                                             {% if first.productValue is not null %}
                                                 <p class="carousel_sale">{{ (first.productValue * first.retailPrice - (first.retailPrice * first.ProductValue/100 * first.sale))|round(1,'common') }} грн</p>
@@ -78,7 +78,7 @@
                                                     {% endif %}
                                                 </a></h4>
                                         </div>
-                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex position-fixed bottom-35">
+                                        <div class="mt-lg-3 mt-md-3 mt-sm-1 d-inline-flex position-absolute bottom-15" style="width: max-content">
                                             {% if mainPage.sale is not null %}
                                                 {% if mainPage.productValue is not null %}
                                                     <p class="carousel_sale">{{ (mainPage.productValue * mainPage.retailPrice - (mainPage.retailPrice * mainPage.ProductValue/100 * mainPage.sale))|round(1,'common') }} грн</p>
