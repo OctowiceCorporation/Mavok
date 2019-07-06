@@ -349,6 +349,20 @@
 	{
 		font-size: 24px;
 	}
+	.footer_contact
+	{
+		order: 2;
+	}
+	.footer_about
+	{
+		order: 1;
+	}
+	.footer_nav
+	{
+		padding-top: 10px;
+		order: 3;
+		text-align: center;
+	}
 	.cart_text
 	{
 		display: none;

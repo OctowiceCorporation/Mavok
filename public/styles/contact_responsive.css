@@ -313,6 +313,20 @@
 	{
 		padding-top: 35px;
 	}
+	.footer_contact
+	{
+		order: 2;
+	}
+	.footer_about
+	{
+		order: 1;
+	}
+	.footer_nav
+	{
+		padding-top: 10px;
+		order: 3;
+		text-align: center;
+	}
 	.single_post
 	{
 		padding-top: 35px;

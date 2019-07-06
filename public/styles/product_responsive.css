@@ -433,6 +433,20 @@
 	{
 		width: 100%;
 	}
+	.footer_contact
+	{
+		order: 2;
+	}
+	.footer_about
+	{
+		order: 1;
+	}
+	.footer_nav
+	{
+		padding-top: 10px;
+		order: 3;
+		text-align: center;
+	}
 	.top_bar
 	{
 		display: none;

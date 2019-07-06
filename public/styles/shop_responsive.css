@@ -367,6 +367,20 @@
 		padding-top: 1rem;
 		padding-bottom: 1rem;
 	}
+	.footer_contact
+	{
+		order: 2;
+	}
+	.footer_about
+	{
+		order: 1;
+	}
+	.footer_nav
+	{
+		padding-top: 10px;
+		order: 3;
+		text-align: center;
+	}
 	#logo_container {
 		display: none;
 	}

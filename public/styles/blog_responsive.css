@@ -343,6 +343,20 @@
 		right: -14px!important;
 		top: 18px!important;
 	}
+	.footer_contact
+	{
+		order: 2;
+	}
+	.footer_about
+	{
+		order: 1;
+	}
+	.footer_nav
+	{
+		padding-top: 10px;
+		order: 3;
+		text-align: center;
+	}
 	.blog {
 		padding-bottom: unset!important;
 		padding-top: 20px!important;
