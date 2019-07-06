@@ -2141,6 +2141,10 @@ select option
 {
 	margin-top: 5rem;
 }
+.not_found img
+{
+	max-width: 100%;
+}
 
 /*********************************
 9. Newsletter

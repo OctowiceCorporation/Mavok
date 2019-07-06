@@ -704,6 +704,10 @@
 	#resp_basket {
 		padding-left: 3rem;
 	}
+	.not_found
+	{
+		text-align: center;
+	}
 }
 
 /************

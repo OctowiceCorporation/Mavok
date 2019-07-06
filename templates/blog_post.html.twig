@@ -34,7 +34,14 @@
                         <!-- Blog post -->
                         <div class="blog_post">
                             <div class="blog_image" style="background-image:url('{{asset('/images/blog/' ~ post.image)}}')"></div>
-                            <div class="blog_text">{{ post.description |striptags|slice(0, 100)|raw|nl2br }}...</div>
+                            <div class="blog_text px-4 pt-2">
+                                {% if post.title|length > 80 %}
+                                    {{ post.title|slice(0,80) }}...
+                                {% else %}
+                                    {{ post.title }}
+                                {% endif %}
+                            </div>
+                            <div class="pt-1 px-4">{{ post.description |striptags|slice(0, 150)|raw|nl2br }}...</div>
                             <div class="blog_button"><a href={{ path('showBlogPost', {'slug': post.slug}) }}>Читать дальше</a></div>
                         </div>
                         {% endfor %}
