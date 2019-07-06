@@ -28,10 +28,22 @@
                         <img src="{{ asset('imagen_1_1497560052.jpg') }}">
                         <h4 class="pl-lg-4">В данной категории еще нет товаров</h4>
                     </div>
+                    <div class="description">
+                        {{ category.description|raw }}
+                    </div>
                 {% endif %}
+                {% if categories is not null %}
+                    <ul class="list-group pb-lg-5 py-3 col-12">
+                        {% for category in categories %}
+                            {% if category.isVisible == true %}
+                                <li class="list-group-item"><a class="text-primary" href="{{ path('category', {'slug': category.slug}) }}">•  {{ category.name }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if form is defined %}
                 <div class="col-lg-3" id="filter">
                     <div class="shop_sidebar">
-                        {% if form is defined %}
                             {{ form_start(form, {'attr': {'id': 'form_filter'}}) }}
                             {% for fo in form %}
                                 {% if fo.vars.attr.min is defined %}
@@ -54,13 +66,14 @@
                             {% endfor %}
                             <div id="mobile-filter-submit"></div>
                             {{ form_end(form, {'render_rest': false}) }}
-                        {% endif %}
                     </div>
                 </div>
 
                 <div class="col-lg-9">
-
-                    {% if categories is not null %}
+                попробуйте изменить параметры фильтра{% else %}
+                <div class="col-12">
+                {% endif %}
+                    {% if categories is not null and form is defined %}
                     <ul class="list-group pb-lg-5 py-3">
                         {% for category in categories %}
                             {% if category.isVisible == true %}
@@ -198,12 +211,14 @@
                             <h3>{{ category.name }}</h3>
                             <div class="container not_found text-center mb-5">
                                 <img src="{{ asset('imagen_1_1497560052.jpg') }}">
-                                <h4 class="pl-lg-4">По вашему запросу ничего не найдено, попробуйте изменить параметры фильтра</h4>
+                                <h4 class="pl-lg-4">По вашему запросу ничего не найдено</h4>
                             </div>
                         {% endif %}
+                    {% if form is defined %}
                     <div class="description">
                         {{ category.description|raw }}
                     </div>
+                    {% endif %}
                 </div>
 
 

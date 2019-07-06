@@ -84,6 +84,9 @@
 	{
 		width: 456px;
 	}
+	.logo a {
+		font-size: 40px;
+	}
 }
 
 /************
@@ -121,6 +124,9 @@
 	.custom_dropdown
 	{
 		text-align: left;
+	}
+	.logo a {
+		font-size: 50px;
 	}
 	.main_nav
 	{
@@ -338,6 +344,10 @@
 	.wishlist_text
 	{
 		display: none;
+	}
+	.logo a
+	{
+		font-size: 24px;
 	}
 	.cart_text
 	{
