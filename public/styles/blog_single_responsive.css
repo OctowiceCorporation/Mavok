@@ -292,6 +292,8 @@
 	.blog_post
 	{
 		width: 100%;
+		margin-top: 15px;
+		margin-bottom: 50px;
 	}
 }
 
@@ -501,6 +503,7 @@
 	}
 	.blog {
 		padding-bottom: 0;
+		padding-top: 20px;
 	}
 	.newsletter_form
 	{

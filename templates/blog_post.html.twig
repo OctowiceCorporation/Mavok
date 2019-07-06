@@ -41,7 +41,7 @@
                                     {{ post.title }}
                                 {% endif %}
                             </div>
-                            <div class="pt-1 px-4">{{ post.description |striptags|slice(0, 150)|raw|nl2br }}...</div>
+                            <div class="pt-1 px-4 position-absolute bottom-15">{{ post.description |striptags|slice(0, 150)|raw|nl2br }}...</div>
                             <div class="blog_button"><a href={{ path('showBlogPost', {'slug': post.slug}) }}>Читать дальше</a></div>
                         </div>
                         {% endfor %}
