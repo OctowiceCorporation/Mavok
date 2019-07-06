@@ -194,10 +194,15 @@
                     {% endif %}
 
                 </div>
-                {% else %}
+                {% elseif categories is empty and products is empty %}
                     <div class="container not_found">
                         <img src="{{ asset('imagen_1_1497560052.jpg') }}">
-                        <h4 class="pl-lg-4">По вашему запросу ничего не найдено:(</h4>
+                        {% if form is defined %}
+                            <h4 class="pl-lg-4">По вашему запросу ничего не найдено, попробуйте изменить параметры фильтра</h4>
+                        {% else %}
+                            <h4 class="pl-lg-4">В данной категории еще нет товаров</h4>
+                        {% endif %}
+
                     </div>
                 {% endif %}
             </div>

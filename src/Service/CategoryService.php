@@ -156,7 +156,8 @@ class CategoryService
         $categories = new ArrayCollection();
         $products = new ArrayCollection();
             foreach ($last_category->getChildren() as $child) {
-                $categories->add(CategoryMapper::entityToDto($child, substr($this->generateUrlFromCategory($child), 1)));
+                if($child->getIsVisible())
+                    $categories->add(CategoryMapper::entityToDto($child, substr($this->generateUrlFromCategory($child), 1)));
             }
             $basket = $this->session->get('basket');
             foreach ($this->getChildProducts($last_category) as $childProduct) {
