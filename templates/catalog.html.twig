@@ -55,7 +55,6 @@
 
                     {% if category is defined %}
                         <h3>{{ category.name }}</h3>
-                        {{ category.description|raw }}
                     {% endif %}
 
 
@@ -186,6 +185,9 @@
                             'rounded': true,
                         }) }}
                     </div>
+                        <div class="description">
+                            {{ category.description|raw }}
+                        </div>
                     </div>
 
                     {% endif %}

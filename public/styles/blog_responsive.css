@@ -346,10 +346,6 @@
 	.blog {
 		padding-bottom: unset!important;
 	}
-	.blog_post
-	{
-		height: 300px!important;
-	}
 	.cat_menu_text
 	{
 		font-size: 13px!important;
@@ -644,9 +640,5 @@
 {
 	#resp_basket {
 		padding-left: 2rem;
-	}
-	.blog_post
-	{
-		height: 315px!important;
 	}
 }
