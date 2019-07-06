@@ -22,9 +22,9 @@
     <div class="shop">
         <div class="container">
             <div class="row">
+            {% if form is defined %}
                 <div class="col-lg-3" id="filter">
                     <div class="shop_sidebar">
-                        {% if form is defined %}
                             {{ form_start(form, {'attr': {'id': 'form_filter'}}) }}
                             {% for fo in form %}
                                 {% if fo.vars.attr.min is defined %}
@@ -47,11 +47,16 @@
                             {% endfor %}
                             <div id="mobile-filter-submit"></div>
                             {{ form_end(form, {'render_rest': false}) }}
-                        {% endif %}
+
                     </div>
                 </div>
+                {% endif %}
 
-                <div class="col-lg-9">
+                {% if categories is empty and products is not empty %}
+                    <div class="col-lg-9">
+                {% else %}
+                    <div class="col-lg-12">
+                {% endif %}
 
                     {% if category is defined %}
                         <h3>{{ category.name }}</h3>
@@ -203,16 +208,18 @@
                         {% else %}
                             <h4 class="pl-lg-4">В данной категории сейчас нет товаров</h4>
                         {% endif %}
-
                     </div>
                 {% endif %}
+                <div class="description">
+                {{ category.description|raw }}
+            </div>
             </div>
         </div>
     </div>
     <div id="filter-submit" class="display-none"></div>
 {% endblock %}
 {% block filter %}
-    {% if categories is null %}
+    {% if form is defined %}
         <div class="row px-4 py-2 justify-content-center d-none" id="filter_container">
             <div id="filter_trigger">
                 <div class="menu_trigger_text text-primary text-center filter_trigger">Фильтр</div>
