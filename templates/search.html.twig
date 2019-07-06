@@ -25,6 +25,7 @@
                     <div class="shop_content">
                         <div class="shop_bar clearfix">
                             <div class="shop_product_count"><span>{{ length }}</span> Товаров найдено</div>
+                            {% if products is not empty %}
                             <div class="shop_sorting">
                                 <ul>
                                     <li>
@@ -41,7 +42,14 @@
                                     </li>
                                 </ul>
                             </div>
+                            {% endif %}
                         </div>
+                        {% if products is empty %}
+                            <div class="container not_found text-center mb-5">
+                                <img src="{{ asset('imagen_1_1497560052.jpg') }}">
+                                <h4 class="pl-lg-4">По вашему запросу ничего не найдено, попробуйте изменить параметры фильтра</h4>
+                            </div>
+                        {% endif %}
 
 
 

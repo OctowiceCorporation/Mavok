@@ -22,6 +22,13 @@
     <div class="shop">
         <div class="container">
             <div class="row">
+                {% if categories is empty and products is empty and form is not defined %}
+                    <h3>{{ category.name }}</h3>
+                    <div class="container not_found text-center">
+                        <img src="{{ asset('imagen_1_1497560052.jpg') }}">
+                        <h4 class="pl-lg-4">В данной категории еще нет товаров</h4>
+                    </div>
+                {% endif %}
                 <div class="col-lg-3" id="filter">
                     <div class="shop_sidebar">
                         {% if form is defined %}
@@ -52,11 +59,6 @@
                 </div>
 
                 <div class="col-lg-9">
-
-                    {% if category is defined %}
-                        <h3>{{ category.name }}</h3>
-                    {% endif %}
-
 
                     {% if categories is not null %}
                     <ul class="list-group pb-lg-5 py-3">
@@ -191,18 +193,15 @@
                     {% endif %}
 
                 {% endif %}
-                    <div class="description">
-                        {% if categories is empty and products is empty %}
-                            <div class="container not_found">
-                                <img src="{{ asset('imagen_1_1497560052.jpg') }}">
-                                {% if form is defined %}
-                                    <h4 class="pl-lg-4">По вашему запросу ничего не найдено, попробуйте изменить параметры фильтра</h4>
-                                {% else %}
-                                    <h4 class="pl-lg-4">В данной категории еще нет товаров</h4>
-                                {% endif %}
 
+                        {% if categories is empty and products is empty and form is defined%}
+                            <h3>{{ category.name }}</h3>
+                            <div class="container not_found text-center mb-5">
+                                <img src="{{ asset('imagen_1_1497560052.jpg') }}">
+                                <h4 class="pl-lg-4">По вашему запросу ничего не найдено, попробуйте изменить параметры фильтра</h4>
                             </div>
                         {% endif %}
+                    <div class="description">
                         {{ category.description|raw }}
                     </div>
                 </div>
