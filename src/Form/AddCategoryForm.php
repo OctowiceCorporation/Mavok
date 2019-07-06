@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\DTO\CategoryForm;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -35,14 +36,9 @@ class AddCategoryForm extends AbstractType
                 'label' => 'Изображение',
                 'required' => false,
             ])
-            ->add('is_visible', ChoiceType::class,[
-                'label' => 'Отображение',
-                'choices'=>[
-                    'Да' => true,
-                    'Нет' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+            ->add('is_visible', CheckboxType::class,[
+                'label' => 'Отображать',
+                'required' => false
             ])
             ->add('usd', TextType::class,[
                 'label' => 'Стоимость доллара, формат: "26.34"',

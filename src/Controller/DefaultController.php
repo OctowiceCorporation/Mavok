@@ -311,6 +311,8 @@ class DefaultController extends AbstractController
     public function showBlogPost(string $slug, BlogRepository $blogRepository)
     {
         $post = $blogRepository->findOneBy(['slug' => $slug]);
+        if(empty($post))
+            throw $this->createNotFoundException();
         $postDto = BlogMapper::entityToDto($post);
         $related = $blogRepository->findBy(['is_visible' => 1]);
         if (($key = array_search($post, $related)) !== false) {
