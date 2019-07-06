@@ -43,7 +43,7 @@ class MainController extends AbstractController
             );
         }
 
-        return $this->render('admin/admin_product.html.twig', ['products' => $products, 'sort' => $sort, 'category' => $category]);
+        return $this->render('admin/admin_product.html.twig', ['products' => $products, 'sort' => $sort, 'category' => $category, 'random' => true]);
     }
 
     public function viewVisitors(VisitorsRepository $visitorsRepository)

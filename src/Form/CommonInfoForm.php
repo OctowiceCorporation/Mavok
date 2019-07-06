@@ -57,7 +57,7 @@ class CommonInfoForm extends AbstractType
                 'label' => 'Текст "О нас" в футере',
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Соханить'
+                'label' => 'Сохранить'
             ]);
     }
 
