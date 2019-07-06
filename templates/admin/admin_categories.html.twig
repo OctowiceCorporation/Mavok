@@ -7,6 +7,10 @@
     </style
 {% endblock %}
 {% block body %}
+    <div><p style="float: right;">
+            <button class="btn btn-primary"><a class="text-light" href="{{ path('add_category') }}">Добавить категорию</a></button>
+        </p>
+    </div><br><br><br>
     <div id="admin-categories"></div>
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

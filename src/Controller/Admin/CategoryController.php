@@ -84,4 +84,28 @@ class CategoryController extends AbstractController
 
         return $this->render('admin/edit_subcategory.html.twig', ['form' => $form->createView()]);
     }
+
+    public function addCategory(Request $request, UploadFileService $fileService, EntityManagerInterface $manager)
+    {
+        $form = $this->createForm(AddCategoryForm::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+            $category = new Category();
+            $category
+                ->setName($data->getName())
+                ->setDescription($data->getDescription())
+                ->setUsdValue($data->getUsd())
+                ->setEurValue($data->getEur())
+                ->setIsVisible($data->getIsVisible());
+            if(!empty($data->getImage()))
+                $category->setImage($fileService->upload($data->getImage()));
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute('categories');
+        }
+
+        return $this->render('admin/edit_subcategory.html.twig', ['form' => $form->createView()]);
+    }
 }

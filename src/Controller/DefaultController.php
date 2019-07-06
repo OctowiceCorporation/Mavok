@@ -196,8 +196,11 @@ class DefaultController extends AbstractController
             );
             return $this->render('catalog.html.twig', ['categories' => null, 'products' => $products,  'category' => $last_category,'form' => $form->createView(), 'sort' => $sort, 'length' => $length]);
         }
-        else
-            return $this->render('catalog.html.twig',['categories' => null, 'products' => null, 'sort' => $sort]);
+        else{
+
+            return $this->render('catalog.html.twig',['categories' => null, 'products' => null, 'sort' => $sort, 'category' => $last_category]);
+
+        }
     }
 
     public function sendMail(Request $request, ProductRepository $productRepository, ProductService $productService, Swift_Mailer $mailer, SessionInterface $session, EntityManagerInterface $em, CommonInfoService $commonInfoService)

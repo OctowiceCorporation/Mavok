@@ -72,6 +72,9 @@ categories:
 add_sub_category:
     path: /adminPage/add_sub_category/{id}
     controller: App\Controller\Admin\CategoryController:add_sub_category
+add_category:
+    path: /adminPage/add_category
+    controller: App\Controller\Admin\CategoryController:addCategory
 edit_category:
     path: /adminPage/edit_category/{id}
     controller: App\Controller\Admin\CategoryController:edit_category
