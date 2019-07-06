@@ -489,6 +489,10 @@
 		padding: unset;
 		margin: unset;
 	}
+	.banner_content
+	{
+		padding-right: 1rem;
+	}
 	.cart_button
 	{
 		font-size: 14px;
@@ -676,10 +680,7 @@
 	}
 	.banner_content
 	{
-		position: absolute;
-		left: 15px;
-		top: 35%;
-		transform: translateY(-30%);
+		padding-top: 1rem;
 	}
 	.banner_text
 	{
