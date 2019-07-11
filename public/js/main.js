@@ -45,9 +45,6 @@ $.ajax({
 
 $(document).ready(function () {
 
-    $(document).on('click', '#menu_trigger', function () {
-        $('.mobile-header-opened').click();
-    });
     $(document).on('click', '.menu_trigger_closed', function () {
         $(this).removeClass().addClass('menu_trigger_opened');
     });
