@@ -312,6 +312,17 @@
         params.set('sort_by', $('#sorting_type').val());
         location.href = '?'+params.toString();
     })
+
+            var allimgs = document.images;
+            for (var i = 0; i < allimgs.length; i++) {
+                allimgs[i].style.objectFit = 'contain';
+                allimgs[i].style.height = 'auto';
+                allimgs[i].style.width = 'auto';
+                allimgs[i].onerror = function() {
+                    this.src='/no-image.png';
+                }
+            }
+
     </script>
 
 {% endblock %}

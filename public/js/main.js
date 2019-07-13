@@ -8,6 +8,8 @@ $.ajax({
     .done(function(msg) {
         let array = JSON.parse(msg);
         let parent = $('#header_dropdown');
+        if(window.screen.width > 800)
+            parent.css('width', '30vw');
         Object.keys(array).forEach(function (key) {
             if(array[key]['is_visible'] === true)
                 callback_category(parent, array[key]);
@@ -16,7 +18,7 @@ $.ajax({
             let is_sub_exist = false;
             if(category['sub'].length === undefined)
                 is_sub_exist = true;
-            let li = $('<li></li>').append($('<a style="display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a> '));
+            let li = $('<li style="height: auto"></li>').append($('<a style="word-break: normal; white-space: normal; display: inline" href="/category'+category["link"]+'">'+category["name"]+'</a> '));
             if(is_sub_exist){
                 li.addClass('header_hassubs');
                 li.append('<i style="position: absolute; right: 0; display: inline-block; padding: 1em" class="fas fa-chevron-right open-ul"></i>');
@@ -43,8 +45,14 @@ $.ajax({
 
 $(document).ready(function () {
 
-    $(document).on('click', '#menu_trigger', function () {
-        $('.mobile-header-opened').click();
+    $(document).on('click', '.menu_trigger_closed', function () {
+        $(this).removeClass().addClass('menu_trigger_opened');
+    });
+    $(document).on('click', '.menu_trigger_opened', function () {
+        $(this).removeClass().addClass('menu_trigger_closed');
+    });
+    $(document).on('click', '.mobile-header-closed', function () {
+        $('.menu_trigger_opened').click();
     });
 
 
