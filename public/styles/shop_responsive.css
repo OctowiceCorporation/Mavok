@@ -737,10 +737,3 @@
 		padding-left: 2rem;
 	}
 }
-
-@media only screen and (min-width: 400px)
-{
-	.not_found{
-		padding-left: 30%;
-	}
-}
