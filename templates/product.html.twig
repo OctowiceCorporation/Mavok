@@ -75,7 +75,7 @@
                     <div class="product_description">
                         <div class="product_name">{{ product.name }}</div>
                         {% if product.wholesalePrice is not null and product.minimumWholesale is not null %}
-                        <div>
+                        <div class="pt-3">
                             Оптовая цена:
                             {% if product.sale is not empty %}
                                 {% if product.ProductValue is not null %}
@@ -95,7 +95,6 @@
                             - при заказе от {{ product.minimumWholesale }} {{ product.productUnit }}
                         </div>
                         {% endif %}
-                        <div></div>
                         <div class="order_info d-flex flex-row">
                             <form action="#">
                                 {% if product.IsAvailable %}
@@ -110,7 +109,7 @@
                                         </div>
                                     </div>
                                 {% endif %}
-                                <div class="product_price">
+                                <div class="product_price pt-3">
                                     {% if product.ProductValue is not null %}
                                     {% if product.sale is not empty %}
                                         <s style="color: #787d76; font-size: medium">{{ (product.retailPrice * product.ProductValue) }} грн</s>

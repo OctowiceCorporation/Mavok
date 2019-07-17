@@ -9,7 +9,7 @@ $.ajax({
         let array = JSON.parse(msg);
         let parent = $('#header_dropdown');
         if(window.screen.width > 800)
-            parent.css('width', '30vw');
+            parent.css('width', '410px');
         Object.keys(array).forEach(function (key) {
             if(array[key]['is_visible'] === true)
                 callback_category(parent, array[key]);

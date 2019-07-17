@@ -169,13 +169,8 @@
             <div class="col px-0 py-3 d-inline-block">
                 <div class="viewed_title_container">
                     <div class="tabs clearfix tabs-right">
-                        <div class="new_arrivals_title font-weight-bold">Хиты продаж<a id="view_all_resp" class="d-none float-right" href="#">Посмотреть все</a></div>
-                        <ul class="clearfix" id="view_all">
-                            <li class="active">
-                                <a class="font-weight-bold h5 text-primary" href="#">Посмотреть все</a>
-                            </li>
-                        </ul>
-                        <div class="tabs_line"><span></span></div>
+                        <div class="new_arrivals_title font-weight-bold">Хиты продаж<a id="view_all_resp" class="d-none float-right" href="#"></a></div>
+                        <div class="mt-sm-1 mt-lg-4 mt-md-4"><span></span></div>
                     </div>
                 </div>
             </div>
@@ -250,10 +245,10 @@
         <div class="col px-0 d-inline-block py3">
             <div class="viewed_title_container">
                 <div class="tabs clearfix tabs-right">
-                    <div class="new_arrivals_title font-weight-bold">Акционные товары<a id="view_all_resp" class="d-none float-right" href="#">Посмотреть все</a></div>
+                    <div class="new_arrivals_title font-weight-bold">Акционные товары<a id="view_all_resp" class="d-none float-right" href="{{ path('sale_products') }}">Посмотреть все</a></div>
                     <ul class="clearfix" id="view_all">
                         <li class="active">
-                            <a class="font-weight-bold h5 text-primary" href="#">Посмотреть все</a>
+                            <a class="font-weight-bold h5 text-primary" href="{{ path('sale_products') }}">Посмотреть все</a>
                         </li>
                     </ul>
                     <div class="tabs_line"><span></span></div>
