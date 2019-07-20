@@ -1242,6 +1242,7 @@ select option
 {
 	height: available;
 	height: -webkit-fill-available;
+	height: 300px;
 }
 .bottom-15
 {
@@ -1250,8 +1251,7 @@ select option
 .banner_content
 {
 	z-index: 1;
-	width: 60%;
-	padding-right: 10rem;
+	width: 58%;
 	float: right;
 }
 .banner_text

@@ -2,7 +2,7 @@
 {% block body %}
     <div class="super_container">
         <!-- Banner -->
-        <div class="banner">
+        <div class="banner container-fluid">
             <div class="banner_background"></div>
             <div class="container banner_content">
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -49,7 +49,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 text-right">
+                                <div class="col-6">
                                     <img onerror="this.src = '/no-image.png'" style="mix-blend-mode: multiply;" src={% if first.image.get(0).ImagePath is defined %}
                      "/images/{{ first.image.get(0).ImagePath }}"
                                     {% else %}
